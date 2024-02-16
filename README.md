@@ -54,7 +54,6 @@
         - annullamento ordini
         - restituzione prodotti
         - feedback prodotti
-        - feedback spedizioni
     - fornitori
         - registrazione ed autenticazione fornitore
         - gestione prodotti
