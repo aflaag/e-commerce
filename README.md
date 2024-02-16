@@ -65,7 +65,4 @@
         - statistiche prodotti
             - classifica prodotti maggiormente venduti negli ultimi X giorni
     - trasportatori
-        - registrazione corrieri
-        - assegnazione corrieri
-        - corrieri
-            - registrazione avvenuta consegna
+        - trasporto prodotti
