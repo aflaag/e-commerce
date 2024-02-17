@@ -46,22 +46,20 @@
     - uno o più server per i produttori
     - DB dei dati
 
-- funzionalità
-    - customers
-        - registrazione ed autenticazione customer
-        - ricerca prodotti
-        - acquisto prodotti
-        - annullamento ordini
-        - restituzione prodotti
-        - feedback prodotti
-    - fornitori
-        - registrazione ed autenticazione fornitore
-        - gestione prodotti
-            - registrazione prodotti
-            - aggiornamento prodotti
-            - rimozione prodotti
-        - affiliazione trasportatori
-        - statistiche prodotti
-            - classifica prodotti maggiormente venduti negli ultimi X giorni
-    - trasportatori
-        - trasporto prodotti
+- [x] funzionalità
+    - [x] customers
+        - [x] registrazione customer
+        - [x] ricerca prodotti
+        - [x] acquisto prodotti
+        - [x] annullamento ordini
+        - [x] restituzione prodotti
+        - [x] feedback prodotti
+        - [x] registrazione carte
+        - [x] registrazione indirizzi
+    - [x] fornitori
+        - [x] registrazione fornitore
+        - [x] gestione prodotti
+        - [x] classifica prodotti maggiormente venduti in range temporale
+    - [x] trasportatori
+        - [x] registrazione trasportatore
+        - [x] gestione spedizioni
