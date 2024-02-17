@@ -1,0 +1,59 @@
+sumOfRestock(pr: Product, ipu: datetime): int {
+    R := { (r, q) | EXISTS ir, q    Restock(r) & relativeTo(r, pr) & restockInstant(r, d) & datetime(ir) & ipu <= ir & quantity(r, q)}
+
+    return sum_R (q)
+}
+
+sumOfSoldProducts(pr: Product, ipu: datetime): int {
+    S := { (pu, q_diff) | EXISTS ipu_older    Purchase(pu) & quantity(pr, pu, q) & purchaseInstant(pu, ipu_older) & ipu_older < ipu & q = q_diff & (EXISTS q_ref, ref    RefundRequest(ref) & refundedProducts(pr, pu, ref) -> q_diff = q - d_ref))} // TODO: O DEVI RIFA PERCHÉ COSI È SEMPRE VUOTO STO COSO
+
+    return sum_R (q_diff)
+}
+
+[V.Purchase.restockDisponibile]
+ALL pr, pu, ipu, q   Purchase(pu) & Product(pr) & purchaseInstant(pu, ipu) & quantity(pr, pu, q) -> q <= sumOfRestock(pr, ipu) - sumOfSoldProducts(pr, ipu)
+
+[V.Customer.feedbackProdottiAcquistati]
+ALL pr, cu    Product(pr) & Customer(cu) & rating(pr, cu) -> EXISTS pu    Purchase(pu) & makes(cu, pu) & orderedProducts(pu, pr)
+
+[V.Card.cardAssociata]
+ALL pu, ca, cu    Purchase(pu) & payment(pu, c) & Card(ca) & Customer(cu) & makes(pu, cu) -> customerCards(cu, ca)
+
+[V.Purchase.quantitaConsistente]
+ALL pu, pr, q_tot, q_ref    Product(pr) & Purchase(pu) & quantity(pu, pr, q_tot) & quantity(pr, pu, r_ref) -> q_ref <= q_tot
+
+[V.Address.indirizzoConsistente]
+ALL cu, pu, ad    Customer(cu) & Purchase(pu) & Address(ad) & makes(cu, pu) & purAdd(pu, ad) -> addCust(cu, ad)
+
+[V.Tariff.tariffeRimosse]
+EXISTS t    Tariff(t) & not RemovedTariff(t) -> not EXISTS t'    Tariff(t') & not RemovedTariff(t') & t != t'
+
+[V.Purchase.prodottiConsistenti]
+ALL pu, pr, ref    Product(pr) & Purchase(pu) & RefundRequest(ref) & refundedProducts(pr, pu, ref) -> orderedProducts(pr, pu) 
+
+[V.RefundRequest.isADEliveredPurchase]
+ALL ref, pu, pr    Purchase(pu) & Product(pr) & RefundRequest(ref) refundedProducts(pu, pr, ref) -> DeliveredPurchase(pu)
+
+[V.AssignedDelivery.istante]
+ALL pu, ad, ipu, iad    AssignedDelivery(ad) & purchaseInstant(ad, ipu) & deliveryAssignmentInstant(ad, iad) -> ipu <= iad
+
+[V.OnGoingDelivery.istante]
+ALL ad, ogd, iad, iogd    OnGoingDelivery(ogd) & deliveryAssignmentInstant(ad, iad) & deliveryStart(ogd, iogd) -> iad <= iogd
+
+[V.DeliveredPurchase.istante]
+ALL ogd, dp, iogd, idp    DeliveredPurchase(dp) & deliveryStart(ogd, iogd) & deliveryEnd(dp, idp) -> iogd <= idp
+
+[V.RefundRequest.istante]
+ALL pr, dp, rr, idp, irr    RefundRequest(rr) & DeliveredPurchase(dp) & Produc(pr) & refundedProducts(pr, dp, rr) & deliveryEnd(dp, idp) & requestInstant(rr, irr) -> idp <= irr
+
+[V.AssignedRefund.istante]
+ALL rr, ar, irr, iar    AssignedRefund(ar) & requestInstant(rr, irr) & refundAssignmentInstant(ar, iar) -> irr <= iar
+
+[V.OnGoingRefund.istante]
+ALL ar, ogr, iar, iogr    OnGoingRefund(ogr) & refundAssignmentInstant(ar, iar) & refundStart(ogr, iogr) -> iar <= iogr
+
+[V.RefundedPurchase.istante]
+ALL ogr, rp, iogr, irp    RefundedPurchase(rp) & refundStart(ogr, iogr) & refundEnd(rp, irp) -> iogr <= irp
+
+[V.CanceledPurchase.istante]
+ALL cp, icp, ipu    CanceledPurchase(cp) & cancelInstant(cp, icp) & purchaseInstant(cp, ipu) -> ipu <= icp
