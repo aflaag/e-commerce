@@ -5,9 +5,9 @@ sumOfRestock(pr: Product, ipu: datetime): int {
 }
 
 sumOfSoldProducts(pr: Product, ipu: datetime): int {
-    S := { (pu, q_diff) | EXISTS ipu_older    Purchase(pu) & quantity(pr, pu, q) & purchaseInstant(pu, ipu_older) & ipu_older < ipu }
+    S := { (pu, q) | EXISTS ipu_older    Purchase(pu) & quantity(pr, pu, q) & purchaseInstant(pu, ipu_older) & ipu_older < ipu }
 
-    return sum_R (q_diff)
+    return sum_R (q)
 }
 
 sumOfRefoundedProductsPerPurchase(pu: Purchase, pr: Product): int {
