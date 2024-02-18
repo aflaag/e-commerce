@@ -1,11 +1,11 @@
 sumOfRestock(pr: Product, ipu: datetime): int {
-    R := { (r, q) | EXISTS ir, q    Restock(r) & relativeTo(r, pr) & restockInstant(r, d) & datetime(ir) & ipu <= ir & quantity(r, q)}
+    R := { (r, q) | EXISTS ir, d    Restock(r) & relativeTo(r, pr) & restockInstant(r, d) & datetime(ir) & ipu <= ir & quantity(r, q)}
 
     return sum_R (q)
 }
 
 sumOfSoldProducts(pr: Product, ipu: datetime): int {
-    S := { (pu, q_diff) | EXISTS ipu_older    Purchase(pu) & quantity(pr, pu, q) & purchaseInstant(pu, ipu_older) & ipu_older < ipu & q = q_diff & (EXISTS q_ref, ref    RefundRequest(ref) & refundedProducts(pr, pu, ref) -> q_diff = q - d_ref))} // TODO: O DEVI RIFA PERCHÉ COSI È SEMPRE VUOTO STO COSO
+    S := { (pu, q_diff) | EXISTS ipu_older    Purchase(pu) & quantity(pr, pu, q) & purchaseInstant(pu, ipu_older) & ipu_older < ipu & q = q_diff & (EXISTS q_ref, ref    RefoundRequest(ref) & RefoundedProducts(pr, pu, ref) -> q_diff = q - d_ref))} // TODO: O DEVI RIFA PERCHÉ COSI È SEMPRE VUOTO STO COSO
 
     return sum_R (q_diff)
 }
@@ -28,8 +28,9 @@ ALL cu, pu, ad    Customer(cu) & Purchase(pu) & Address(ad) & makes(cu, pu) & pu
 [V.Tariff.tariffeRimosse]
 EXISTS t    Tariff(t) & not RemovedTariff(t) -> not EXISTS t'    Tariff(t') & not RemovedTariff(t') & t != t'
 
-[V.RefundRequest.prodottiConsistenti]
-ALL dp, pr, ref    Product(pr) & DeliveredPurchase(dp) & RefundRequest(ref) & refundedProducts(pr, dp) & request(ref, dp) -> orderedProducts(pr, pu) 
+[V.RefoundRequest.prodottiConsistenti]
+ALL dp, pr, ref    Product(pr) & DeliveredPurchase(dp) & RefoundRequest(ref) & RefoundedProducts(pr, dp) & request(ref, dp) -> orderedProducts(pr, pu) 
+
 [V.AssignedDelivery.istante]
 ALL pu, ad, ipu, iad    AssignedDelivery(ad) & purchaseInstant(ad, ipu) & deliveryAssignmentInstant(ad, iad) -> ipu <= iad
 
@@ -42,17 +43,17 @@ ALL ogd, ld, iogd, ild    LostDelivery(ld) & deliveryStart(odg, iogd) & lostInst
 [V.DeliveredPurchase.istante]
 ALL ogd, dp, iogd, idp    DeliveredPurchase(dp) & deliveryStart(ogd, iogd) & deliveryEnd(dp, idp) -> iogd <= idp
 
-[V.RefundRequest.istante]
-ALL dp, rr, idp, irr    RefundRequest(rr) & DeliveredPurchase(dp) & requestInstant(rr, irr) & deliveryEnd(dp, idp) & request(rr, dp) -> idp <= irr
+[V.RefoundRequest.istante]
+ALL dp, rr, idp, irr    RefoundRequest(rr) & DeliveredPurchase(dp) & requestInstant(rr, irr) & deliveryEnd(dp, idp) & request(rr, dp) -> idp <= irr
 
-[V.AssignedRefund.istante]
-ALL rr, ar, irr, iar    AssignedRefund(ar) & requestInstant(rr, irr) & refundAssignmentInstant(ar, iar) -> irr <= iar
+[V.AssignedRefound.istante]
+ALL rr, ar, irr, iar    AssignedRefound(ar) & requestInstant(rr, irr) & RefoundAssignmentInstant(ar, iar) -> irr <= iar
 
-[V.OnGoingRefund.istante]
-ALL ar, ogr, iar, iogr    OnGoingRefund(ogr) & refundAssignmentInstant(ar, iar) & refundStart(ogr, iogr) -> iar <= iogr
+[V.OnGoingRefound.istante]
+ALL ar, ogr, iar, iogr    OnGoingRefound(ogr) & RefoundAssignmentInstant(ar, iar) & RefoundStart(ogr, iogr) -> iar <= iogr
 
-[V.RefundedPurchase.istante]
-ALL ogr, rp, iogr, irp    RefundedPurchase(rp) & refundStart(ogr, iogr) & refundEnd(rp, irp) -> iogr <= irp
+[V.RefoundedPurchase.istante]
+ALL ogr, rp, iogr, irp    RefoundedPurchase(rp) & RefoundStart(ogr, iogr) & RefoundEnd(rp, irp) -> iogr <= irp
 
 [V.CanceledPurchase.istante]
 ALL cp, icp, ipu    CanceledPurchase(cp) & cancelInstant(cp, icp) & purchaseInstant(cp, ipu) -> ipu <= icp
