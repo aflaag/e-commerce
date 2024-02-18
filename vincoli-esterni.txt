@@ -23,7 +23,7 @@ ALL pr, pu, ipu, q   Purchase(pu) & Product(pr) & purchaseInstant(pu, ipu) & qua
 ALL pr, cu    Product(pr) & Customer(cu) & rating(pr, cu) -> EXISTS pu    Purchase(pu) & makes(cu, pu) & orderedProducts(pu, pr)
 
 [V.Card.cardAssociata]
-ALL pu, ca, cu    Purchase(pu) & payment(pu, c) & Card(ca) & Customer(cu) & makes(pu, cu) -> customerCards(cu, ca)
+ALL pu, ca, cu    Purchase(pu) & payment(pu, ca) & Card(ca) & Customer(cu) & makes(pu, cu) -> customerCards(cu, ca)
 
 [V.Address.indirizzoConsistente]
 ALL cu, pu, ad    Customer(cu) & Purchase(pu) & Address(ad) & makes(cu, pu) & purAdd(pu, ad) -> addCust(cu, ad)
@@ -32,7 +32,7 @@ ALL cu, pu, ad    Customer(cu) & Purchase(pu) & Address(ad) & makes(cu, pu) & pu
 EXISTS t    Tariff(t) & not RemovedTariff(t) -> not EXISTS t'    Tariff(t') & not RemovedTariff(t') & t != t'
 
 [V.RefoundRequest.prodottiConsistenti]
-ALL dp, pr, ref    Product(pr) & DeliveredPurchase(dp) & RefoundRequest(ref) & RefoundedProducts(pr, dp) & request(ref, dp) -> orderedProducts(pr, pu) 
+ALL dp, pr, ref    Product(pr) & DeliveredPurchase(dp) & RefoundRequest(ref) & RefoundedProducts(pr, ref) & request(ref, dp) -> orderedProducts(pr, pu) 
 
 [V.AssignedDelivery.istante]
 ALL pu, ad, ipu, iad    AssignedDelivery(ad) & purchaseInstant(ad, ipu) & deliveryAssignmentInstant(ad, iad) -> ipu <= iad
