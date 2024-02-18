@@ -1,0 +1,95 @@
+sumOfRestock(pr: Product, ipu: datetime): int {
+    R := { (r, q) | EXISTS ir, d    Restock(r) & relativeTo(r, pr) & restockInstant(r, d) & datetime(ir) & ipu <= ir & quantity(r, q)}
+
+    return sum_R (q)
+}
+
+sumOfSoldProducts(pr: Product, ipu: datetime): int {
+    S := { (pu, q) | EXISTS ipu_older    Purchase(pu) & quantity(pr, pu, q) & purchaseInstant(pu, ipu_older) & ipu_older < ipu }
+
+    return sum_R (q)
+}
+
+sumOfRefoundedProductsPerPurchase(pu: Purchase, pr: Product): int {
+    S := { (rf, q) | EXISTS ad    refoundedProducts(rf, pr) & quantity(rf, pr, q) & request(rf, ad) & drequest(pu, ad) } UNION {(NULL, 0)}
+
+    return sum_R (q)
+}
+
+[V.Purchase.restockDisponibile]
+ALL pr, pu, ipu, q   Purchase(pu) & Product(pr) & purchaseInstant(pu, ipu) & quantity(pr, pu, q) -> q <= sumOfRestock(pr, ipu) - sumOfSoldProducts(pr, ipu)
+
+[V.Customer.feedbackProdottiAcquistati]
+ALL pr, cu    Product(pr) & Customer(cu) & rating(pr, cu) -> EXISTS pu    Purchase(pu) & makes(cu, pu) & orderedProducts(pu, pr)
+
+[V.Card.cardAssociata]
+ALL pu, ca, cu    Purchase(pu) & payment(pu, ca) & Card(ca) & Customer(cu) & makes(pu, cu) -> customerCards(cu, ca)
+
+[V.Address.indirizzoConsistente]
+ALL cu, pu, ad    Customer(cu) & Purchase(pu) & Address(ad) & makes(cu, pu) & purAdd(pu, ad) -> addCust(cu, ad)
+
+[V.Tariff.tariffeRimosse]
+EXISTS t    Tariff(t) & IsRemoved(t, False) -> not EXISTS t'    Tariff(t') & IsRemoved(t, False) & t != t'
+
+[V.RefoundRequest.prodottiConsistenti]
+ALL ad, pr, ref    Product(pr) & AssignedDelivery(dp) & RefoundRequest(ref) & RefoundedProducts(pr, ref) & request(ref, ad) -> EXISTS pu    orderedProducts(pr, pu) & drequest(pu, ad) 
+
+[V.AssignedDelivery.istante]
+ALL pu, ad, ipu, iad    AssignedDelivery(ad) & drequest(ad, pu) & purchaseInstant(pu, ipu) & deliveryAssignmentInstant(ad, iad) -> ipu <= iad
+
+[V.OnGoingDelivery.istante]
+ALL ad, iad, iogd    AssignedDelivery(ad) & deliveryAssignmentInstant(ad, iad) & deliveryStart(ad, iogd) -> iad <= iogd
+
+[V.LostDelivery.istante]
+ALL ad, iogd, ild    AssignedDelivery(ad) & deliveryStart(ad, iogd) & lostInstant(ld, ild) -> iogd <= ild
+
+[V.DeliveredPurchase.istante]
+ALL ad, iogd, idp    AssignedDelivery(ad) & deliveryStart(ad, iogd) & deliveryEnd(ad, idp) -> iogd <= idp
+
+[V.RefoundRequest.istante]
+ALL ad, rr, idp, irr    RefoundRequest(rr) & AssignedDelivery(ad) & requestInstant(rr, irr) & deliveryEnd(ad, idp) & request(rr, ad) -> idp <= irr
+
+[V.AssignedRefound.istante]
+ALL rr, irr, iar    RefoundRequest(rr) & requestInstant(rr, irr) & RefoundAssignmentInstant(rr, iar) -> irr <= iar
+
+[V.OnGoingRefound.istante]
+ALL ar, ogr, iar, iogr    RefoundRequest(rr) & RefoundAssignmentInstant(rr, iar) & RefoundStart(rr, iogr) -> iar <= iogr
+
+[V.RefoundedPurchase.istante]
+ALL rr, iogr, irp    RefoundedPurchase(rr) & RefoundStart(rr, iogr) & RefoundEnd(rr, irp) -> iogr <= irp
+
+[V.CanceledPurchase.istante]
+ALL pu, icp, ipu    Purchase(pu) & cancelInstant(cp, icp) & purchaseInstant(cp, ipu) -> ipu <= icp
+
+[V.RefoundedProducts.QuantityConsistency]
+ALL pr, pu, q    Purchase(pu) & orderedProducts(pu, pr) & quantity(pu, pr, q) -> q >= sumOfRefoundedProductsPerPurchase(pu, pr)
+
+[V.Purchase.disjunction]
+ALL pu, ad    Purchase(pu) & drequest(pu, ad) -> NOT EXISTS ci    cancelInstant(pu, ci)
+
+[V.OnGoingDelivery.disjunction]
+ALL ad, iogd, idp    AssignedDelivery(ad) & deliveryStart(ad, iogd) & deliveryEnd(ad, idp) -> NOT EXISTS ild    lostInstant(ad, ild)
+
+[V.AssignedDelivery.StateConsistency]
+ALL ad    AssignedDelivery(ad) -> (NOT EXISTS idp, ild, iogd deliveryEnd(ad, idp) | lostInstant(ad, ild) | deliveryStart(ad, iogd)) <-> DeliveryState(ar, 'Assigned delivery')
+
+[V.OnGoingDelivery.StateConsistency]
+ALL ad    AssignedDelivery(ad) -> (EXISTS iogd deliveryStart(ad, iogd)) & (NOT EXISTS idp, ild deliveryEnd(ad, idp) | lostInstant(ad, ild)) <-> DeliveryState(ar, 'Ongoing delivery')
+
+[V.DeliveredPurchase.StateConsistency]
+ALL ad, iogd    AssignedDelivery(ad) -> (EXISTS idp, iogd deliveryStart(ad, iogd) & deliveryEnd(ar, idp)) <-> DeliveryState(ar, 'Delivered purchase')
+
+[V.LostDelivery.StateConsistency]
+ALL ad, iogd    AssignedDelivery(ad) -> (EXISTS iogd, ild lostInstant(ar, ild) & deliveryStart(ad, iogd)) <-> DeliveryState(ar, 'Losted delivery')
+
+[V.RefoundRequest.StateConsistency]
+ALL rr    RefoundRequest(rr) -> (NOT EXISTS iar, iogr, irf RefoundAssignmentInstant(rr, iar) | RefoundStart(rr, iogr) | RefoundEnd(rr, irf)) <-> RefoundState(rr, 'Refound Request sended')
+
+[V.AssignedRefound.StateConsistency]
+ALL rr    RefoundRequest(rr) -> (EXISTS iar RefoundAssignmentInstant(rr, iar)) & (NOT EXISTS iogr, irf RefoundStart(rr, iogr) | RefoundEnd(rr, irf)) <-> RefoundState(rr, 'Assigned refound')
+
+[V.OnGoingRefound.StateConsistency]
+ALL rr    RefoundRequest(rr) -> (EXISTS iar, iogr RefoundAssignmentInstant(rr, iar) & RefoundStart(rr, iogr)) & (NOT EXISTS irf RefoundEnd(rr, irf)) <-> RefoundState(rr, 'Ongoing refound')
+
+[V.RefoundedPurchase.StateConsistency]
+ALL rr    RefoundRequest(rr) -> (EXISTS iar, iogr, irf RefoundAssignmentInstant(rr, iar) & RefoundStart(rr, iogr) & RefoundEnd(rr, irf)) <-> RefoundState(rr, 'Arrived refound')
