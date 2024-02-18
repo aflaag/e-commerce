@@ -5,9 +5,15 @@ sumOfRestock(pr: Product, ipu: datetime): int {
 }
 
 sumOfSoldProducts(pr: Product, ipu: datetime): int {
-    S := { (pu, q_diff) | EXISTS ipu_older    Purchase(pu) & quantity(pr, pu, q) & purchaseInstant(pu, ipu_older) & ipu_older < ipu & q = q_diff & (EXISTS q_ref, ref    RefoundRequest(ref) & RefoundedProducts(pr, pu, ref) -> q_diff = q - d_ref))} // TODO: O DEVI RIFA PERCHÉ COSI È SEMPRE VUOTO STO COSO
+    S := { (pu, q_diff) | EXISTS ipu_older    Purchase(pu) & quantity(pr, pu, q) & purchaseInstant(pu, ipu_older) & ipu_older < ipu }
 
     return sum_R (q_diff)
+}
+
+sumOfRefoundedProductsPerPurchase(pu: Purchase, pr: Product): int {
+    S := { (rf, q) | refoundedProducts(rf, pr) & quantity(rf, pr, q) & request(rf, pu) } UNION {(NULL, 0)}
+
+    return sum_R (q)
 }
 
 [V.Purchase.restockDisponibile]
@@ -18,9 +24,6 @@ ALL pr, cu    Product(pr) & Customer(cu) & rating(pr, cu) -> EXISTS pu    Purcha
 
 [V.Card.cardAssociata]
 ALL pu, ca, cu    Purchase(pu) & payment(pu, c) & Card(ca) & Customer(cu) & makes(pu, cu) -> customerCards(cu, ca)
-
-[V.Purchase.quantitaConsistente]
-ALL pu, pr, q_tot, q_ref    Product(pr) & Purchase(pu) & quantity(pu, pr, q_tot) & quantity(pr, pu, r_ref) -> q_ref <= q_tot
 
 [V.Address.indirizzoConsistente]
 ALL cu, pu, ad    Customer(cu) & Purchase(pu) & Address(ad) & makes(cu, pu) & purAdd(pu, ad) -> addCust(cu, ad)
@@ -57,3 +60,6 @@ ALL ogr, rp, iogr, irp    RefoundedPurchase(rp) & RefoundStart(ogr, iogr) & Refo
 
 [V.CanceledPurchase.istante]
 ALL cp, icp, ipu    CanceledPurchase(cp) & cancelInstant(cp, icp) & purchaseInstant(cp, ipu) -> ipu <= icp
+
+[V.RefoundedProducts.QuantityConsistency]
+ALL pr, pu, q    Purchase(pu) & orderedProducts(pu, pr) & quantity(pu, pr, q) -> q >= sumOfRefoundedProductsPerPurchase(pu, pr)
