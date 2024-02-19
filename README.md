@@ -56,6 +56,7 @@
         - [x] feedback prodotti
         - [x] registrazione carte
         - [x] registrazione indirizzi
+        - [x] vedere i propri ordini
     - [x] fornitori
         - [x] registrazione fornitore
         - [x] gestione prodotti
