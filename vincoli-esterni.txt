@@ -28,9 +28,6 @@ ALL pu, ca, cu    Purchase(pu) & payment(pu, ca) & Card(ca) & Customer(cu) & mak
 [V.Address.indirizzoConsistente]
 ALL cu, pu, ad    Customer(cu) & Purchase(pu) & Address(ad) & makes(cu, pu) & purAdd(pu, ad) -> addCust(cu, ad)
 
-[V.Tariff.tariffeRimosse]
-EXISTS t    Tariff(t) & not RemovedTariff(t) -> not EXISTS t'    Tariff(t') & not RemovedTariff(t') & t != t'
-
 [V.RefoundRequest.prodottiConsistenti]
 ALL dp, pr, ref    Product(pr) & DeliveredPurchase(dp) & RefoundRequest(ref) & RefoundedProducts(pr, ref) & request(ref, dp) -> orderedProducts(pr, pu) 
 
@@ -61,5 +58,5 @@ ALL ogr, rp, iogr, irp    RefoundedPurchase(rp) & RefoundStart(ogr, iogr) & Refo
 [V.CanceledPurchase.istante]
 ALL cp, icp, ipu    CanceledPurchase(cp) & cancelInstant(cp, icp) & purchaseInstant(cp, ipu) -> ipu <= icp
 
-[V.RefoundedProducts.QuantityConsistency]
+[V.RefoundedProducts.quantitaConsistente]
 ALL pr, pu, q    Purchase(pu) & orderedProducts(pu, pr) & quantity(pu, pr, q) -> q >= sumOfRefoundedProductsPerPurchase(pu, pr)

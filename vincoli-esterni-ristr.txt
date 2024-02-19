@@ -28,9 +28,6 @@ ALL pu, ca, cu    Purchase(pu) & payment(pu, ca) & Card(ca) & Customer(cu) & mak
 [V.Address.indirizzoConsistente]
 ALL cu, pu, ad    Customer(cu) & Purchase(pu) & Address(ad) & makes(cu, pu) & purAdd(pu, ad) -> addCust(cu, ad)
 
-[V.Tariff.tariffeRimosse]
-EXISTS t    Tariff(t) & IsRemoved(t, False) -> not EXISTS t'    Tariff(t') & IsRemoved(t, False) & t != t'
-
 [V.RefoundRequest.prodottiConsistenti]
 ALL ad, pr, ref    Product(pr) & AssignedDelivery(dp) & RefoundRequest(ref) & RefoundedProducts(pr, ref) & request(ref, ad) -> EXISTS pu    orderedProducts(pr, pu) & drequest(pu, ad) 
 
