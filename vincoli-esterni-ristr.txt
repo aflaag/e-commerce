@@ -74,10 +74,10 @@ ALL ad    AssignedDelivery(ad) -> (NOT EXISTS idp, ild, iogd deliveryEnd(ad, idp
 ALL ad    AssignedDelivery(ad) -> (EXISTS iogd deliveryStart(ad, iogd)) & (NOT EXISTS idp, ild deliveryEnd(ad, idp) | lostInstant(ad, ild)) <-> DeliveryState(ar, 'Ongoing delivery')
 
 [V.DeliveredPurchase.StateConsistency]
-ALL ad, iogd    AssignedDelivery(ad) -> (EXISTS idp, iogd deliveryStart(ad, iogd) & deliveryEnd(ar, idp)) <-> DeliveryState(ar, 'Delivered purchase')
+ALL ad, iogd    AssignedDelivery(ad) -> (EXISTS idp, iogd deliveryStart(ad, iogd) & deliveryEnd(ar, idp) & (NOT EXISTS ild lostInstant(ad, ild))) <-> DeliveryState(ar, 'Delivered purchase')
 
 [V.LostDelivery.StateConsistency]
-ALL ad, iogd    AssignedDelivery(ad) -> (EXISTS iogd, ild lostInstant(ar, ild) & deliveryStart(ad, iogd)) <-> DeliveryState(ar, 'Losted delivery')
+ALL ad, iogd    AssignedDelivery(ad) -> (EXISTS iogd, ild lostInstant(ar, ild) & deliveryStart(ad, iogd) & (NOT EXISTS idp deliveryEnd(ad, idp))) <-> DeliveryState(ar, 'Losted delivery')
 
 [V.RefoundRequest.StateConsistency]
 ALL rr    RefoundRequest(rr) -> (NOT EXISTS iar, iogr, irf RefoundAssignmentInstant(rr, iar) | RefoundStart(rr, iogr) | RefoundEnd(rr, irf)) <-> RefoundState(rr, 'Refound Request sended')
