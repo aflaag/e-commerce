@@ -139,7 +139,10 @@ CREATE TABLE IF NOT EXISTS AssignedDelivery (
         purchase integer NOT NULL UNIQUE,
 
         CONSTRAINT fk_assigneddelivery_courier FOREIGN KEY (courier) REFERENCES Courier(business_name),
-        CONSTRAINT fk_assigneddelivery_purchase FOREIGN KEY (purchase) REFERENCES Purchase(id)
+        CONSTRAINT fk_assigneddelivery_purchase FOREIGN KEY (purchase) REFERENCES Purchase(id),
+        CONSTRAINT delivery_start CHECK (delivery_start is NULL or delivery_start >= delivery_assignment_instant),
+        CONSTRAINT lost_instant CHECK (lost_instant is NULL or delivery_start is NULL or lost_instant >= delivery_start)
+
 );
 
 CREATE TABLE IF NOT EXISTS RefundRequest (
