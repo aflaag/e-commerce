@@ -23,9 +23,9 @@ INSERT INTO City (name, country) VALUES
     ('Barcelona', 'Spain') ;
 
 INSERT INTO Customer (email, name, surname, phone_number) VALUES
-    ('user1@gmail.com', 'user1', '+1 5551234'),
-    ('user2@gmail.com', 'user2', '+44 2012345678'),
-    ('user3@gmail.com', 'user3', '+1 4165557890') ;
+    ('user1@gmail.com', 'user1', 'boh', '+15551234'),
+    ('user2@gmail.com', 'user2', 'boh', '+442012345678'),
+    ('user3@gmail.com', 'user3', 'boh', '+14165557890') ;
 
 INSERT INTO Supplier (business_name)
 VALUES
