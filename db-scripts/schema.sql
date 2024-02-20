@@ -17,7 +17,7 @@ CREATE DOMAIN CardNumber AS VARCHAR(20) CHECK (VALUE ~* E'^[0-9]{13,19}$');
 CREATE DOMAIN Stars AS integer CHECK (VALUE >= 1 AND VALUE <= 5);
 
 CREATE TYPE DeliveryState AS ENUM ('Assigned', 'OnGoing', 'Lost', 'Delivered');
-CREATE TYPE RefundState AS ENUM ('Assigned', 'OnGoing', 'Refunded');
+CREATE TYPE RefundState AS ENUM ('Requested', 'Assigned', 'OnGoing', 'Refunded');
 
 CREATE TABLE IF NOT EXISTS Country (
         name StringS NOT NULL PRIMARY KEY
@@ -110,7 +110,8 @@ CREATE TABLE IF NOT EXISTS Purchase (
 
         CONSTRAINT fk_purchase_customer FOREIGN KEY (customer) REFERENCES Customer(email),
         CONSTRAINT fk_purchase_card FOREIGN KEY (card) REFERENCES Card(number),
-        CONSTRAINT fk_purchase_address FOREIGN KEY (zip_code, street, street_number) REFERENCES Address(zip_code, street, street_number)
+        CONSTRAINT fk_purchase_address FOREIGN KEY (zip_code, street, street_number) REFERENCES Address(zip_code, street, street_number),
+        CONSTRAINT cancel_instant_after_purchase CHECK (cancel_instant IS NULL OR cancel_instant >= purchase_instant)
 );
 
 CREATE TABLE IF NOT EXISTS OrderedProducts (
@@ -140,9 +141,23 @@ CREATE TABLE IF NOT EXISTS AssignedDelivery (
 
         CONSTRAINT fk_assigneddelivery_courier FOREIGN KEY (courier) REFERENCES Courier(business_name),
         CONSTRAINT fk_assigneddelivery_purchase FOREIGN KEY (purchase) REFERENCES Purchase(id),
-        CONSTRAINT delivery_start CHECK (delivery_start is NULL or delivery_start >= delivery_assignment_instant),
-        CONSTRAINT lost_instant CHECK (lost_instant is NULL or delivery_start is NULL or lost_instant >= delivery_start)
 
+        CONSTRAINT delivery_start_after_assignment CHECK (delivery_start IS NULL OR delivery_start >= delivery_assignment_instant),
+        CONSTRAINT lost_after_delivery_start CHECK (lost_instant IS NULL OR lost_instant >= delivery_start),
+        CONSTRAINT delivery_end_after_delivery_start CHECK (delivery_end IS NULL OR delivery_end >= delivery_start),
+        CONSTRAINT ongoing_lost_delivery_disjunction CHECK (delivery_end IS NULL OR lost_instant IS NULL),
+        
+        CONSTRAINT assigned_delivery_status1 CHECK (delivery_start IS NOT NULL OR delivery_end IS NOT NULL OR lost_instant IS NOT NULL OR delivery_state = 'Assigned'),
+        CONSTRAINT assigned_delivery_status2 CHECK (delivery_state != 'Assigned' OR (delivery_start IS NULL AND delivery_end IS NULL AND lost_instant IS NULL)),
+        
+        CONSTRAINT ongoing_delivery_status1 CHECK (delivery_start IS NULL OR delivery_end IS NOT NULL OR lost_instant IS NOT NULL OR delivery_state = 'OnGoing'),
+        CONSTRAINT ongoing_delivery_status2 CHECK (delivery_state != 'OnGoing' OR (delivery_start IS NOT NULL AND delivery_end IS NULL AND lost_instant IS NULL)),
+        
+        CONSTRAINT delivered_delivery_status1 CHECK (delivery_start IS NULL OR delivery_end IS NULL OR lost_instant IS NOT NULL OR delivery_state = 'Delivered'),
+        CONSTRAINT delivered_delivery_status2 CHECK (delivery_state != 'Delivered' OR (delivery_start IS NOT NULL AND delivery_end IS NOT NULL AND lost_instant IS NULL)),
+
+        CONSTRAINT lost_delivery_status1 CHECK (delivery_start IS NULL OR delivery_end IS NOT NULL OR lost_instant IS NULL OR delivery_state = 'Lost'),
+        CONSTRAINT lost_delivery_status2 CHECK (delivery_state != 'Lost' OR (delivery_start IS NOT NULL AND delivery_end IS NULL AND lost_instant IS NOT NULL))
 );
 
 CREATE TABLE IF NOT EXISTS RefundRequest (
@@ -152,11 +167,27 @@ CREATE TABLE IF NOT EXISTS RefundRequest (
         refund_start timestamp,
         refund_end timestamp,
         refund_state RefundState NOT NULL,
-        assigned_delivery StringS NOT NULL,
+        assigned_delivery StringS,
         courier StringS UNIQUE,
 
         CONSTRAINT fk_refundrequest_assigneddelivery FOREIGN KEY (assigned_delivery) REFERENCES AssignedDelivery(delivery_code),
-        CONSTRAINT fk_refundrequest_courier FOREIGN KEY (courier) REFERENCES Courier(business_name)
+        CONSTRAINT fk_refundrequest_courier FOREIGN KEY (courier) REFERENCES Courier(business_name),
+        CONSTRAINT assigned_delivery_instant CHECK ((assigned_delivery IS NULL AND refund_assignment_instant IS NULL) OR (assigned_delivery IS NOT NULL AND refund_assignment_instant IS NOT NULL)), 
+        CONSTRAINT refund_assignment_after_request_instant CHECK (refund_assignment_instant IS NULL OR refund_assignment_instant >= request_instant),
+        CONSTRAINT refund_start_after_refund_assignment CHECK (refund_start IS NULL OR refund_start >= refund_assignment_instant),
+        CONSTRAINT refund_end_after_refund_start CHECK (refund_end IS NULL OR refund_end >= refund_start),
+
+        CONSTRAINT requested_refund_status1 CHECK (refund_assignment_instant IS NOT NULL OR refund_start IS NOT NULL OR refund_end IS NOT NULL OR refund_state = 'Requested'),
+        CONSTRAINT requested_refund_status2 CHECK (refund_state != 'Requested' OR (refund_assignment_instant IS NULL AND refund_start IS NULL AND refund_end IS NULL )),
+
+        CONSTRAINT assigned_refund_status1 CHECK (refund_assignment_instant IS NULL OR refund_start IS NOT NULL OR refund_end IS NOT NULL OR refund_state = 'Assigned'),
+        CONSTRAINT assigned_refund_status2 CHECK (refund_state != 'Assigned' OR (refund_assignment_instant IS NOT NULL AND refund_start IS NULL AND refund_end IS NULL )),
+
+        CONSTRAINT ongoing_refund_status1 CHECK (refund_assignment_instant IS NULL OR refund_start IS NULL OR refund_end IS NOT NULL OR refund_state = 'OnGoing'),
+        CONSTRAINT ongoing_refund_status2 CHECK (refund_state != 'OnGoing' OR (refund_assignment_instant IS NOT NULL AND refund_start IS NOT NULL AND refund_end IS NULL )),
+
+        CONSTRAINT refunfef_refund_status1 CHECK (refund_assignment_instant IS NULL OR refund_start IS NULL OR refund_end IS NULL OR refund_state = 'Refunded'),
+        CONSTRAINT refunded_refund_status2 CHECK (refund_state != 'Requested' OR (refund_assignment_instant IS NULL AND refund_start IS NULL AND refund_end IS NULL))
 );
 
 CREATE TABLE IF NOT EXISTS RefundedProduct (
