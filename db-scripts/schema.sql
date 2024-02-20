@@ -119,7 +119,6 @@ CREATE TABLE IF NOT EXISTS OrderedProducts (
         purchase integer NOT NULL,
         quantity IntGZ NOT NULL,
 
-        -- TODO: MANCA IL VINCOLO DI INCLUSIONE, CERCA COME SI FA
         PRIMARY KEY (product, purchase),
         CONSTRAINT fk_orderedproducts_product FOREIGN KEY (product) REFERENCES Product(code),
         CONSTRAINT fk_orderedproduct_purchase FOREIGN KEY (purchase) REFERENCES Purchase(id)
@@ -195,7 +194,6 @@ CREATE TABLE IF NOT EXISTS RefundedProduct (
         product StringS NOT NULL,
         quantity IntGZ NOT NULL,
 
-        -- TODO: MANCA IL VINCOLO DI INCLUSIONE
         PRIMARY KEY (refund_request, product),
         CONSTRAINT fk_refundedproduct_refundrequest FOREIGN KEY (refund_request) REFERENCES RefundRequest(id),
         CONSTRAINT fk_refundedproduct_product FOREIGN KEY (product) REFERENCES Product(code)
