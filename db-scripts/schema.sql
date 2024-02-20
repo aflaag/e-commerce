@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS Card (
         number CardNumber NOT NULL PRIMARY KEY,
         customer Email NOT NULL,
 
-        CONSTRAINT fk_card_customer FOREIGN KEY (customer) REFERENCES Customer(email),
+        CONSTRAINT fk_card_customer FOREIGN KEY (customer) REFERENCES Customer(email)
 );
 
 CREATE TABLE IF NOT EXISTS Supplier (
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS Product (
         name StringS NOT NULL,
         description StringL NOT NULL,
         price RealGEZ NOT NULL
-),
+);
 
 CREATE TABLE IF NOT EXISTS Restock (
         id SERIAL PRIMARY KEY,
@@ -136,10 +136,10 @@ CREATE TABLE IF NOT EXISTS AssignedDelivery (
         delivery_state DeliveryState NOT NULL,
         lost_instant timestamp,
         courier StringS NOT NULL,
-        purchase StringS NOT NULL UNIQUE,
+        purchase integer NOT NULL UNIQUE,
 
         CONSTRAINT fk_assigneddelivery_courier FOREIGN KEY (courier) REFERENCES Courier(business_name),
-        CONSTRAINT fk_assigneddelivery_purchase FOREIGN KEY (purchase) REFERENCES Purchase(code)
+        CONSTRAINT fk_assigneddelivery_purchase FOREIGN KEY (purchase) REFERENCES Purchase(id)
 );
 
 CREATE TABLE IF NOT EXISTS RefundRequest (
@@ -158,11 +158,11 @@ CREATE TABLE IF NOT EXISTS RefundRequest (
 
 CREATE TABLE IF NOT EXISTS RefundedProduct (
         refund_request integer NOT NULL,
-        product StirngS NOT NULL,
+        product StringS NOT NULL,
         quantity IntGZ NOT NULL,
 
         -- TODO: MANCA IL VINCOLO DI INCLUSIONE
         PRIMARY KEY (refund_request, product),
         CONSTRAINT fk_refundedproduct_refundrequest FOREIGN KEY (refund_request) REFERENCES RefundRequest(id),
-        CONSTRAINT fk_refundedproduct_product FOREIGN KEY (product) REFERENCES Product(code),
+        CONSTRAINT fk_refundedproduct_product FOREIGN KEY (product) REFERENCES Product(code)
 );
