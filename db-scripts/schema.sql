@@ -1,19 +1,20 @@
 \c :dbname 
 
-CREATE domain StringS as VARCHAR(50);
-CREATE domain StringM as VARCHAR(100);
-CREATE domain StringL as VARCHAR(200);
+CREATE DOMAIN StringS AS VARCHAR(50);
+CREATE DOMAIN StringM AS VARCHAR(100);
+CREATE DOMAIN StringL AS VARCHAR(200);
 
-CREATE domain IntGZ as integer CHECK (VALUE > 0);
-CREATE domain IntGEZ as integer CHECK (VALUE >= 0);
+CREATE DOMAIN IntGZ AS integer CHECK (VALUE > 0);
+CREATE DOMAIN IntGEZ AS integer CHECK (VALUE >= 0);
 
-CREATE domain RealGZ as real CHECK (VALUE > 0);
-CREATE domain RealGEZ as real CHECK (VALUE >= 0);
+CREATE DOMAIN RealGZ AS real CHECK (VALUE > 0);
+CREATE DOMAIN RealGEZ AS real CHECK (VALUE >= 0);
 
-CREATE domain Email as StringS; -- TODO:
-CREATE domain PhoneNumber as Strings; -- TODO:
-CREATE domain CardNumber as Strings; -- TODO:
-CREATE domain Stars as integer CHECK (VALUE >= 1 AND VALUE <= 5);
+CREATE DOMAIN Email AS VARCHAR(255) CHECK (VALUE ~* E'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$');
+CREATE DOMAIN PhoneNumber AS VARCHAR(20) CHECK (VALUE ~* E'^\\+?[0-9-]+[0-9]+$');
+CREATE DOMAIN CardNumber AS VARCHAR(20) CHECK (VALUE ~* E'^[0-9]{13,19}$');
+
+CREATE DOMAIN Stars AS integer CHECK (VALUE >= 1 AND VALUE <= 5);
 
 CREATE TYPE DeliveryState AS ENUM ('Assigned', 'OnGoing', 'Lost', 'Delivered');
 CREATE TYPE RefundState AS ENUM ('Assigned', 'OnGoing', 'Refunded');
