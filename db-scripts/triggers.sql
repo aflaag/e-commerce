@@ -194,3 +194,63 @@ $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER refunded_products_quantity_consistency_trg
 AFTER INSERT ON RefundedProduct FOR EACH ROW EXECUTE FUNCTION refunded_products_quantity_consistency();
+
+--[V.Purchase.restockDisponibile]
+CREATE OR REPLACE FUNCTION ordered_product_quantity_consistency() RETURNS TRIGGER AS $$
+BEGIN
+    IF (
+        WITH restock_quantity AS (
+            SELECT SUM(quantity) AS quantity
+            FROM Restock
+            WHERE product = NEW.product
+        )
+        SELECT SUM(DISTINCT rq.quantity) >= SUM(op.quantity)
+        FROM OrderedProducts AS op, restock_quantity as rq
+        WHERE op.product = NEW.product
+    ) IS FALSE THEN
+        RAISE EXCEPTION 'invalid quantity for order request';
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER ordered_product_quantity_consistency_trg
+AFTER INSERT ON OrderedProducts FOR EACH ROW EXECUTE FUNCTION ordered_product_quantity_consistency();
+
+-- inclusion RefundedProduct
+CREATE OR REPLACE FUNCTION inclusion_refunded_products() RETURNS TRIGGER AS $$
+BEGIN
+
+    IF EXISTS (
+        SELECT 1 
+        FROM RefundedProduct
+        WHERE refund_request = NEW.id
+    ) IS FALSE THEN
+        RAISE EXCEPTION 'no product included';
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER inclusion_refunded_products_trg
+AFTER INSERT ON RefundRequest FOR EACH ROW EXECUTE FUNCTION inclusion_refunded_products();
+
+-- inclusion OrderedProducts
+CREATE OR REPLACE FUNCTION inclusion_ordered_products() RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS (
+        SELECT 1 
+        FROM OrderedProducts
+        WHERE NEW.id = purchase
+    ) IS FALSE THEN
+        RAISE EXCEPTION 'no product included';
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER inclusion_ordered_products_trg
+AFTER INSERT ON Purchase FOR EACH ROW EXECUTE FUNCTION inclusion_ordered_products();
