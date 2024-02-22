@@ -44,6 +44,7 @@ VALUES
 INSERT INTO Restock (quantity, supplier, product)
 VALUES
     (100, 'Supplier1', 'P1'),
+    (100, 'Supplier1', 'P1'),
     (50, 'Supplier2', 'P2'),
     (75, 'Supplier3', 'P3'),
     (40, 'Supplier4', 'P4'),
