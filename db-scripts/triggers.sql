@@ -31,7 +31,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE TRIGGER consistent_card
+CREATE TRIGGER consistent_card_trg
 AFTER INSERT ON Purchase FOR EACH ROW EXECUTE FUNCTION consistent_card();
 
 -- [V.Address.indirizzoConsistente]
@@ -55,7 +55,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE TRIGGER consistent_address
+CREATE TRIGGER consistent_address_trg
 AFTER INSERT ON Purchase FOR EACH ROW EXECUTE FUNCTION consistent_address();
 
 -- [V.Customer.ratingProdottiAcquistati]
@@ -79,5 +79,24 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE TRIGGER consistent_rating
+CREATE TRIGGER consistent_rating_trg
 AFTER INSERT ON rating FOR EACH ROW EXECUTE FUNCTION consistent_rating();
+
+-- [V.AssignedDelivery.istante]
+CREATE OR REPLACE FUNCTION consistent_assignementdelivery_instant() RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS (
+        SELECT 1 FROM Purchase
+        WHERE NEW.purchase = Purchase.id
+        AND NEW.delivery_assignment_instant >= Purchase.purchase_instant
+        AND Purchase.cancel_instant IS NULL
+    ) IS FALSE THEN
+        RAISE EXCEPTION 'invalid assignement instant';
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER consistent_assignementdelivery_instant_trg
+AFTER INSERT ON AssignedDelivery FOR EACH ROW EXECUTE FUNCTION consistent_assignementdelivery_instant();

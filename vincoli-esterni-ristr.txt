@@ -32,7 +32,7 @@ ALL cu, pu, ad    Customer(cu) & Purchase(pu) & Address(ad) & makes(cu, pu) & pu
 ALL ad, pr, ref    Product(pr) & AssignedDelivery(dp) & RefoundRequest(ref) & RefoundedProducts(pr, ref) & request(ref, ad) -> EXISTS pu    orderedProducts(pr, pu) & drequest(pu, ad) 
 
 [V.AssignedDelivery.istante]
-ALL pu, ad, ipu, iad    AssignedDelivery(ad) & drequest(ad, pu) & purchaseInstant(pu, ipu) & deliveryAssignmentInstant(ad, iad) -> ipu <= iad
+ALL pu, ad, ipu, iad    AssignedDelivery(ad) & drequest(ad, pu) & purchaseInstant(pu, ipu) & deliveryAssignmentInstant(ad, iad) & (NOT EXISTS ic cancelInstant(pu, ic)) -> ipu <= iad
 
 [V.OnGoingDelivery.istante]
 ALL ad, iad, iogd    AssignedDelivery(ad) & deliveryAssignmentInstant(ad, iad) & deliveryStart(ad, iogd) -> iad <= iogd
