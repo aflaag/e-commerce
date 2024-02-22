@@ -168,14 +168,14 @@ AFTER INSERT ON RefundedProduct FOR EACH ROW EXECUTE FUNCTION refunded_products_
 --                  q >= sumOfRefoundedProductsPerPurchase(pu, pr)
 CREATE OR REPLACE FUNCTION refunded_products_quantity_consistency() RETURNS TRIGGER AS $$
 BEGIN
-    IF EXISTS (
+    IF (
         WITH purchase_id AS (
             SELECT ad.purchase AS id
             FROM RefundRequest AS rr, AssignedDelivery AS ad
             WHERE NEW.refund_request = rr.id
             AND rr.assigned_delivery = ad.delivery_code
         )
-        SELECT purchase_id.id
+        SELECT SUM(op.quantity) >= SUM(rp.quantity)
         FROM RefundRequest AS rr, 
              AssignedDelivery AS ad,
              OrderedProducts as op,
@@ -187,8 +187,6 @@ BEGIN
         AND rr.id = rp.refund_request
         AND rr.assigned_delivery = ad.delivery_code
         AND ad.purchase = purchase_id.id
-        GROUP BY purchase_id.id
-        HAVING SUM(op.quantity) >= SUM(rp.quantity)
     ) IS FALSE THEN
         RAISE EXCEPTION 'invalid quantity refund request';
     END IF;

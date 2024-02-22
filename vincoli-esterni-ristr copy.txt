@@ -19,17 +19,8 @@ sumOfRefoundedProductsPerPurchase(pu: Purchase, pr: Product): int {
 [V.Purchase.restockDisponibile]
 ALL pr, pu, ipu, q   Purchase(pu) & Product(pr) & purchaseInstant(pu, ipu) & quantity(pr, pu, q) -> q <= sumOfRestock(pr, ipu) - sumOfSoldProducts(pr, ipu)
 
-[V.RefoundRequest.prodottiConsistenti]
-ALL ad, pr, ref    Product(pr) & AssignedDelivery(dp) & RefoundRequest(ref) & RefoundedProducts(pr, ref) & request(ref, ad) -> EXISTS pu    orderedProducts(pr, pu) & drequest(pu, ad) 
-
-[V.RefoundRequest.istante]
-ALL ad, rr, idp, irr    RefoundRequest(rr) & AssignedDelivery(ad) & requestInstant(rr, irr) & deliveryEnd(ad, idp) & request(rr, ad) -> idp <= irr
-
 [V.RefoundedProducts.QuantityConsistency]
 ALL pr, pu, q    Purchase(pu) & orderedProducts(pu, pr) & quantity(pu, pr, q) -> q >= sumOfRefoundedProductsPerPurchase(pu, pr)
-
-[V.Purchase.disjunction]
-ALL pu, ad    Purchase(pu) & drequest(pu, ad) -> NOT EXISTS ci    cancelInstant(pu, ci)
 
 inclusione RefundedProduct
 inclusione OrderedProducts
