@@ -100,3 +100,104 @@ $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER consistent_assignementdelivery_instant_trg
 AFTER INSERT ON AssignedDelivery FOR EACH ROW EXECUTE FUNCTION consistent_assignementdelivery_instant();
+
+
+-- [V.RefundRequest.istante]
+CREATE OR REPLACE FUNCTION consistent_refund_request_instant() RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS (
+        SELECT 1 
+        FROM AssignedDelivery
+        WHERE NEW.assigned_delivery = delivery_code
+        AND NEW.request_instant >= delivery_end
+    ) IS FALSE THEN
+        RAISE EXCEPTION 'invalid refund instant';
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER consistent_refund_request_instant_trg
+AFTER INSERT ON RefundRequest FOR EACH ROW EXECUTE FUNCTION consistent_refund_request_instant();
+
+-- [V.Purchase.disjunction]
+CREATE OR REPLACE FUNCTION purchase_disjunction() RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS (
+        SELECT 1 
+        FROM AssignedDelivery
+        WHERE NEW.cancel_instant IS NOT NULL
+        AND NEW.id = purchase
+    ) IS TRUE THEN
+        RAISE EXCEPTION 'invalid cancel request';
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER purchase_disjunction_trg
+AFTER UPDATE ON Purchase FOR EACH ROW EXECUTE FUNCTION purchase_disjunction();
+
+-- [V.RefoundRequest.prodottiConsistenti]
+CREATE OR REPLACE FUNCTION refunded_products_consistency() RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS (
+        SELECT 1 
+        FROM RefundRequest AS rr, AssignedDelivery AS ad, Purchase AS p, OrderedProducts as op
+        WHERE NEW.refund_request = rr.id 
+        AND rr.assigned_delivery = ad.delivery_code
+        AND ad.purchase = p.id
+        AND op.purchase = p.id
+        AND op.product = NEW.product
+    ) IS FALSE THEN
+        RAISE EXCEPTION 'invalid refund request';
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER refunded_products_consistency_trg
+AFTER INSERT ON RefundedProduct FOR EACH ROW EXECUTE FUNCTION refunded_products_consistency();
+
+-- [V.RefoundedProducts.QuantityConsistency]
+-- ALL pr, pu, q    Purchase(pu) & orderedProducts(pu, pr) & 
+--                  quantity(pu, pr, q) -> 
+--                  q >= sumOfRefoundedProductsPerPurchase(pu, pr)
+CREATE OR REPLACE FUNCTION refunded_products_quantity_consistency() RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS (
+        WITH purchase_id AS (
+            SELECT ad.purchase AS id
+            FROM RefundRequest AS rr, AssignedDelivery AS ad
+            WHERE NEW.refund_request = rr.id
+            AND rr.assigned_delivery = ad.delivery_code
+        )
+        SELECT purchase_id.id
+        FROM RefundRequest AS rr, 
+             AssignedDelivery AS ad,
+             OrderedProducts as op,
+             RefundedProduct as rp,
+             purchase_id
+        WHERE NEW.product = op.product
+        AND NEW.product = rp.product
+        AND op.purchase = purchase_id.id
+        AND rr.id = rp.refund_request
+        AND rr.assigned_delivery = ad.delivery_code
+        AND ad.purchase = purchase_id.id
+        GROUP BY purchase_id.id
+        HAVING SUM(op.quantity) >= SUM(rp.quantity)
+    ) IS FALSE THEN
+        RAISE EXCEPTION 'invalid quantity refund request';
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER refunded_products_quantity_consistency_trg
+AFTER INSERT ON RefundedProduct FOR EACH ROW EXECUTE FUNCTION refunded_products_quantity_consistency();
+
+
