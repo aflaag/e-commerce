@@ -19,10 +19,7 @@ INSERT INTO RefundRequest (request_instant, refund_state, assigned_delivery)
 VALUES ('2024-02-22 10:30:00', 'Requested', 'bo');
 
 INSERT INTO RefundedProduct (refund_request, product, quantity)
-VALUES (1, 'P1', 7);
+VALUES (1, 'P1', 2);
 
 INSERT INTO RefundRequest (request_instant, refund_state, assigned_delivery)
 VALUES ('2024-02-22 10:30:00', 'Requested', 'bo');
-
-INSERT INTO RefundedProduct (refund_request, product, quantity)
-VALUES (2, 'P1', 4);

@@ -163,30 +163,21 @@ CREATE TRIGGER refunded_products_consistency_trg
 AFTER INSERT ON RefundedProduct FOR EACH ROW EXECUTE FUNCTION refunded_products_consistency();
 
 -- [V.RefoundedProducts.QuantityConsistency]
--- ALL pr, pu, q    Purchase(pu) & orderedProducts(pu, pr) & 
---                  quantity(pu, pr, q) -> 
---                  q >= sumOfRefoundedProductsPerPurchase(pu, pr)
 CREATE OR REPLACE FUNCTION refunded_products_quantity_consistency() RETURNS TRIGGER AS $$
 BEGIN
     IF (
-        WITH purchase_id AS (
-            SELECT ad.purchase AS id
-            FROM RefundRequest AS rr, AssignedDelivery AS ad
-            WHERE NEW.refund_request = rr.id
+        SELECT SUM(DISTINCT op.quantity)>=SUM(rp.quantity)
+            FROM
+                OrderedProducts as op,
+                RefundRequest AS rr,
+                RefundedProduct AS rp,
+                AssignedDelivery as ad
+            WHERE NEW.product = op.product
+            AND op.purchase = ad.purchase
             AND rr.assigned_delivery = ad.delivery_code
-        )
-        SELECT SUM(op.quantity) >= SUM(rp.quantity)
-        FROM RefundRequest AS rr, 
-             AssignedDelivery AS ad,
-             OrderedProducts as op,
-             RefundedProduct as rp,
-             purchase_id
-        WHERE NEW.product = op.product
-        AND NEW.product = rp.product
-        AND op.purchase = purchase_id.id
-        AND rr.id = rp.refund_request
-        AND rr.assigned_delivery = ad.delivery_code
-        AND ad.purchase = purchase_id.id
+            AND rr.id = rp.refund_request
+            AND rp.product=NEW.product
+            GROUP BY op.purchase
     ) IS FALSE THEN
         RAISE EXCEPTION 'invalid quantity refund request';
     END IF;
@@ -197,5 +188,3 @@ $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER refunded_products_quantity_consistency_trg
 AFTER INSERT ON RefundedProduct FOR EACH ROW EXECUTE FUNCTION refunded_products_quantity_consistency();
-
-

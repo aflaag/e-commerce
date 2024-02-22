@@ -10,17 +10,8 @@ sumOfSoldProducts(pr: Product, ipu: datetime): int {
     return sum_R (q)
 }
 
-sumOfRefoundedProductsPerPurchase(pu: Purchase, pr: Product): int {
-    S := { (rf, q) | EXISTS ad    refoundedProducts(rf, pr) & quantity(rf, pr, q) & request(rf, ad) & drequest(pu, ad) } UNION {(NULL, 0)}
-
-    return sum_R (q)
-}
-
 [V.Purchase.restockDisponibile]
 ALL pr, pu, ipu, q   Purchase(pu) & Product(pr) & purchaseInstant(pu, ipu) & quantity(pr, pu, q) -> q <= sumOfRestock(pr, ipu) - sumOfSoldProducts(pr, ipu)
-
-[V.RefoundedProducts.QuantityConsistency]
-ALL pr, pu, q    Purchase(pu) & orderedProducts(pu, pr) & quantity(pu, pr, q) -> q >= sumOfRefoundedProductsPerPurchase(pu, pr)
 
 inclusione RefundedProduct
 inclusione OrderedProducts
