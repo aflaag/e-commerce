@@ -54,3 +54,9 @@ VALUES
     ('1234567890123456', 'user1@gmail.com'),
     ('9876543210987654', 'user2@gmail.com'),
     ('1111222233334444', 'user3@gmail.com');
+
+INSERT INTO Courier (business_name)
+VALUES
+    ('courier1'),
+    ('courier2'),
+    ('courier3');
