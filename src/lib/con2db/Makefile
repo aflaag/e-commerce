@@ -10,13 +10,10 @@ DEPS = $(wildcard *.h)
 objects := $(patsubst %.cpp,%.o,$(wildcard *.cpp))
 
 
-all:	 $(objects)
+all:	$(objects)
 
 %.o:	%.cpp $(DEPS) 
 	$(CC) -c -o $@ $< $(CPPFLAGS) 
 
 clear:
 	rm *.o 
-
-
-
