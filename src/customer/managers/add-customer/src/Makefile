@@ -23,7 +23,11 @@ con2db_OBJ=$(wildcard ../../../../lib/con2db/*.o)
 
 
 
-all:	con2db $(BDIR)/main
+all:	create_dirs con2db $(BDIR)/main
+
+create_dirs:
+	mkdir -p $(BDIR)
+	mkdir -p $(ODIR)
 
 con2db:
 	$(MAKE) -C ../../../../lib/con2db
