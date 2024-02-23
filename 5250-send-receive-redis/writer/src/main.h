@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <time.h>
 
-#include "con2redis.h"
+#include "../../../src/lib/con2redis/src/con2redis.h"
 
 int micro_sleep(long usec);
 
