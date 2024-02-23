@@ -1,2 +1,10 @@
-src/customer/managers/add-customer/bin
+src/courier/handler/*/bin
+src/courier/managers/*/bin
+
+src/supplier/handler/*/bin
+src/supplier/managers/*/bin
+
+src/customer/handler/*/bin
+src/customer/managers/*/bin
+
 *.o
