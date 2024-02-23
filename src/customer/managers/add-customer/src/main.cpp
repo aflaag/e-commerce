@@ -37,11 +37,9 @@ int main() {
 
     printf("test\n");
 
-    reply = RedisCommand(c2r, "XREADGROUP GROUP test_group Alice BLOCK 0 COUNT 1 STREAMS %s >", READ_STREAM);
+    reply = RedisCommand(c2r, "XREADGROUP GROUP diameter Alice BLOCK 0 COUNT 1 STREAMS %s >", READ_STREAM);
 
     assertReply(c2r, reply);
-    // dumpReply(reply, 0);
-    freeReplyObject(reply);
 
     printf("test\n");
 
