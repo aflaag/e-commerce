@@ -1,5 +1,5 @@
-#ifndef main_h
-#define main_h
+#ifndef read_stream_h
+#define read_stream_h
 
 // TODO: da filtrare
 #include <stdio.h>
@@ -15,10 +15,9 @@
 #include <cassert>
 #include <cerrno>
 
-#include "../../../../lib/con2db/pgsql.h"
 #include "../../../../lib/con2redis/src/con2redis.h"
-#include "test_stream.h"
 
 using namespace std;
 
+int add_to_stream();
 #endif

@@ -5,16 +5,8 @@
 int main() {
     redisContext *c2r;
     redisReply *reply;
-   int read_counter = 0;
-    int send_counter = 0;
-    int block = 1000000000;
-    int pid;
-    unsigned seed;
-    char username[100];
     char key[100];
     char value[100];
-    char streamname[100];
-    char msgid[100];
     int numstreams;
     int k, i, h;
     char fval[100];
@@ -28,41 +20,24 @@ int main() {
 
     // initialize stream
     initStreams(c2r, READ_STREAM);
+    
+    add_to_stream();
 
-    reply = RedisCommand(c2r, "XADD %s * cazzo palle", READ_STREAM);
-     //     reply = RedisCommand(c2r, "XADD %s * %s", WRITE_STREAM, msg);
-    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
-
-    freeReplyObject(reply);
-
-    printf("test\n");
-
-    reply = RedisCommand(c2r, "XREADGROUP GROUP diameter Alice BLOCK 0 COUNT 1 STREAMS %s >", READ_STREAM);
+    reply = RedisCommand(c2r, "XREADGROUP GROUP diameter Alice BLOCK 0 COUNT 4 STREAMS %s >", READ_STREAM);
 
     assertReply(c2r, reply);
 
-    printf("test\n");
+    for (k=0; k < ReadNumStreams(reply); k++) {
+        for (i=0; i < ReadStreamNumMsg(reply, k); i++) {
+	        for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h +=  2) {
+		        ReadStreamMsgVal(reply, k, i, h, key);
+                ReadStreamMsgVal(reply, k, i, h, value);
+                printf("key = %s, value = %s\n", key, value);
+		    }	      	      
+        }
+    }
 
- for (k=0; k < ReadNumStreams(reply); k++)
-   {
-     ReadStreamName(reply, streamname, k);
-   for (i=0; i < ReadStreamNumMsg(reply, k); i++)
-     {
-       ReadStreamNumMsgID(reply, k, i, msgid);
- 
-       printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n",
-	      pid, username, streamname,
-	      k, i, msgid,
-	      ReadStreamMsgNumVal(reply, k, i));
-	      for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
-		{
-		  ReadStreamMsgVal(reply, k, i, h, fval);
-		  printf("main(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
-		}	      	      
-     }
-   }
-
-    printf("test\n");
+    freeReplyObject(reply);
 
     // Con2DB db("localhost", "5432", "customer", "customer", "ecommerce");
 
