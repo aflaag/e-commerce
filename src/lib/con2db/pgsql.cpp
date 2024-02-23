@@ -132,3 +132,38 @@ PGresult* Con2DB::ExecSQLtuples(char *sqlcmd)
 
     return (res);
 }
+
+PGresult* Con2DB::RunQuery(char* query, bool is_tuples) {
+    PGresult* transaction_res;
+    PGresult* query_res;
+
+    char sqlCmd[7];
+
+    sprintf(sqlCmd, "BEGIN");
+    transaction_res = ExecSQLcmd(sqlCmd);
+
+    if (PQresultStatus(transaction_res) != PGRES_COMMAND_OK) {
+        return transaction_res; // not need to PQclear() and finish()
+    }
+
+    PQclear(transaction_res);
+
+    query_res = !is_tuples ? ExecSQLcmd(query) : ExecSQLtuples(query);
+
+    if (PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) {
+        return query_res; // not need to PQclear() and finish()
+    }
+
+    PQclear(query_res);
+
+    sprintf(sqlCmd, "COMMIT");
+    transaction_res = ExecSQLcmd(sqlCmd);
+
+    if (PQresultStatus(transaction_res) != PGRES_COMMAND_OK) {
+        return transaction_res; // not need to PQclear() and finish()
+    }
+
+    PQclear(transaction_res);
+    
+    return query_res;
+}
