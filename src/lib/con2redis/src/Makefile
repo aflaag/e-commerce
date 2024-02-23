@@ -24,7 +24,6 @@ OBJ = $(patsubst %.cpp, $(ODIR)/%.o, $(SRC))
 all:	create_dirs $(ODIR)/$(OBJ)
 
 create_dirs:
-	mkdir -p $(BDIR)
 	mkdir -p $(ODIR)
 
 $(ODIR)/%.o: %.cpp $(DEPS)
