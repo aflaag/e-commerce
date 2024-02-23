@@ -18,14 +18,15 @@ DEPS = $(wildcard $(IDIR)/*.h)
 SRC = $(wildcard *.cpp)
 OBJ = $(patsubst %.cpp, $(ODIR)/%.o, $(SRC))
 
-con2db_OBJ=$(wildcard ../../con2db/*.o)
+# con2db_OBJ=$(wildcard ../../con2db/*.o)
+con2db_OBJ=$(wildcard ../../../../lib/con2db/*.o)
 
 
 
 all:	con2db $(BDIR)/main
 
 con2db:
-	$(MAKE) -C ../../con2db
+	$(MAKE) -C ../../../../lib/con2db
 
 
 $(ODIR)/%.o: %.cpp $(DEPS)

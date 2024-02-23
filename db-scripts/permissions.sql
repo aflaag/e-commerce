@@ -48,3 +48,4 @@ GRANT SELECT, INSERT ON AddCust TO :customer ;
 GRANT SELECT, UPDATE ON Purchase TO :customer ;
 GRANT SELECT, INSERT ON Card TO :customer ;
 GRANT SELECT ON AssignedDelivery TO :customer ;
+GRANT INSERT ON Customer TO :customer ;

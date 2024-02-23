@@ -15,7 +15,7 @@
 #include <cerrno>
 
 #include "global.h"
-#include "../../con2db/pgsql.h"
+#include "../../../../lib/con2db/pgsql.h"
 
 #define DEBUG 1000
 
