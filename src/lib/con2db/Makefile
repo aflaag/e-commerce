@@ -15,5 +15,5 @@ all:	$(objects)
 %.o:	%.cpp $(DEPS) 
 	$(CC) -c -o $@ $< $(CPPFLAGS) 
 
-clear:
+clean:
 	rm *.o 
