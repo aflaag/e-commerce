@@ -90,7 +90,7 @@ PGresult* Con2DB::ExecSQLcmd(char *sqlcmd)
 	      PQresultErrorMessage(res) ) ;
            
         PQclear(res);
-        finish();
+        // finish();
     }    
 
 #if 0
@@ -143,7 +143,8 @@ PGresult* Con2DB::RunQuery(char* query, bool is_tuples) {
     transaction_res = ExecSQLcmd(sqlCmd);
 
     if (PQresultStatus(transaction_res) != PGRES_COMMAND_OK) {
-        return transaction_res; // not need to PQclear() and finish()
+        printf("CIAO1\n");
+        return transaction_res; // not need to PQclear()
     }
 
     PQclear(transaction_res);
@@ -151,7 +152,8 @@ PGresult* Con2DB::RunQuery(char* query, bool is_tuples) {
     query_res = !is_tuples ? ExecSQLcmd(query) : ExecSQLtuples(query);
 
     if (PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) {
-        return query_res; // not need to PQclear() and finish()
+        printf("CIAO2\n");
+        return query_res; // not need to PQclear()
     }
 
     PQclear(query_res);
@@ -160,7 +162,8 @@ PGresult* Con2DB::RunQuery(char* query, bool is_tuples) {
     transaction_res = ExecSQLcmd(sqlCmd);
 
     if (PQresultStatus(transaction_res) != PGRES_COMMAND_OK) {
-        return transaction_res; // not need to PQclear() and finish()
+        printf("CIAO3\n");
+        return transaction_res; // not need to PQclear()
     }
 
     PQclear(transaction_res);

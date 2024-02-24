@@ -16,7 +16,7 @@ int add_to_stream() {
     // initialize stream
     initStreams(c2r, WRITE_STREAM2);
 
-    reply = RedisCommand(c2r, "XADD %s * name example surname example email example@example.com phone_sumber +34567453", WRITE_STREAM2);
+    reply = RedisCommand(c2r, "XADD %s * name example surname example email example6@gmail.com phone_number +34567453", WRITE_STREAM2);
     assertReplyType(c2r, reply, REDIS_REPLY_STRING);
     freeReplyObject(reply);
 

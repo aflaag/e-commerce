@@ -39,7 +39,7 @@ int main() {
     add_to_stream();
 
     while(1) {
-        reply = RedisCommand(c2r, "XREADGROUP GROUP diameter Alice BLOCK 0 COUNT 4 STREAMS %s >", READ_STREAM);
+        reply = RedisCommand(c2r, "XREADGROUP GROUP diameter Alice BLOCK 0 COUNT 1 STREAMS %s >", READ_STREAM);
 
         assertReply(c2r, reply);
 
@@ -47,15 +47,15 @@ int main() {
             for (i=0; i < ReadStreamNumMsg(reply, k); i++) {
                 for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h +=  2) {
                     ReadStreamMsgVal(reply, k, i, h, key);
-                    ReadStreamMsgVal(reply, k, i, h, value);
+                    ReadStreamMsgVal(reply, k, i, h + 1, value);
                     
-                    if (key == "name") {
+                    if (!strcmp(key, "name")) {
                         sprintf(name, "%s", value);
-                    } else if (key == "email") {
+                    } else if (!strcmp(key, "email")) {
                         sprintf(email, "%s", value);
-                    } else if (key == "surname") {
+                    } else if (!strcmp(key, "surname")) {
                         sprintf(surname, "%s", value);
-                    } else if (key == "phone_number") {
+                    } else if (!strcmp(key, "phone_number")) {
                         sprintf(phone_number, "%s", value);
                     } else {
                         printf("%s\n", key);
@@ -70,6 +70,7 @@ int main() {
         sprintf(query, "INSERT INTO Customer (email, name, surname , phone_number) VALUES (\'%s\', \'%s\', \'%s\', \'%s\')", 
                         email, name, surname, phone_number);
 
+        printf("ciao\n");
         res = db.RunQuery(query, false);
 
         if (PQresultStatus(res) != PGRES_COMMAND_OK && PQresultStatus(res) != PGRES_TUPLES_OK) {

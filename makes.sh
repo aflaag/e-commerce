@@ -8,6 +8,6 @@ cd ../con2redis/src
 make clean
 make
 
-cd ../../../../customer/managers/add-customer
+cd ../../../../customer/managers/add-customer/src
 make clean
 make
