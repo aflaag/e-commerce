@@ -43,8 +43,18 @@ int main() {
 
         assertReply(c2r, reply);
 
-        for (k=0; k < ReadNumStreams(reply); k++) {
+        char id[30];
+        int A = ReadNumStreams(reply);
+
+        if (A == 0) {
+            continue;
+        } 
+
+        for (k=0; k < A; k++) {
             for (i=0; i < ReadStreamNumMsg(reply, k); i++) {
+                ReadStreamNumMsgID(reply, k, i, id);
+                printf("%s\n", id);
+
                 for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h +=  2) {
                     ReadStreamMsgVal(reply, k, i, h, key);
                     ReadStreamMsgVal(reply, k, i, h + 1, value);
@@ -70,8 +80,15 @@ int main() {
         sprintf(query, "INSERT INTO Customer (email, name, surname , phone_number) VALUES (\'%s\', \'%s\', \'%s\', \'%s\')", 
                         email, name, surname, phone_number);
 
-        printf("ciao\n");
+        // printf("%s\n", query);
+
         res = db.RunQuery(query, false);
+
+
+        reply = RedisCommand(c2r, "XACK %s diameter %s", WRITE_STREAM, id);
+        assertReplyType(c2r, reply, REDIS_REPLY_INTEGER);
+        freeReplyObject(reply);
+        printf("ciao\n");
 
         if (PQresultStatus(res) != PGRES_COMMAND_OK && PQresultStatus(res) != PGRES_TUPLES_OK) {
             // gestione disconnessione db o per il meme ci connettiamo sempre
@@ -84,7 +101,7 @@ int main() {
         assertReplyType(c2r, reply, REDIS_REPLY_STRING);
         freeReplyObject(reply);
 
-        // continuiamo con tuple se dobbiamo ritornare qualcosa
+        // micro_sleep(1000000);
     }
 
     db.finish();

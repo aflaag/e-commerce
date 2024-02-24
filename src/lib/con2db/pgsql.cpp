@@ -152,7 +152,19 @@ PGresult* Con2DB::RunQuery(char* query, bool is_tuples) {
     query_res = !is_tuples ? ExecSQLcmd(query) : ExecSQLtuples(query);
 
     if (PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) {
-        printf("CIAO2\n");
+        printf("CIAO2 CAZZO\n");
+
+        sprintf(sqlCmd, "COMMIT");
+        transaction_res = ExecSQLcmd(sqlCmd);
+
+        if (PQresultStatus(transaction_res) != PGRES_COMMAND_OK) {
+            printf("CIAO4\n");
+            return transaction_res; // cosa ritornare qua?
+        }
+
+        printf("CIAO5\n");
+        PQclear(transaction_res);
+
         return query_res; // not need to PQclear()
     }
 
