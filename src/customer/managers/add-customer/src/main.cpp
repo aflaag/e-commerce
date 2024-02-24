@@ -8,18 +8,18 @@ int main() {
     redisReply *reply;
 
     PGresult *res;
+    int k, i, h;
     
     char query[1000];
+
+    char key[100];
+    char value[100];
 
     char name[100];
     char email[100];
     char surname[100];
     char phone_number[100];
     char response[100];
-    int k, i, h;
-    char key[100];
-    char value[100];
-
 
     Con2DB db("localhost", "5432", "customer", "customer", "ecommerce");
     c2r = redisConnect("localhost", 6379);
@@ -28,6 +28,7 @@ int main() {
     reply = RedisCommand(c2r, "DEL %s", READ_STREAM);
     assertReply(c2r, reply);
     dumpReply(reply, 0);
+
     reply = RedisCommand(c2r, "DEL %s", WRITE_STREAM);
     assertReply(c2r, reply);
     dumpReply(reply, 0);
@@ -39,7 +40,8 @@ int main() {
     add_to_stream();
 
     while(1) {
-        reply = RedisCommand(c2r, "XREADGROUP GROUP diameter Alice BLOCK 0 COUNT 1 STREAMS %s >", READ_STREAM);
+        reply = RedisCommand(c2r,
+            "XREADGROUP GROUP diameter Alice BLOCK 0 COUNT 1 STREAMS %s >", READ_STREAM);
 
         assertReply(c2r, reply);
 
@@ -80,10 +82,7 @@ int main() {
         sprintf(query, "INSERT INTO Customer (email, name, surname , phone_number) VALUES (\'%s\', \'%s\', \'%s\', \'%s\')", 
                         email, name, surname, phone_number);
 
-        // printf("%s\n", query);
-
         res = db.RunQuery(query, false);
-
 
         reply = RedisCommand(c2r, "XACK %s diameter %s", WRITE_STREAM, id);
         assertReplyType(c2r, reply, REDIS_REPLY_INTEGER);
@@ -100,8 +99,6 @@ int main() {
         reply = RedisCommand(c2r, "XADD %s * response %s", WRITE_STREAM);
         assertReplyType(c2r, reply, REDIS_REPLY_STRING);
         freeReplyObject(reply);
-
-        // micro_sleep(1000000);
     }
 
     db.finish();

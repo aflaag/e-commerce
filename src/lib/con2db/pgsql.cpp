@@ -133,52 +133,41 @@ PGresult* Con2DB::ExecSQLtuples(char *sqlcmd)
     return (res);
 }
 
-PGresult* Con2DB::RunQuery(char* query, bool is_tuples) {
-    PGresult* transaction_res;
+PGresult* Con2DB::RunQuery(char* query, bool has_tuples) {
+    PGresult* trans_res;
     PGresult* query_res;
 
     char sqlCmd[7];
 
+    // open transaction
     sprintf(sqlCmd, "BEGIN");
-    transaction_res = ExecSQLcmd(sqlCmd);
+    trans_res = ExecSQLcmd(sqlCmd);
 
-    if (PQresultStatus(transaction_res) != PGRES_COMMAND_OK) {
-        printf("CIAO1\n");
-        return transaction_res; // not need to PQclear()
+    // if not ok
+    if (PQresultStatus(trans_res) != PGRES_COMMAND_OK) {
+        return trans_res;     // no need to PQclear()
     }
 
-    PQclear(transaction_res);
+    PQclear(trans_res);
 
-    query_res = !is_tuples ? ExecSQLcmd(query) : ExecSQLtuples(query);
+    // execute query
+    query_res = !has_tuples ? ExecSQLcmd(query) : ExecSQLtuples(query);
 
-    if (PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) {
-        printf("CIAO2 CAZZO\n");
-
-        sprintf(sqlCmd, "COMMIT");
-        transaction_res = ExecSQLcmd(sqlCmd);
-
-        if (PQresultStatus(transaction_res) != PGRES_COMMAND_OK) {
-            printf("CIAO4\n");
-            return transaction_res; // cosa ritornare qua?
-        }
-
-        printf("CIAO5\n");
-        PQclear(transaction_res);
-
-        return query_res; // not need to PQclear()
-    }
-
-    PQclear(query_res);
-
+    // close transaction
     sprintf(sqlCmd, "COMMIT");
-    transaction_res = ExecSQLcmd(sqlCmd);
+    trans_res = ExecSQLcmd(sqlCmd);
 
-    if (PQresultStatus(transaction_res) != PGRES_COMMAND_OK) {
-        printf("CIAO3\n");
-        return transaction_res; // not need to PQclear()
+    // if an error occurred during query execution
+    if(PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK){
+        PQclear(trans_res);
+        return query_res;
     }
-
-    PQclear(transaction_res);
-    
-    return query_res;
+    else if(PQresultStatus(trans_res) != PGRES_COMMAND_OK){
+        PQclear(query_res);
+        return trans_res;
+    }
+    else{
+        PQclear(trans_res);
+        return query_res;
+    }
 }
