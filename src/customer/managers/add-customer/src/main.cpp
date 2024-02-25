@@ -99,6 +99,8 @@ int main() {
         reply = RedisCommand(c2r, "XADD %s * response %s", WRITE_STREAM);
         assertReplyType(c2r, reply, REDIS_REPLY_STRING);
         freeReplyObject(reply);
+
+        micro_sleep(1000);
     }
 
     db.finish();

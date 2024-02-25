@@ -20,5 +20,6 @@
 #include "test_stream.h"
 
 using namespace std;
+int micro_sleep(long usec);
 
 #endif
