@@ -33,26 +33,35 @@ Customer* Customer::from_stream(redisReply* reply, int stream_num, int msg_num){
     char surname[100];
     char phone_number[100];
 
-    for (int field_num = 0; field_num < ReadStreamMsgNumVal(reply, stream_num, msg_num); field_num +=  2) {
+    char read_fields = 0b0000;
+
+    for (int field_num = 2; field_num < ReadStreamMsgNumVal(reply, stream_num, msg_num); field_num +=  2) {
         ReadStreamMsgVal(reply, stream_num, msg_num, field_num, key);
         ReadStreamMsgVal(reply, stream_num, msg_num, field_num + 1, value);
         
         if (!strcmp(key, "name")) {
-            sprintf(name, "%s", value);
+            snprintf(name, 100, "%s", value);
+            read_fields |= 0b0001;
 
         } else if (!strcmp(key, "email")) {
-            sprintf(email, "%s", value);
+            snprintf(email, 100, "%s", value);
+            read_fields |= 0b0010;
 
         } else if (!strcmp(key, "surname")) {
-            sprintf(surname, "%s", value);
+            snprintf(surname, 100, "%s", value);
+            read_fields |= 0b0100;
 
         } else if (!strcmp(key, "phone_number")) {
-            sprintf(phone_number, "%s", value);
+            snprintf(phone_number, 100, "%s", value);
+            read_fields |= 0b1000;
 
         } else {
-            // printf("%s %s\n", key, value);
             throw std::invalid_argument("Stream error: invalid fields");
         }
+    }
+
+    if (read_fields != 0b1111){
+        throw std::invalid_argument("Stream error: invalid fields");
     }
 
     return new Customer(email, name, surname, phone_number);
