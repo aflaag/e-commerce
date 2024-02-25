@@ -1,7 +1,7 @@
 #include "main.h"
 
-#define READ_STREAM "handler-add-address"
-#define WRITE_STREAM "add-address-handler"
+#define READ_STREAM "handler-add-card"
+#define WRITE_STREAM "add-card-handler"
 
 int main() {
     redisContext *c2r;
@@ -15,11 +15,8 @@ int main() {
     char key[100];
     char value[100];
 
-    char zip_code[100];
+    char number[100];
     char email[100];
-    char street[100];
-    char street_number[100];
-    char city[100];
     char response[100];
 
     Con2DB db("localhost", "5432", "customer", "customer", "ecommerce");
@@ -62,16 +59,10 @@ int main() {
                     ReadStreamMsgVal(reply, k, i, h, key);
                     ReadStreamMsgVal(reply, k, i, h + 1, value);
                     
-                    if (!strcmp(key, "email")) {
+                    if (!strcmp(key, "number")) {
+                        sprintf(number, "%s", value);
+                    } else if (!strcmp(key, "email")) {
                         sprintf(email, "%s", value);
-                    } else if (!strcmp(key, "zip_code")) {
-                        sprintf(zip_code, "%s", value);
-                    } else if (!strcmp(key, "street")) {
-                        sprintf(street, "%s", value);
-                    } else if (!strcmp(key, "street_number")) {
-                        sprintf(street_number, "%s", value);
-                    } else if (!strcmp(key, "city")) {
-                        sprintf(city, "%s", value);
                     } else {
                         printf("%s\n", key);
                         return 1;
@@ -82,9 +73,8 @@ int main() {
 
         freeReplyObject(reply);
 
-        sprintf(query, "INSERT INTO Address ON CONFLICT DO NOTHING (zip_code, street, street_number , city) VALUES (\'%s\', \'%s\', \'%s\', %s);"
-                       "INSERT INTO AddCust (customer, zip_code, street, street_number) VALUES (\'%s\', \'%s\', \'%s\', \'%s\')", 
-                        zip_code, street, street_number, city, email, zip_code, street, street_number);
+        sprintf(query, "INSERT INTO Card (number, customer) VALUES (\'%s\', \'%s\')", 
+                        number, email);
 
         res = db.RunQuery(query, false);
 
