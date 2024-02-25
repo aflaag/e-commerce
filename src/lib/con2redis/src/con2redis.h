@@ -35,7 +35,7 @@ void assertReply(redisContext *c, redisReply *r);
 
 void dumpReply(redisReply *r, int indent);
 
-void initStreams(redisContext *c, const char *stream, const char *group);
+void initStreams(redisContext *c, const char *stream);
 
 void ReadStreamReply(redisReply *r, int indent, int readstatus);
 

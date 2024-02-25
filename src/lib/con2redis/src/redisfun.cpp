@@ -78,8 +78,8 @@ void dumpReply(redisReply *r, int indent) {
     sdsfree(buffer);
 }
 
-void initStreams(redisContext *c, const char *stream, const char *group) {
-    redisReply *r = RedisCommand(c, "XGROUP CREATE %s %s $ MKSTREAM", stream, group);
+void initStreams(redisContext *c, const char *stream) {
+    redisReply *r = RedisCommand(c, "XGROUP CREATE %s main $ MKSTREAM", stream);
     assertReply(c, r);
     freeReplyObject(r);
 }

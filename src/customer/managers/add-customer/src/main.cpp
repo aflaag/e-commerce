@@ -6,10 +6,6 @@ void send_response_status(redisContext* c2r, const char *stream, const char *cli
     // LOG
     printf("Response: %s %s %s %s\n", stream, client_id, resp_status, msg_id);
 
-    reply = RedisCommand(c2r, "XACK %s %s %s", stream, resp_status, msg_id);
-    assertReplyType(c2r, reply, REDIS_REPLY_INTEGER);
-    freeReplyObject(reply);
-
     reply = RedisCommand(c2r, "XADD %s * client_id %s resp_status %s", WRITE_STREAM, client_id, resp_status);
     assertReplyType(c2r, reply, REDIS_REPLY_STRING);
     freeReplyObject(reply);
@@ -36,16 +32,13 @@ int main() {
     dumpReply(reply, 0);
 
     // initialize stream
-    initStreams(c2r, READ_STREAM, "add-customer");
-    initStreams(c2r, WRITE_STREAM, "manager");
+    initStreams(c2r, READ_STREAM);
+    initStreams(c2r, WRITE_STREAM);
     
-    add_to_stream();
-
     Customer* customer;
 
     while(1) {
-        reply = RedisCommand(c2r,
-            "XREADGROUP GROUP %s manager BLOCK 0 COUNT 1 STREAMS %s >", MANAGER_GROUP, READ_STREAM);
+        reply = RedisCommand(c2r, "XREAD BLOCK 0 COUNT 1 STREAMS %s $", READ_STREAM);
 
         assertReply(c2r, reply);
 
@@ -63,7 +56,7 @@ int main() {
 
         printf("%s\n", first_key);
         if(strcmp(first_key, "client_id")){
-            send_response_status(c2r, WRITE_STREAM, client_id, "INVALID#CLIENT#ID", msg_id);
+            send_response_status(c2r, WRITE_STREAM, client_id, "INVALID#CLIENT#STREAM", msg_id);
             continue;
         }
         
