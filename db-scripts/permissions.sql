@@ -38,6 +38,7 @@ GRANT UPDATE ON RefundRequest TO :courier ;
 
 GRANT INSERT, UPDATE, SELECT, DELETE ON Product TO :supplier ;
 GRANT INSERT, SELECT ON Product TO :supplier ;
+GRANT INSERT ON Supplier TO :supplier ;
 
 GRANT INSERT ON Rating TO :customer ;
 GRANT SELECT, INSERT ON RefundRequest TO :customer ;
