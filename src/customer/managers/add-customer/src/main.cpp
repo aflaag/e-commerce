@@ -8,18 +8,13 @@ int main() {
     redisReply *reply;
 
     PGresult *res;
-    int k, i, h;
+    int num_streams, k, i;
     
     char query[1000];
-
-    char key[100];
-    char value[100];
-
-    char name[100];
-    char email[100];
-    char surname[100];
-    char phone_number[100];
     char response[100];
+    char id[30];
+
+    bool invalid_entry;
 
     Con2DB db("localhost", "5432", "customer", "customer", "ecommerce");
     c2r = redisConnect("localhost", 6379);
@@ -39,55 +34,52 @@ int main() {
     
     add_to_stream();
 
+    Customer* customer;
+
     while(1) {
         reply = RedisCommand(c2r,
             "XREADGROUP GROUP diameter Alice BLOCK 0 COUNT 1 STREAMS %s >", READ_STREAM);
 
         assertReply(c2r, reply);
 
-        char id[30];
-        int A = ReadNumStreams(reply);
+        num_streams = ReadNumStreams(reply);
 
-        if (A == 0) {
+        if (num_streams == 0) {
             continue;
         } 
-
-        for (k=0; k < A; k++) {
+        
+        for (k=0; k < num_streams; k++) {
             for (i=0; i < ReadStreamNumMsg(reply, k); i++) {
                 ReadStreamNumMsgID(reply, k, i, id);
                 printf("%s\n", id);
+                
+                try{
+                    customer = Customer::from_stream(reply, k, i);
+                }
+                catch(std::invalid_argument exp){
+                    printf("Invalid entry - Aborting insert\n");
+                    invalid_entry = true;
+                    continue;
+                }
 
-                for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h +=  2) {
-                    ReadStreamMsgVal(reply, k, i, h, key);
-                    ReadStreamMsgVal(reply, k, i, h + 1, value);
-                    
-                    if (!strcmp(key, "name")) {
-                        sprintf(name, "%s", value);
-                    } else if (!strcmp(key, "email")) {
-                        sprintf(email, "%s", value);
-                    } else if (!strcmp(key, "surname")) {
-                        sprintf(surname, "%s", value);
-                    } else if (!strcmp(key, "phone_number")) {
-                        sprintf(phone_number, "%s", value);
-                    } else {
-                        printf("%s\n", key);
-                        return 1;
-                    }
-                }	      	      
+                invalid_entry = true;
             }
+        }
+
+        if(invalid_entry){
+            continue;
         }
 
         freeReplyObject(reply);
 
         sprintf(query, "INSERT INTO Customer (email, name, surname , phone_number) VALUES (\'%s\', \'%s\', \'%s\', \'%s\')", 
-                        email, name, surname, phone_number);
+                        customer->email, customer->name, customer->surname, customer->phone_number);
 
         res = db.RunQuery(query, false);
 
         reply = RedisCommand(c2r, "XACK %s diameter %s", WRITE_STREAM, id);
         assertReplyType(c2r, reply, REDIS_REPLY_INTEGER);
         freeReplyObject(reply);
-        printf("ciao\n");
 
         if (PQresultStatus(res) != PGRES_COMMAND_OK && PQresultStatus(res) != PGRES_TUPLES_OK) {
             // gestione disconnessione db o per il meme ci connettiamo sempre
@@ -95,6 +87,8 @@ int main() {
         } else {
             sprintf(response, "SUCCESSFUL REQUEST");
         }
+
+        printf("%s\n", response);
 
         reply = RedisCommand(c2r, "XADD %s * response %s", WRITE_STREAM);
         assertReplyType(c2r, reply, REDIS_REPLY_STRING);

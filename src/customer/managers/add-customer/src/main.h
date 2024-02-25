@@ -1,7 +1,7 @@
 #ifndef main_h
 #define main_h
 
-// TODO: da filtrare
+/* Library imports */
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -15,10 +15,11 @@
 #include <cassert>
 #include <cerrno>
 
+/* Local imports */
+
 #include "../../../../lib/con2db/pgsql.h"
 #include "../../../../lib/con2redis/src/con2redis.h"
+#include "../../../../classes/src/customer.h"
 #include "test_stream.h"
-
-using namespace std;
 
 #endif

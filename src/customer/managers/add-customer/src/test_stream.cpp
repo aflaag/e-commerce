@@ -8,15 +8,14 @@ int add_to_stream() {
 
     c2r = redisConnect("localhost", 6379);
 
-    // delete stream if exists
-    // reply = RedisCommand(c2r, "DEL %s", WRITE_STREAM2);
-    // assertReply(c2r, reply);
-    // dumpReply(reply, 0);
-
     // initialize stream
     initStreams(c2r, WRITE_STREAM2);
-
+    
     reply = RedisCommand(c2r, "XADD %s * name example surname example email sara@gmail.com phone_number +34567453", WRITE_STREAM2);
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+    freeReplyObject(reply);
+
+    reply = RedisCommand(c2r, "XADD %s * name example surname example ciao ciao email sara@gmail.com phone_number +34567453", WRITE_STREAM2);
     assertReplyType(c2r, reply, REDIS_REPLY_STRING);
     freeReplyObject(reply);
 

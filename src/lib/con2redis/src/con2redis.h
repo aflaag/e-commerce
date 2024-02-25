@@ -29,8 +29,6 @@ extern "C" {
 #define RedisCommand(fmt, ...)			\
   (redisReply*) redisCommand(fmt, __VA_ARGS__)
 
-
-
 void assertReplyType(redisContext *c, redisReply *r, int type);
 
 void assertReply(redisContext *c, redisReply *r);
