@@ -18,11 +18,11 @@ make clean
 make
 echo "DONE add-customer/src"
 
-# cd ../../add-card/src
-# echo "INSIDE add-card/src"
-# make clean
-# make
-# echo "DONE add-card/src"
+ cd ../../add-card/src
+ echo "INSIDE add-card/src"
+ make clean
+ make
+ echo "DONE add-card/src"
 
 # cd ../../add-address/src
 # echo "INSIDE add-address/src"
