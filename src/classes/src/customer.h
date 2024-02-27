@@ -1,5 +1,5 @@
-#ifndef db_h
-#define db_h
+#ifndef customer_h
+#define customer_h
 
 /* Library imports */
 

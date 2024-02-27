@@ -19,6 +19,7 @@
 #include "../../../../lib/con2db/pgsql.h"
 #include "../../../../lib/con2redis/src/con2redis.h"
 #include "../../../../classes/src/customer.h"
+#include "../../../../utils/src/utils.h"
 
 /* Constants */
 

@@ -1,5 +1,5 @@
-#ifndef read_stream_h
-#define read_stream_h
+#ifndef test_stream_h
+#define test_stream_h
 
 // TODO: da filtrare
 #include <stdio.h>

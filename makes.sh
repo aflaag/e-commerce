@@ -11,27 +11,3 @@ echo "INSIDE con2redis/src"
 make clean
 make
 echo "DONE con2redis/src"
-
-cd ../../../customer/managers/add-customer/src
-echo "INSIDE add-customer/src"
-make clean
-make
-echo "DONE add-customer/src"
-
- cd ../../add-card/src
- echo "INSIDE add-card/src"
- make clean
- make
- echo "DONE add-card/src"
-
-# cd ../../add-address/src
-# echo "INSIDE add-address/src"
-# make clean
-# make
-# echo "DONE add-address/src"
-
-# cd ../../../../supplier/managers/add-supplier/src
-# echo "INSIDE add-address/src"
-# make clean
-# make
-# echo "DONE add-address/src"

@@ -20,6 +20,7 @@
 #include "../../../../lib/con2redis/src/con2redis.h"
 #include "test_stream.h"
 #include "../../../../classes/src/address.h"
+#include "../../../../utils/src/utils.h"
 
 /* Constants */
 

@@ -1,5 +1,5 @@
-#ifndef db_h
-#define db_h
+#ifndef card_h
+#define card_h
 
 /* Library imports */
 
