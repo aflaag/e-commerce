@@ -1,26 +1,27 @@
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <string>
-#include <sstream>
-#include <list>
-#include <cerrno>
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <cstring> 
-#include <iostream>
+#include <iostream> 
+#include <stdio.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <sys/ioctl.h>
+#include <sys/socket.h>
+#include <sys/time.h>
+#include <netinet/in.h>
+#include <errno.h>
+#include <unistd.h> 
+#include <cerrno>
 
 #define MAX_CONNECTIONS 200
+#define TRUE 1
+#define FALSE 0
 
 class Server {
     public:
         Server(int);
-        void accept_clients();
+        void run();
 
     private:
         int sockfd;
         int sockPort;
-        std::list<int> clients;
+        int end_server = 0;
 };

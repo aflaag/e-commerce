@@ -22,9 +22,8 @@ int micro_sleep(long usec)
     return res;  
 }
 
-int main(){\
-    int p = 5;
+int main(){
+    int p = 8080;
     Server s { p };
-    micro_sleep(10000000);
-    s.accept_clients();
+    s.run();
 }
