@@ -8,6 +8,8 @@
   
 using namespace std; 
 
+#define SERVER_PORT  12345
+
 
 int micro_sleep(long usec)
 {
@@ -34,24 +36,23 @@ int micro_sleep(long usec)
 int main() 
 { 
     // creating socket 
-    int clientSocket = socket(AF_INET, SOCK_STREAM, 0); 
-  
+    int clientSocket = socket(AF_INET6, SOCK_STREAM, 0); 
+  struct sockaddr_in6 addr;
     // specifying address 
-    sockaddr_in serverAddress; 
-    serverAddress.sin_family = AF_INET; 
-    serverAddress.sin_port = htons(8080); 
-    serverAddress.sin_addr.s_addr = INADDR_ANY; 
+    memset(&addr, 0, sizeof(addr));
+   addr.sin6_family      = AF_INET6;
+   memcpy(&addr.sin6_addr, &in6addr_any, sizeof(in6addr_any));
+   addr.sin6_port        = htons(SERVER_PORT);
   
     // sending connection request 
 
-    connect(clientSocket, (struct sockaddr*)&serverAddress, 
-            sizeof(serverAddress)); 
+    connect(clientSocket, (struct sockaddr*)&addr, 
+            sizeof(addr)); 
     int i = 0;
     while(i < 10){
-    connect(clientSocket, (struct sockaddr*)&serverAddress, 
-            sizeof(serverAddress));
+    connect(clientSocket, (struct sockaddr*)&addr, 
+            sizeof(addr));
     cout << i << endl;
-    micro_sleep(100000);
     i ++;
     }
     // closing socket 
