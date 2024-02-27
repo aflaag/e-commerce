@@ -21,7 +21,7 @@ Server::Server(int port) {
     serverAddress.sin_addr.s_addr = INADDR_ANY;
     serverAddress.sin_port = sockPort;
 
-    if (bind(sockfd, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) == -1){
+    if (bind(sockfd, (struct sockaddr*) &serverAddress, sizeof(serverAddress)) == -1){
         throw std::invalid_argument("Error binding the socket");
     }
     if (listen(sockfd, MAX_CONNECTIONS) == -1) {
@@ -32,7 +32,7 @@ Server::Server(int port) {
 void Server::run(){
     fd_set current_set, working_set;
     char buffer[1000];
-    int errno, max_fd, rc, close_conn, i, new_client, ready_requests = 0;
+    int max_fd, rc, close_conn, i, new_client, ready_requests = 0;
     struct timeval timeout;
 
     FD_ZERO(&current_set);
@@ -46,6 +46,8 @@ void Server::run(){
         printf("select failed");
 
         memcpy(&working_set, &current_set, sizeof(current_set));
+
+        // Listens for incoming requests. Returns the number of incoming requests
         rc = select(max_fd + 1, &working_set, NULL, NULL, &timeout);
 
         if (rc < 0) {
@@ -59,12 +61,17 @@ void Server::run(){
 
         ready_requests = rc;
 
+        // For all connections (itself included)
+
         for (i = 0; i <= max_fd && ready_requests > 0; ++i) {
 
             if (FD_ISSET(i, &working_set)) {
                 ready_requests -= 1;
-
+                
+                // If it's itself
                 if (i == sockfd) {
+
+                    // Accept incoming conncetions
                     do {
                         new_client = accept(sockfd, NULL, NULL);
                         printf("%d\n", new_client);
@@ -81,8 +88,12 @@ void Server::run(){
                             max_fd = new_client;
                         }
                     } while (new_client != -1);
+
+                // If it's a client
                 } else {
                     close_conn = FALSE;
+
+                    // Read incoming data
                     do {
                         rc = recv(i, buffer, sizeof(buffer), 0);
 
@@ -97,18 +108,23 @@ void Server::run(){
                             close_conn = TRUE;
                             break;
                         }
-                    printf("%s\n", buffer);
+                        printf("%s\n", buffer);
+
                         // we have in the buffer the request
                         // process che responce
                         // send the responce
                             // rc = send(i, buffer, len, 0);
+
+                        // send_to_managers(i, stringa_letta);
+
                         if (rc < 0) {
-                            perror("  send() failed");
+                            perror("send() failed");
                             close_conn = TRUE;
                             break;
                         }
-
                     } while (TRUE);
+
+                    // If conncetion was closed by client or crashed
                     if (close_conn) {
                         close(i);
                         FD_CLR(i, &current_set);
@@ -117,11 +133,16 @@ void Server::run(){
                                 max_fd -= 1;
                         }
                     }
-                
                 }
             }
         }
+
+        // Read from managers (usare pair per ritornare lista di tuple (socket, stringa))
+
+        // Send responses
     }
+
+    // Close connections
     for (i=0; i <= max_fd; ++i){
         if (FD_ISSET(i, &current_set))
             close(i);

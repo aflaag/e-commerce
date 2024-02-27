@@ -42,6 +42,8 @@ int main(){
         ReadStreamMsgVal(reply, 0, 0, 0, first_key);        // Index of first field of msg = 0
         ReadStreamMsgVal(reply, 0, 0, 1, request_type);     // Index of second field of msg = 1
 
+        // DA QUI
+
         if(strcmp(first_key, "request_type")){
             reply = RedisCommand(c2r, "XADD %s * resp_status %s", WRITE_CLIENT_STREAM, "INVALID#REQUEST");
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
