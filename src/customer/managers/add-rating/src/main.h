@@ -19,13 +19,13 @@
 #include "../../../../lib/con2db/pgsql.h"
 #include "../../../../lib/con2redis/src/con2redis.h"
 #include "test_stream.h"
-#include "../../../../classes/src/card.h"
+#include "../../../../classes/src/rating.h"
 #include "../../../../utils/src/utils.h"
 
 /* Constants */
 
-#define READ_STREAM "add-card-in"
-#define WRITE_STREAM "add-card-out"
+#define READ_STREAM "add-rating-in"
+#define WRITE_STREAM "add-rating-out"
 
 #define REDIS_SERVER "localhost"
 #define REDIS_PORT 6379

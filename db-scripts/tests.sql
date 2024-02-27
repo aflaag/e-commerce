@@ -12,3 +12,6 @@ VALUES ('2024-02-22 10:30:00', 0.0, 'user1@gmail.com', '1234567890123456', '0102
 )
 INSERT INTO OrderedProducts (product, purchase, quantity)
 VALUES ('P1', 1, 10);
+
+INSERT INTO AssignedDelivery 
+VALUES('bho2','2024-02-22 10:30:00','2024-02-22 10:30:00', '2024-02-22 10:30:00','Delivered',null, 'courier1',1);

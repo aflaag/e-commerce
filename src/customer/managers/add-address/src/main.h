@@ -36,10 +36,6 @@
 #define POSTGRESQL_PSW "customer"
 #define POSTGRESQL_DBNAME "ecommerce"
 
-/* Functions */
-
-void send_response_status(redisContext* c2r, const char *stream, const char *client_id, const char *resp_status, const char *msg_id);
-
 using namespace std;
 
 #endif

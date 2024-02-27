@@ -89,7 +89,7 @@ PGresult* Con2DB::ExecSQLcmd(char *sqlcmd)
       fprintf(stderr, "ExecSQLcmd(): PQresultErrorMessage: %s\n",
 	      PQresultErrorMessage(res) ) ;
            
-        PQclear(res);
+        //PQclear(res);
         // finish();
     }    
 
@@ -145,7 +145,8 @@ PGresult* Con2DB::RunQuery(char* query, bool has_tuples) {
 
     // if not ok
     if (PQresultStatus(trans_res) != PGRES_COMMAND_OK) {
-        return trans_res;     // no need to PQclear()
+        PQclear(trans_res);
+        return trans_res;
     }
 
     PQclear(trans_res);
@@ -160,14 +161,17 @@ PGresult* Con2DB::RunQuery(char* query, bool has_tuples) {
     // if an error occurred during query execution
     if(PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK){
         PQclear(trans_res);
+        PQclear(query_res);
         return query_res;
     }
     else if(PQresultStatus(trans_res) != PGRES_COMMAND_OK){
         PQclear(query_res);
+        PQclear(trans_res);
         return trans_res;
     }
     else{
         PQclear(trans_res);
+        PQclear(query_res);
         return query_res;
     }
 }
