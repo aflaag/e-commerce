@@ -237,20 +237,20 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER inclusion_refunded_products_trg
 AFTER INSERT ON RefundRequest FOR EACH ROW EXECUTE FUNCTION inclusion_refunded_products();
 
--- inclusion OrderedProducts
-CREATE OR REPLACE FUNCTION inclusion_ordered_products() RETURNS TRIGGER AS $$
-BEGIN
-    IF EXISTS (
-        SELECT 1 
-        FROM OrderedProducts
-        WHERE NEW.id = purchase
-    ) IS FALSE THEN
-        RAISE EXCEPTION 'no product included';
-    END IF;
-
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER inclusion_ordered_products_trg
-AFTER INSERT ON Purchase FOR EACH ROW EXECUTE FUNCTION inclusion_ordered_products();
+-- -- inclusion OrderedProducts
+-- CREATE OR REPLACE FUNCTION inclusion_ordered_products() RETURNS TRIGGER AS $$
+-- BEGIN
+--     IF EXISTS (
+--         SELECT 1 
+--         FROM OrderedProducts
+--         WHERE NEW.id = purchase
+--     ) IS FALSE THEN
+--         RAISE EXCEPTION 'no product included';
+--     END IF;
+--
+--     RETURN NEW;
+-- END;
+-- $$ LANGUAGE plpgsql;
+--
+-- CREATE TRIGGER inclusion_ordered_products_trg
+-- AFTER INSERT ON Purchase FOR EACH ROW EXECUTE FUNCTION inclusion_ordered_products();

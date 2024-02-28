@@ -25,12 +25,16 @@ ALTER TABLE AssignedDelivery OWNER TO :admin ;
 ALTER TABLE RefundRequest OWNER TO :admin ;
 ALTER TABLE RefundedProduct OWNER TO :admin ;
 
-
 -- grant all privileges on all tables in schema public to :username ;
 -- grant all privileges on all sequences in schema public to :username ;
 
 GRANT ALL ON SCHEMA public TO :admin ;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO :admin ;
+
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO :admin ;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO :customer ;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO :courier ;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO :supplier ;
 
 GRANT SELECT ON Purchase TO :courier ;
 GRANT INSERT, UPDATE ON AssignedDelivery TO :courier ;
@@ -43,11 +47,11 @@ GRANT INSERT ON Supplier TO :supplier ;
 GRANT INSERT ON Rating TO :customer ;
 GRANT SELECT, INSERT ON RefundRequest TO :customer ;
 GRANT SELECT ON Product TO :customer ;
-GRANT INSERT ON Purchase TO :customer ;
-GRANT INSERT ON Address TO :customer ;
+GRANT SELECT, INSERT ON Address TO :customer ;
 GRANT SELECT, INSERT ON AddCust TO :customer ;
-GRANT SELECT, UPDATE ON Purchase TO :customer ;
+GRANT SELECT, INSERT, UPDATE, DELETE ON Purchase TO :customer ;
 GRANT SELECT, INSERT ON Card TO :customer ;
 GRANT SELECT ON AssignedDelivery TO :customer ;
 GRANT SELECT, INSERT ON Customer TO :customer ;
-GRANT SELECT ON OrderedProducts TO :customer ;
+GRANT SELECT, INSERT ON OrderedProducts TO :customer ;
+GRANT SELECT ON Restock TO :customer ;

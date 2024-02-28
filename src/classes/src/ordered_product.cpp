@@ -1,6 +1,6 @@
-#include "ordered_products.h"
+#include "ordered_product.h"
 
-Ordered_products::Ordered_products(char* order_product, 
+OrderedProduct::OrderedProduct(char* order_product, 
         char* order_purchase, 
         char* order_quantity){
 
@@ -13,48 +13,49 @@ Ordered_products::Ordered_products(char* order_product,
     strcpy(quantity, order_quantity);
 }
 
-Ordered_products::~Ordered_products(){
+OrderedProduct::~OrderedProduct(){
     free(product);
     free(purchase);
     free(quantity);
 }
 
-Ordered_products* Ordered_products::from_stream(redisReply* reply, int stream_num, int msg_num){
-
+OrderedProduct* OrderedProduct::from_stream(redisReply* reply, int stream_num, int msg_num, int starting_value, char* purchase) {
     char key[100];
     char value[100];
 
     char product[100];
-    char purchase[100];
     char quantity[100];
 
-    char read_fields = 0b000;
+    char read_fields = 0b00;
 
-    for (int field_num = 2; field_num < ReadStreamMsgNumVal(reply, stream_num, msg_num); field_num +=  2) {
+    for (int field_num = starting_value; field_num < starting_value + 4; field_num += 2) {
         ReadStreamMsgVal(reply, stream_num, msg_num, field_num, key);
         ReadStreamMsgVal(reply, stream_num, msg_num, field_num + 1, value);
                     
         if (!strcmp(key, "product")) {
             sprintf(product, "%s", value);
-            read_fields |=0b001;
-
-        } else if (!strcmp(key, "purchase")) {
-            sprintf(purchase, "%s", value);
-            read_fields |=0b010;
+            read_fields |=0b01;
 
         } else if (!strcmp(key, "quantity")) {
             sprintf(quantity, "%s", value);
-            read_fields |=0b100;
+            read_fields |=0b10;
 
         } else {
             throw std::invalid_argument("Stream error: invalid fields");
         }
     }
 
-    if (read_fields != 0b111){
+    if (read_fields != 0b11) {
         throw std::invalid_argument("Stream error: invalid fields");
     }
 
-    return new Ordered_products(product, purchase, quantity);
+    return new OrderedProduct(product, purchase, quantity);
 }
     
+std::string OrderedProduct::to_insert_query() {
+    std::string str_product = product;
+    std::string str_purchase = purchase;
+    std::string str_quantity = quantity;
+
+    return "INSERT INTO OrderedProducts (product, purchase, quantity) VALUES (\'" + str_product + "\', \'" + str_purchase + "\', \'" + str_quantity + "\')";
+}

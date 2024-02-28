@@ -2,6 +2,10 @@
 
 ## TODO list
 
+### Altro
+
+- costanti
+
 ### Relazione
 
 - generale

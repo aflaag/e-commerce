@@ -46,7 +46,7 @@ Purchase* Purchase::from_stream(redisReply* reply, int stream_num, int msg_num){
     char value[100];
 
     char id[100];
-    char purchase_instant[100];
+    char* purchase_instant;
     char fare[100];
     char customer[100];
     char card[100];
@@ -54,51 +54,49 @@ Purchase* Purchase::from_stream(redisReply* reply, int stream_num, int msg_num){
     char street[100];
     char street_number[100];
 
-    char read_fields = 0b0000000;
+    char read_fields = 0b000000;
 
     // prendo il timestamp corrente
     auto current_time = std::chrono::system_clock::now();
     std::time_t current_time_t = std::chrono::system_clock::to_time_t(current_time);
-    purchase_instant = std::ctime(&current_time_t) 
+    purchase_instant = std::ctime(&current_time_t);
 
-    for (int field_num = 2; field_num < ReadStreamMsgNumVal(reply, stream_num, msg_num); field_num +=  2) {
+    for (int field_num = 2; field_num < ReadStreamMsgNumVal(reply, stream_num, msg_num) && read_fields != 0b111111; field_num += 2) {
         ReadStreamMsgVal(reply, stream_num, msg_num, field_num, key);
         ReadStreamMsgVal(reply, stream_num, msg_num, field_num + 1, value);
                     
-        if (!strcmp(key, "id")) {
-            sprintf(id, "%s", value);
-            read_fields |=0b0000001;
-
-        } else if (!strcmp(key, "fare")) {
+        // printf("%b\n", read_fields);
+        if (!strcmp(key, "fare")) {
             sprintf(fare, "%s", value);
-            read_fields |=0b0000010;
+            read_fields |=0b000001;
 
         }else if (!strcmp(key, "customer")) {
             sprintf(customer, "%s", value);
-            read_fields |=0b0000100;
+            read_fields |=0b000010;
 
         }else if (!strcmp(key, "card")) {
             sprintf(card, "%s", value);
-            read_fields |=0b0001000;
+            read_fields |=0b000100;
 
         }else if (!strcmp(key, "zip_code")) {
             sprintf(zip_code, "%s", value);
-            read_fields |=0b0010000;
+            read_fields |=0b001000;
 
         }else if (!strcmp(key, "street")) {
             sprintf(street, "%s", value);
-            read_fields |=0b0100000;
+            read_fields |=0b010000;
 
         }else if (!strcmp(key, "street_number")) {
             sprintf(street_number, "%s", value);
-            read_fields |=0b1000000;
+            read_fields |=0b100000;
 
         } else {
+            printf("%s\n", key);
             throw std::invalid_argument("Stream error: invalid fields");
         }
     }
 
-    if (read_fields != 0b1111111){
+    if (read_fields != 0b111111){
         throw std::invalid_argument("Stream error: invalid fields");
     }
 

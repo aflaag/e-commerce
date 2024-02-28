@@ -109,7 +109,7 @@ PGresult* Con2DB::ExecSQLtuples(char *sqlcmd)
     // error
     {
      fprintf(stderr, "ExecSQLtuples(): no connection to DB: sqlcmd = %s\n", sqlcmd);
-     exit (1);
+     // exit (1);
     }
 
   // conn != NULL
@@ -119,11 +119,12 @@ PGresult* Con2DB::ExecSQLtuples(char *sqlcmd)
     if (PQresultStatus(res) != PGRES_TUPLES_OK) {
 
       fprintf(stderr, "ExecSQLtuples(): SQL command failed: %s\n", sqlcmd);
-      fprintf(stderr, "ExecSQLtuples(): %s\n",
-	      PQresStatus(PQresultStatus(res)));
+      fprintf(stderr, "ExecSQLtuples(): %s\n", PQresStatus(PQresultStatus(res)));
+      fprintf(stderr, "ExecSQLcmd(): PQresultErrorMessage: %s\n",
+	      PQresultErrorMessage(res) ) ;
 
-        PQclear(res);
-        finish();
+        // PQclear(res);
+        // finish();
     }    
 
 #if 0
@@ -171,7 +172,7 @@ PGresult* Con2DB::RunQuery(char* query, bool has_tuples) {
     }
     else{
         PQclear(trans_res);
-        PQclear(query_res);
+        if (PQresultStatus(query_res) != PGRES_TUPLES_OK) PQclear(query_res);
         return query_res;
     }
 }

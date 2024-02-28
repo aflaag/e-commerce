@@ -16,7 +16,7 @@
 
 /* Classes */
 
-class Purhcase{
+class Purchase{
     public:
         char *id;
         char *purchase_instant;
@@ -28,12 +28,12 @@ class Purhcase{
         char *street;
         char *street_number;
 
-        Purhcase(char* purchase_id, char* purchase_instant_in, char* purchase_fare, char* purchase_customer, 
+        Purchase(char* purchase_id, char* purchase_instant_in, char* purchase_fare, char* purchase_customer, 
                 char* purchase_card, char* purchase_zip_code, char* purchase_street, char* purchase_street_number);
 
-        ~Purhcase();
+        ~Purchase();
 
-        static Purhcase* from_stream(redisReply* reply, int stream_num, int msg_num);
+        static Purchase* from_stream(redisReply* reply, int stream_num, int msg_num);
 };
 
 #endif

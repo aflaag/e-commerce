@@ -11,6 +11,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/times.h>
+#include <string>
 #include <cassert>
 #include <cerrno>
 
@@ -20,6 +21,7 @@
 #include "../../../../lib/con2redis/src/con2redis.h"
 #include "test_stream.h"
 #include "../../../../classes/src/purchase.h"
+#include "../../../../classes/src/ordered_product.h"
 #include "../../../../utils/src/utils.h"
 
 /* Constants */

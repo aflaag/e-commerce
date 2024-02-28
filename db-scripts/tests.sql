@@ -15,3 +15,6 @@ VALUES ('P1', 1, 10);
 
 INSERT INTO AssignedDelivery 
 VALUES('bho2','2024-02-22 10:30:00','2024-02-22 10:30:00', '2024-02-22 10:30:00','Delivered',null, 'courier1',1);
+
+INSERT INTO Restock (quantity, supplier, product)
+VALUES(100, 'Supplier1', 'P1');
