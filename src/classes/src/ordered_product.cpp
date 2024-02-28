@@ -20,11 +20,11 @@ OrderedProduct::~OrderedProduct(){
 }
 
 OrderedProduct* OrderedProduct::from_stream(redisReply* reply, int stream_num, int msg_num, int starting_value, char* purchase) {
-    char keyPARAMETERS_LEN;
-    char valuePARAMETERS_LEN;
+    char key[PARAMETERS_LEN];
+    char value[PARAMETERS_LEN];
 
-    char productPARAMETERS_LEN;
-    char quantityPARAMETERS_LEN;
+    char product[PARAMETERS_LEN];
+    char quantity[PARAMETERS_LEN];
 
     char read_fields = 0b00;
 

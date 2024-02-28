@@ -21,12 +21,12 @@ Rating::~Rating(){
 
 Rating* Rating::from_stream(redisReply* reply, int stream_num, int msg_num){
 
-    char keyPARAMETERS_LEN;
-    char valuePARAMETERS_LEN;
+    char key[PARAMETERS_LEN];
+    char value[PARAMETERS_LEN];
 
-    char productPARAMETERS_LEN;
-    char customerPARAMETERS_LEN;
-    char starsPARAMETERS_LEN;
+    char product[PARAMETERS_LEN];
+    char customer[PARAMETERS_LEN];
+    char stars[PARAMETERS_LEN];
 
     char read_fields = 0b000;
 

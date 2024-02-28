@@ -6,7 +6,7 @@ int main(){
     redisContext *c2r;
     redisReply *reply;
 
-    char next_valPARAMETERS_LEN;
+    char next_val[PARAMETERS_LEN];
 
     c2r = redisConnect(REDIS_SERVER, REDIS_PORT);
 

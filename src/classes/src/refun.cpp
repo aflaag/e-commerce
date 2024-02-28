@@ -1,21 +1,30 @@
-#include "card.h"
+#include "refund.h"
 
-Card::Card(char* card_number, 
-        char* card_owner_email){
+Refund::Refund(char* refund_id, 
+        char* refund_request_instant, 
+        char* refund_state, 
+        char* refund_assigned_delivery){
 
-    number = (char*) malloc(sizeof(char) * 100);
-    email = (char*) malloc(sizeof(char) * 100);
+    id = (char*) malloc(sizeof(char) * 100);
+    request_instant = (char*) malloc(sizeof(char) * 100);
+    state = (char*) malloc(sizeof(char) * 100);
+    assigned_delivery = (char*) malloc(sizeof(char) * 100);
 
-    strcpy(number, card_number);
-    strcpy(email, card_owner_email);
+    strcpy(id, refund_id);
+    strcpy(request_instant, refund_request_instant);
+    strcpy(state, refund_state);
+    strcpy(assigned_delivery, refund_assigned_delivery);
+    
 }
 
-Card::~Card(){
-    free(number);
-    free(email);
+Refund::~Refund(){
+    free(id);
+    free(request_instant);
+    free(state);
+    free(assigned_delivery);
 }
 
-Card* Card::from_stream(redisReply* reply, int stream_num, int msg_num){
+Refund* Refund::from_stream(redisReply* reply, int stream_num, int msg_num){
 
     char key[PARAMETERS_LEN];
     char value[PARAMETERS_LEN];
