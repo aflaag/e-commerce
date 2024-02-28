@@ -19,7 +19,6 @@ Server::Server(int port) {
     serverAddress.sin_family = AF_INET; 
     serverAddress.sin_port = htons(port); 
     serverAddress.sin_addr.s_addr = INADDR_ANY;
-    serverAddress.sin_port = sockPort;
 
     if (bind(sockfd, (struct sockaddr*) &serverAddress, sizeof(serverAddress)) == -1){
         throw std::invalid_argument("Error binding the socket");
@@ -30,20 +29,21 @@ Server::Server(int port) {
 }
 
 void Server::run(){
-    fd_set current_set, working_set;
+
+    fd_set working_set;
     char buffer[1000];
-    int max_fd, rc, close_conn, i, new_client, ready_requests = 0;
+    int rc, close_conn, i, new_client, ready_requests = 0;
     struct timeval timeout;
 
     FD_ZERO(&current_set);
     max_fd = sockfd;
     FD_SET(sockfd, &current_set);
 
-    timeout.tv_sec  = 30;
+    timeout.tv_sec  = 1;
     timeout.tv_usec = 0;
 
     while(!end_server) {
-        printf("select failed");
+        printf("select failed\n");
 
         memcpy(&working_set, &current_set, sizeof(current_set));
 
@@ -55,8 +55,9 @@ void Server::run(){
             break;
         }
         if (rc == 0) {
-            printf("timeout");
-            break;
+            timeout.tv_sec  = 1;
+            timeout.tv_usec = 0;
+            continue;
         }
 
         ready_requests = rc;
@@ -70,69 +71,13 @@ void Server::run(){
                 
                 // If it's itself
                 if (i == sockfd) {
-
-                    // Accept incoming conncetions
-                    do {
-                        new_client = accept(sockfd, NULL, NULL);
-                        printf("%d\n", new_client);
-                        if (new_client < 0) {
-
-                            if (errno != EWOULDBLOCK) {
-                                printf("accept error");
-                                end_server = TRUE;
-                            }
-                            break;
-                        }
-                        FD_SET(new_client, &current_set);
-                        if (new_client > max_fd) {
-                            max_fd = new_client;
-                        }
-                    } while (new_client != -1);
+                    printf("new client\n");
+                    add_new_clients();
 
                 // If it's a client
                 } else {
-                    close_conn = FALSE;
-
-                    // Read incoming data
-                    do {
-                        rc = recv(i, buffer, sizeof(buffer), 0);
-
-                        if (rc < 0) {
-                            if (errno != EWOULDBLOCK) {
-                                
-                                close_conn = TRUE;
-                            }
-                            break;
-                        }
-                        if (rc == 0) {
-                            close_conn = TRUE;
-                            break;
-                        }
-                        printf("%s\n", buffer);
-
-                        // we have in the buffer the request
-                        // process che responce
-                        // send the responce
-                            // rc = send(i, buffer, len, 0);
-
-                        // send_to_managers(i, stringa_letta);
-
-                        if (rc < 0) {
-                            perror("send() failed");
-                            close_conn = TRUE;
-                            break;
-                        }
-                    } while (TRUE);
-
-                    // If conncetion was closed by client or crashed
-                    if (close_conn) {
-                        close(i);
-                        FD_CLR(i, &current_set);
-                        if (i == max_fd) {
-                            while (FD_ISSET(max_fd, &current_set) == FALSE)
-                                max_fd -= 1;
-                        }
-                    }
+                    printf("new msg\n");
+                    receive(i);
                 }
             }
         }
@@ -150,3 +95,77 @@ void Server::run(){
 }
 
 
+void Server::add_new_clients() {
+    // Accept incoming conncetions
+    int new_client;
+    do {
+        new_client = accept(sockfd, NULL, NULL);
+        
+        if (new_client < 0) {
+
+            if (errno != EWOULDBLOCK) {
+                printf("accept error");
+                end_server = TRUE;
+            }
+            break;
+        }
+        FD_SET(new_client, &current_set);
+        if (new_client > max_fd) {
+            max_fd = new_client;
+        }
+
+        if (fcntl(new_client, F_SETFL, O_NONBLOCK) == -1) {
+		    printf("flag set error");
+        }
+    } while (new_client != -1);
+}
+
+
+void Server::receive(int i) {
+    std::string	msg;
+    char buffer[100];
+    int rc;
+    int close_conn = FALSE;
+
+    // Read incoming data
+    do {
+        bzero(buffer, 100);
+        rc = recv(i, buffer, sizeof(buffer), 0);
+        if (rc < 0) {
+            if (errno != EWOULDBLOCK) {
+                close_conn = TRUE;
+            }
+            break;
+        }
+        if (rc == 0) {
+            close_conn = TRUE;
+            break;
+        }
+        msg.append(buffer);
+        std::cout << buffer << std::endl;
+    } while (TRUE);
+
+    // If conncetion was closed by client or crashed
+    if (close_conn) {
+        close(i);
+        FD_CLR(i, &current_set);
+        if (i == max_fd) {
+            while (FD_ISSET(max_fd, &current_set) == FALSE)
+                max_fd -= 1;
+        }
+        // don't answer to the next requests
+        return;
+    }
+
+    std::istringstream iss(msg);
+    std::vector<std::string> lines;
+
+    std::string line;
+    while (std::getline(iss, line, '\n')) {
+        lines.push_back(line);
+    }
+
+    for (const auto& l : lines) {
+        std::cout << l << std::endl;
+    }
+}

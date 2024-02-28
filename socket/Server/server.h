@@ -10,6 +10,8 @@
 #include <errno.h>
 #include <unistd.h> 
 #include <cerrno>
+#include <vector>
+#include <sstream>
 
 #define MAX_CONNECTIONS 200
 #define TRUE 1
@@ -21,7 +23,12 @@ class Server {
         void run();
 
     private:
+        void add_new_clients();
+        void receive(int);
+
         int sockfd;
         int sockPort;
         int end_server = 0;
+        fd_set current_set;
+        int max_fd;
 };

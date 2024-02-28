@@ -25,5 +25,6 @@ int micro_sleep(long usec)
 int main(){
     int p = 8080;
     Server s { p };
+    printf("banana\n");
     s.run();
 }
