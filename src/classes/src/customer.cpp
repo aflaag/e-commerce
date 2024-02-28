@@ -25,13 +25,13 @@ Customer::~Customer(){
 
 Customer* Customer::from_stream(redisReply* reply, int stream_num, int msg_num){
 
-    char key[100];
-    char value[100];
+    char keyPARAMETERS_LEN;
+    char valuePARAMETERS_LEN;
 
-    char name[100];
-    char email[100];
-    char surname[100];
-    char phone_number[100];
+    char namePARAMETERS_LEN;
+    char emailPARAMETERS_LEN;
+    char surnamePARAMETERS_LEN;
+    char phone_numberPARAMETERS_LEN;
 
     char read_fields = 0b0000;
 

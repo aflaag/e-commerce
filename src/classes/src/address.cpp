@@ -29,14 +29,14 @@ Address::~Address(){
 
 Address* Address::from_stream(redisReply* reply, int stream_num, int msg_num){
 
-    char key[100];
-    char value[100];
+    char keyPARAMETERS_LEN;
+    char valuePARAMETERS_LEN;
 
-    char email[100];
-    char zip_code[100];
-    char street[100];
-    char street_number[100];
-    char city[100];
+    char emailPARAMETERS_LEN;
+    char zip_codePARAMETERS_LEN;
+    char streetPARAMETERS_LEN;
+    char street_numberPARAMETERS_LEN;
+    char cityPARAMETERS_LEN;
 
     char read_fields = 0b00000;
 

@@ -6,7 +6,7 @@ int main() {
 
     PGresult *query_res;
 
-    char query[1000], response[100], msg_id[30], first_key[30], client_id[30], second_key[30], purchase[100];
+    char query[QUERY_LEN], response[100], msg_id[30], first_key[30], client_id[30], second_key[30], purchasePARAMETERS_LEN;
 
     char * cancel_instant;
 

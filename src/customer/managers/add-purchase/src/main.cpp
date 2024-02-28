@@ -6,7 +6,7 @@ int main() {
 
     PGresult *query_res;
 
-    char query[1000], response[100], msg_id[30], first_key[30], client_id[30];
+    char query[QUERY_LEN], response[100], msg_id[30], first_key[30], client_id[30];
 
     Con2DB db(POSTGRESQL_SERVER, POSTGRESQL_PORT, POSTGRESQL_USER, POSTGRESQL_PSW, POSTGRESQL_DBNAME);
     c2r = redisConnect(REDIS_SERVER, REDIS_PORT);
@@ -86,7 +86,7 @@ int main() {
 
         // 14 is where the first product is expected to be
         for (int field_num = 14; field_num < ReadStreamMsgNumVal(reply, 0, 0); field_num += 4) {
-            char query_find_product[1000];
+            char query_find_product[QUERY_LEN];
 
             OrderedProduct* ordered_product = OrderedProduct::from_stream(reply, 0, 0, field_num, purchase);
 
@@ -115,7 +115,7 @@ int main() {
         if (PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) {
             send_response_status(c2r, WRITE_STREAM, client_id, "DB#ERROR", msg_id);
 
-            char delete_op[1000];
+            char delete_op[QUERY_LEN];
 
             sprintf(delete_op, "DELETE FROM Purchase WHERE id = %s", purchase);
 

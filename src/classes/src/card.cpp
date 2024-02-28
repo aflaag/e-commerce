@@ -17,11 +17,11 @@ Card::~Card(){
 
 Card* Card::from_stream(redisReply* reply, int stream_num, int msg_num){
 
-    char key[100];
-    char value[100];
+    char keyPARAMETERS_LEN;
+    char valuePARAMETERS_LEN;
 
-    char number[100];
-    char email[100];
+    char numberPARAMETERS_LEN;
+    char emailPARAMETERS_LEN;
 
     char read_fields = 0b00;
 

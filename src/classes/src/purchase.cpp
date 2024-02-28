@@ -42,17 +42,17 @@ Purchase::~Purchase(){
 
 Purchase* Purchase::from_stream(redisReply* reply, int stream_num, int msg_num){
 
-    char key[100];
-    char value[100];
+    char keyPARAMETERS_LEN;
+    char valuePARAMETERS_LEN;
 
-    char id[100];
+    char idPARAMETERS_LEN;
     char* purchase_instant;
-    char fare[100];
-    char customer[100];
-    char card[100];
-    char zip_code[100];
-    char street[100];
-    char street_number[100];
+    char farePARAMETERS_LEN;
+    char customerPARAMETERS_LEN;
+    char cardPARAMETERS_LEN;
+    char zip_codePARAMETERS_LEN;
+    char streetPARAMETERS_LEN;
+    char street_numberPARAMETERS_LEN;
 
     char read_fields = 0b000000;
 
