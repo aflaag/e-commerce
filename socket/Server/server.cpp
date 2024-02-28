@@ -32,7 +32,7 @@ void Server::run(){
 
     fd_set working_set;
     char buffer[1000];
-    int rc, close_conn, i, new_client, ready_requests = 0;
+    int rc, i, new_client, ready_requests = 0;
     struct timeval timeout;
 
     FD_ZERO(&current_set);
@@ -81,17 +81,13 @@ void Server::run(){
                 }
             }
         }
-
         // Read from managers (usare pair per ritornare lista di tuple (socket, stringa))
 
         // Send responses
     }
 
     // Close connections
-    for (i=0; i <= max_fd; ++i){
-        if (FD_ISSET(i, &current_set))
-            close(i);
-    } 
+    close_connections();
 }
 
 
@@ -167,5 +163,14 @@ void Server::receive(int i) {
 
     for (const auto& l : lines) {
         std::cout << l << std::endl;
+    }
+}
+
+void Server::close_connections() {
+    int i;
+
+    for (i=0; i <= max_fd; ++i){
+        if (FD_ISSET(i, &current_set))
+            close(i);
     }
 }
