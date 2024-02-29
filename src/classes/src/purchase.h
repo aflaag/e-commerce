@@ -13,6 +13,7 @@
 /* Local imports */
 
 #include "../../lib/con2redis/src/con2redis.h"
+#include "../../utils/src/consts.h"
 
 /* Classes */
 

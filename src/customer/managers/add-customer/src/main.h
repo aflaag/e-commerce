@@ -20,6 +20,7 @@
 #include "../../../../lib/con2redis/src/con2redis.h"
 #include "../../../../classes/src/customer.h"
 #include "../../../../utils/src/utils.h"
+#include "../../../../utils/src/consts.h"
 
 /* Constants */
 

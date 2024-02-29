@@ -11,7 +11,6 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/times.h>
-#include <string>
 #include <cassert>
 #include <cerrno>
 
@@ -20,15 +19,14 @@
 #include "../../../../lib/con2db/pgsql.h"
 #include "../../../../lib/con2redis/src/con2redis.h"
 #include "test_stream.h"
-#include "../../../../classes/src/purchase.h"
-#include "../../../../classes/src/ordered_product.h"
+#include "../../../../classes/src/card.h"
 #include "../../../../utils/src/utils.h"
 #include "../../../../utils/src/consts.h"
 
 /* Constants */
 
-#define READ_STREAM "add-purchase-in"
-#define WRITE_STREAM "add-purchase-out"
+#define READ_STREAM "add-refund-request-in"
+#define WRITE_STREAM "add-refund-request-out"
 
 #define REDIS_SERVER "localhost"
 #define REDIS_PORT 6379

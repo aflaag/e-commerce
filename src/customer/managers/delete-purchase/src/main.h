@@ -23,6 +23,7 @@
 #include "../../../../classes/src/purchase.h"
 #include "../../../../classes/src/ordered_product.h"
 #include "../../../../utils/src/utils.h"
+#include "../../../../utils/src/consts.h"
 
 /* Constants */
 

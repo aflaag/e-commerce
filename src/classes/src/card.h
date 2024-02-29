@@ -5,6 +5,7 @@
 
 #include <string.h>
 #include <stdexcept>
+#include "../../utils/src/consts.h"
 
 /* Local imports */
 

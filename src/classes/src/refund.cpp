@@ -29,33 +29,26 @@ Refund* Refund::from_stream(redisReply* reply, int stream_num, int msg_num){
     char key[PARAMETERS_LEN];
     char value[PARAMETERS_LEN];
 
-    char number[PARAMETERS_LEN];
-    char email[PARAMETERS_LEN];
+    char id[100];
+    char* request_instant;
+    char state[100] = "Requested";
+    char assigned_delivery[100];
 
-    char read_fields = 0b00;
+    // prendo il timestamp corrente
+    auto current_time = std::chrono::system_clock::now();
+    std::time_t current_time_t = std::chrono::system_clock::to_time_t(current_time);
+    request_instant = std::ctime(&current_time_t);
 
+    ReadStreamMsgVal(reply, stream_num, msg_num, 2, key);
+    ReadStreamMsgVal(reply, stream_num, msg_num, 3, value);
+                
+    if (!strcmp(key, "assigned_delivery")) {
+        sprintf(assigned_delivery, "%s", value);
 
-    for (int field_num = 2; field_num < ReadStreamMsgNumVal(reply, stream_num, msg_num); field_num +=  2) {
-        ReadStreamMsgVal(reply, stream_num, msg_num, field_num, key);
-        ReadStreamMsgVal(reply, stream_num, msg_num, field_num + 1, value);
-                    
-        if (!strcmp(key, "number")) {
-            sprintf(number, "%s", value);
-            read_fields |=0b01;
-
-        } else if (!strcmp(key, "email")) {
-            sprintf(email, "%s", value);
-            read_fields |=0b10;
-
-        } else {
-            throw std::invalid_argument("Stream error: invalid fields");
-        }
-    }
-
-    if (read_fields != 0b11){
+    } else {
         throw std::invalid_argument("Stream error: invalid fields");
     }
 
-    return new Card(number, email);
+    return new Refund(id,request_instant, state, assigned_delivery);
 }
     
