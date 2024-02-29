@@ -20,15 +20,17 @@ class DeliveryPurchase {
         char *time;
         char *courier;
         char *purchase;
+        char *state;
 
         DeliveryPurchase(char* purchase_id, char* del_code, char* courier_id);
-        //DeliveryPurchase(char* code, char* timestamp);
+        DeliveryPurchase(char* del_code, char* timestamp, char* update_state, int);
 
         ~DeliveryPurchase();
 
         static DeliveryPurchase* from_stream(redisReply* reply, int stream_num, int msg_num);
-        //static DeliveryPurchase* update_from_stream(redisReply* reply, int stream_num, int msg_num);
+        static DeliveryPurchase* update_from_stream(redisReply* reply, int stream_num, int msg_num);
         std::string to_insert_query();
+        std::string to_update_query();
 };
 
 #endif
