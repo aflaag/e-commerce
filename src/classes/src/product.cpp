@@ -5,10 +5,10 @@ Product::Product(char* product_code,
         char* product_description,
         char* product_price ){
 
-    code = (char*) malloc(sizeof(char) * 100);
-    name = (char*) malloc(sizeof(char) * 100);
-    description = (char*) malloc(sizeof(char) * 100);
-    price = (char*) malloc(sizeof(char) * 100);
+    code = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    name = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    description = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    price = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
 
     strcpy(code, product_code);
     strcpy(name, product_name);
@@ -19,10 +19,10 @@ Product::Product(char* product_code,
 Product::Product(char* product_code, 
         char* product_description){
 
-    code = (char*) malloc(sizeof(char) * 100);
-    name = (char*) malloc(sizeof(char) * 100);
-    description = (char*) malloc(sizeof(char) * 100);
-    price = (char*) malloc(sizeof(char) * 100);
+    code = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    name = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    description = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    price = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
 
     strcpy(code, product_code);
     strcpy(description, product_description);

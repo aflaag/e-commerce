@@ -2,7 +2,7 @@
 
 Supplier::Supplier(char* supplier_business_name){
 
-    business_name = (char*) malloc(sizeof(char) * 100);
+    business_name = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
 
     strcpy(business_name, supplier_business_name);
 }

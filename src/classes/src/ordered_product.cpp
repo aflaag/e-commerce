@@ -4,9 +4,9 @@ OrderedProduct::OrderedProduct(char* order_product,
         char* order_purchase, 
         char* order_quantity){
 
-    product = (char*) malloc(sizeof(char) * 100);
-    purchase = (char*) malloc(sizeof(char) * 100);
-    quantity = (char*) malloc(sizeof(char) * 100);
+    product = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    purchase = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    quantity = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
 
     strcpy(product, order_product);
     strcpy(purchase, order_purchase);

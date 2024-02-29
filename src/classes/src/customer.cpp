@@ -5,10 +5,10 @@ Customer::Customer(char* customer_email,
         char* customer_surname,
         char* customer_phone_number){
 
-    email = (char*) malloc(sizeof(char) * 100);
-    name = (char*) malloc(sizeof(char) * 100);
-    surname = (char*) malloc(sizeof(char) * 100);
-    phone_number = (char*) malloc(sizeof(char) * 100);
+    email = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    name = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    surname = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    phone_number = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
 
     strcpy(email, customer_email);
     strcpy(name, customer_name);

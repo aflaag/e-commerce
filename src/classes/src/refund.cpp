@@ -5,10 +5,10 @@ Refund::Refund(char* refund_id,
         char* refund_state, 
         char* refund_assigned_delivery){
 
-    id = (char*) malloc(sizeof(char) * 100);
-    request_instant = (char*) malloc(sizeof(char) * 100);
-    state = (char*) malloc(sizeof(char) * 100);
-    assigned_delivery = (char*) malloc(sizeof(char) * 100);
+    id = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    request_instant = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    state = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    assigned_delivery = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
 
     strcpy(id, refund_id);
     strcpy(request_instant, refund_request_instant);

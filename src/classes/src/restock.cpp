@@ -1,10 +1,10 @@
 #include "restock.h"
 
 Restock::Restock(char* restock_id, char* restock_quantity, char* restock_supplier, char* restock_product){
-    id = (char*) malloc(sizeof(char) * 100);
-    quantity = (char*) malloc(sizeof(char) * 100);
-    supplier = (char*) malloc(sizeof(char) * 100);
-    product = (char*) malloc(sizeof(char) * 100);
+    id = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    quantity = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    supplier = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    product = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
 
     strcpy(id, restock_id);
     strcpy(quantity, restock_quantity);

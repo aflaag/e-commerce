@@ -10,14 +10,14 @@ Purchase::Purchase(
         char* purchase_street, 
         char* purchase_street_number){
 
-    id = (char*) malloc(sizeof(char) * 100);
-    purchase_instant = (char*) malloc(sizeof(char) * 100);
-    fare = (char*) malloc(sizeof(char) * 100);
-    customer = (char*) malloc(sizeof(char) * 100);
-    card = (char*) malloc(sizeof(char) * 100);
-    zip_code = (char*) malloc(sizeof(char) * 100);
-    street = (char*) malloc(sizeof(char) * 100);
-    street_number = (char*) malloc(sizeof(char) * 100);
+    id = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    purchase_instant = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    fare = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    customer = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    card = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    zip_code = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    street = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    street_number = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
 
     strcpy(id, purchase_id);
     strcpy(purchase_instant, purchase_instant_in);

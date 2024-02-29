@@ -4,9 +4,9 @@ RefundedProduct::RefundedProduct(char* refund_request_in,
         char* refunded_product, 
         char* refund_quantity){
 
-    refund_request = (char*) malloc(sizeof(char) * 100);
-    product = (char*) malloc(sizeof(char) * 100);
-    quantity = (char*) malloc(sizeof(char) * 100);
+    refund_request = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    product = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    quantity = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
 
     strcpy(refund_request, refund_request_in);
     strcpy(product, refunded_product);

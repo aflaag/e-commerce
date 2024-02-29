@@ -3,8 +3,8 @@
 Card::Card(char* card_number, 
         char* card_owner_email){
 
-    number = (char*) malloc(sizeof(char) * 100);
-    email = (char*) malloc(sizeof(char) * 100);
+    number = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    email = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
 
     strcpy(number, card_number);
     strcpy(email, card_owner_email);

@@ -4,9 +4,9 @@ Rating::Rating(char *rating_product,
         char *rating_customer,
         char *rating_stars){
 
-    product = (char*) malloc(sizeof(char) * 100);
-    customer = (char*) malloc(sizeof(char) * 100);
-    stars = (char*) malloc(sizeof(char) * 100);
+    product = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    customer = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    stars = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
 
     strcpy(product, rating_product);
     strcpy(customer, rating_customer);

@@ -6,11 +6,11 @@ Address::Address(char* address_owner_email,
             char* address_steet_number, 
             char* address_city){
 
-    email = (char*) malloc(sizeof(char) * 100);
-    zip_code = (char*) malloc(sizeof(char) * 100);
-    street = (char*) malloc(sizeof(char) * 100);
-    street_number = (char*) malloc(sizeof(char) * 100);
-    city = (char*) malloc(sizeof(char) * 100);
+    email = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    zip_code = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    street = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    street_number = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    city = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
 
     strcpy(email, address_owner_email);
     strcpy(zip_code, address_zip_code);
