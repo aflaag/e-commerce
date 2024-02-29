@@ -7,7 +7,6 @@ GRANT CONNECT ON DATABASE :dbname TO :courier ;
 GRANT CONNECT ON DATABASE :dbname TO :supplier ;
 GRANT CONNECT ON DATABASE :dbname TO :customer ;
 
-
 ALTER TABLE Country OWNER TO :admin ;
 ALTER TABLE City OWNER TO :admin ;
 ALTER TABLE Address OWNER TO :admin ;
@@ -25,12 +24,10 @@ ALTER TABLE AssignedDelivery OWNER TO :admin ;
 ALTER TABLE RefundRequest OWNER TO :admin ;
 ALTER TABLE RefundedProduct OWNER TO :admin ;
 
--- grant all privileges on all tables in schema public to :username ;
--- grant all privileges on all sequences in schema public to :username ;
-
 GRANT ALL ON SCHEMA public TO :admin ;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO :admin ;
 
+-- grant usage and select permission to autoincrements
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO :admin ;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO :customer ;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO :courier ;
