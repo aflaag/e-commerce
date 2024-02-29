@@ -64,7 +64,7 @@ int main() {
         query = product->to_insert_query();
 
         query_res = db.RunQuery((char *) query.c_str(), false);
-        printf("yoyyo\n");
+        
         if (PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) {
             send_response_status(c2r, WRITE_STREAM, client_id, "DB#ERROR", msg_id);
             continue;

@@ -11,7 +11,7 @@ void send_response_status(redisContext* c2r, const char *stream, const char *cli
     freeReplyObject(reply);
 }
 
-std::string replaceSubstring(std::string input, const std::string& target, const std::string& replacement) {
+std::string replace_substring(std::string input, const std::string& target, const std::string& replacement) {
     size_t pos = input.find(target);
 
     while (pos != std::string::npos) {
@@ -20,4 +20,22 @@ std::string replaceSubstring(std::string input, const std::string& target, const
     }
 
     return input;
+}
+
+std::string get_current_timestamp_as_string() {
+    // Get current time point
+    auto now = std::chrono::system_clock::now();
+
+    // Convert to time_t (seconds since epoch)
+    std::time_t currentTime = std::chrono::system_clock::to_time_t(now);
+
+    // Convert time_t to tm structure
+    std::tm *localTime = std::localtime(&currentTime);
+
+    // Format tm structure into a string
+    std::ostringstream oss;
+    oss << std::put_time(localTime, "%Y-%m-%d %H:%M:%S");
+
+    // Get the resulting string
+    return oss.str();
 }

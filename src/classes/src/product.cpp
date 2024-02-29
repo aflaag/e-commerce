@@ -112,7 +112,7 @@ Product* Product::update_from_stream(redisReply* reply, int stream_num, int msg_
 
     std::string str_description = description;
 
-    str_description = replaceSubstring(str_description, SPACE_REDIS_STRING, SPACE);
+    str_description = replace_substring(str_description, SPACE_REDIS_STRING, SPACE);
 
     return new Product(code, (char*)str_description.c_str());
 }
@@ -124,8 +124,8 @@ std::string Product::to_insert_query() {
     std::string str_price = price;
 
 
-    str_name = replaceSubstring(str_name, SPACE_REDIS_STRING, SPACE);
-    str_description = replaceSubstring(str_description, SPACE_REDIS_STRING, SPACE);
+    str_name = replace_substring(str_name, SPACE_REDIS_STRING, SPACE);
+    str_description = replace_substring(str_description, SPACE_REDIS_STRING, SPACE);
 
 
     return "INSERT INTO Product (code, name, description, price) VALUES (\'" + str_code + "\', \'" + str_name + "\', \'" + str_description + "\', \'" + str_price + "\')";
