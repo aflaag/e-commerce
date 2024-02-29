@@ -15,6 +15,8 @@ check_arguments() {
 check_last_command() {
     if [ $? -ne 0 ]
     then
+        printf "\n\n\n😭😭😭😭😭😭😭😭😭😭 FAILED COOKIN' 😭😭😭😭😭😭😭😭😭😭\n"
+        printf "\n\n\n🗣️🗣️🗣️🗣️🗣️🗣️🗣️🗣️ WE 👏 ARE 👏 SO 👏 BACK 🗣️🗣️🗣️🗣️🗣️🗣️🗣️🗣️\n\n\n\n"
         exit
     fi
 }
