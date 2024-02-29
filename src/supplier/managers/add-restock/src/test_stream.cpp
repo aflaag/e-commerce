@@ -11,7 +11,7 @@ int add_to_stream() {
     // initialize stream
     initStreams(c2r, WRITE_STREAM);
 
-    reply = RedisCommand(c2r, "XADD %s * client_id 1 business_name Supplier5", WRITE_STREAM);
+    reply = RedisCommand(c2r, "XADD %s * client_id 1 quantity 10 supplier Supplier1 product P1", WRITE_STREAM);
     assertReplyType(c2r, reply, REDIS_REPLY_STRING);
     freeReplyObject(reply);
 

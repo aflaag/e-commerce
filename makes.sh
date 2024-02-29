@@ -1,63 +1,98 @@
-#!/usr/bin/sh
+#!/bin/bash
 
-cd src/lib/con2db
-echo "INSIDE con2db"
-make clean
-make
-printf "DONE con2db\n\n"
+ROOT=$(pwd)
+CURRENT_ROOT=""
 
-cd ../con2redis/src
-echo "INSIDE con2redis/src"
-make clean
-make
-printf "DONE con2redis/src\n\n"
+CLEAN=false
 
-cd ../../../utils/src
-echo "INSIDE utils/src"
-make clean
-make
-printf "DONE utils/src\n\n"
+check_arguments() {
+    if [ "$1" = "--clean" ] || [ "$1" = "-c" ]; then
+        CLEAN=true
+    fi
+}
 
-cd ../../customer/managers/add-card/src
-echo "INSIDE add-card/src"
-make clean
-make
-printf "DONE add-card/src\n\n"
+check_last_command() {
+    if [ $? -ne 0 ]
+    then
+        exit
+    fi
+}
 
-cd ./../add-customer/src
-echo "INSIDE add-customer/src"
-make clean
-make
-printf "DONE add-customer/src\n\n"
+try_cd() {
+    cd $1
 
-cd ./../add-address/src
-echo "INSIDE add-address/src"
-make clean
-make
-printf "DONE add-address/src\n\n"
+    check_last_command
+}
 
-cd ./../add-purchase/src
-echo "INSIDE add-purchase/src"
-make clean
-make
-printf "DONE add-purchase/src\n\n"
+set_current_root() {
+    CURRENT_ROOT=$1
 
-cd ./../add-rating/src
-echo "INSIDE add-rating/src"
-make clean
-make
-printf "DONE add-rating/src\n\n"
+    try_cd "$ROOT/$CURRENT_ROOT"
+}
 
-cd ./../delete-purchase/src
-echo "INSIDE delete-purchase/src"
-make clean
-make
-printf "DONE delete-purchase/src\n\n"
+try_make() {
+    if $CLEAN = true
+    then
+        make clean
+    else
+        make
+    fi
 
-cd ./../add-refund-request/src
-echo "INSIDE add-refund-request/src"
-make clean
-make
-printf "DONE add-refund-request/src\n\n"
+    check_last_command
+}
 
+make_folder() {
+    try_cd $1
 
+    printf "INSIDE $1\n"
+
+    try_make
+
+    printf "DONE $1\n\n"
+
+    try_cd "$ROOT/$CURRENT_ROOT"
+}
+
+check_arguments $1
+
+printf "\n\n\n############## 🍳🍳🥩🥩 STARTED COOKIN' 🥩🥩🍳🍳 ##############\n\n\n\n"
+
+printf "############## LIB ##############\n\n"
+
+set_current_root src/lib
+
+make_folder con2db
+make_folder con2redis/src
+
+printf "############## UTILS ##############\n\n"
+
+set_current_root src
+
+make_folder utils/src
+
+printf "############## CLASSES ##############\n\n"
+
+set_current_root src
+
+make_folder classes/src
+
+printf "############## CUSTOMER ##############\n\n"
+
+set_current_root src/customer/managers
+
+make_folder add-card/src
+make_folder add-customer/src
+make_folder add-address/src
+make_folder add-purchase/src
+make_folder add-rating/src
+make_folder add-refund-request/src
+make_folder delete-purchase/src
+
+printf "############## SUPPLIER ##############\n\n"
+
+set_current_root src/supplier/managers
+
+make_folder add-supplier/src
+make_folder add-restock/src
+
+printf "\n\n\n############## 🍳🍳🥩🥩 FINISHED COOKIN' 🥩🥩🍳🍳 ##############\n\n\n\n"

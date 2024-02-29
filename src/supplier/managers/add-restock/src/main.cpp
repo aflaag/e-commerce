@@ -26,7 +26,7 @@ int main() {
     
     add_to_stream(); // DA TOGLIERE
 
-    Supplier* supplier;
+    Restock* restock;
 
     while(1) {
 
@@ -53,15 +53,15 @@ int main() {
 
         // Convert request
         try{
-            supplier = Restock::from_stream(reply, 0, 0);
+            restock = Restock::from_stream(reply, 0, 0);
         }
         catch(std::invalid_argument exp){
+            printf("qui?\n");
             send_response_status(c2r, WRITE_STREAM, client_id, "INVALID#REQUEST", msg_id);
             continue;
         }
 
-        sprintf(query, "INSERT INTO Supplier (business_name) VALUES (\'%s\')", 
-                        supplier->business_name);
+        sprintf(query, "INSERT INTO Restock (quantity, supplier, product) VALUES (\'%s\', \'%s\', \'%s\')", restock->quantity, restock->supplier, restock->product);
 
         query_res = db.RunQuery(query, false);
 
