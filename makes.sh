@@ -46,6 +46,12 @@ cd ./../delete-purchase/src
 echo "INSIDE delete-purchase/src"
 make clean
 make
-echo "DONE delete-/src"
+echo "DONE delete-purchase/src"
+
+cd ./../add-refund-request/src
+echo "INSIDE add-refund-request/src"
+make clean
+make
+echo "DONE add-refund-request/src"
 
 

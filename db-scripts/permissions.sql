@@ -54,4 +54,5 @@ GRANT SELECT, INSERT ON Card TO :customer ;
 GRANT SELECT ON AssignedDelivery TO :customer ;
 GRANT SELECT, INSERT ON Customer TO :customer ;
 GRANT SELECT, INSERT ON OrderedProducts TO :customer ;
+GRANT SELECT, INSERT ON RefundedProduct TO :customer ;
 GRANT SELECT ON Restock TO :customer ;

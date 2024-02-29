@@ -219,23 +219,21 @@ CREATE TRIGGER ordered_product_quantity_consistency_trg
 AFTER INSERT ON OrderedProducts FOR EACH ROW EXECUTE FUNCTION ordered_product_quantity_consistency();
 
 -- inclusion RefundedProduct
-CREATE OR REPLACE FUNCTION inclusion_refunded_products() RETURNS TRIGGER AS $$
-BEGIN
-
-    IF EXISTS (
-        SELECT 1 
-        FROM RefundedProduct
-        WHERE refund_request = NEW.id
-    ) IS FALSE THEN
-        RAISE EXCEPTION 'no product included';
-    END IF;
-
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER inclusion_refunded_products_trg
-AFTER INSERT ON RefundRequest FOR EACH ROW EXECUTE FUNCTION inclusion_refunded_products();
+-- CREATE OR REPLACE FUNCTION inclusion_refunded_products() RETURNS TRIGGER AS $$
+-- BEGIN
+--        IF EXISTS (
+--        SELECT 1 
+--        FROM RefundedProduct
+--        WHERE refund_request = NEW.id
+--    ) IS FALSE THEN
+--        RAISE EXCEPTION 'no product included';
+--    END IF;
+--    RETURN NEW;
+-- END;
+-- $$ LANGUAGE plpgsql;
+--
+-- CREATE TRIGGER inclusion_refunded_products_trg
+-- AFTER INSERT ON RefundRequest FOR EACH ROW EXECUTE FUNCTION inclusion_refunded_products();
 
 -- -- inclusion OrderedProducts
 -- CREATE OR REPLACE FUNCTION inclusion_ordered_products() RETURNS TRIGGER AS $$
