@@ -4,7 +4,6 @@
 
 ### Altro
 
-- costanti
 
 ### Relazione
 

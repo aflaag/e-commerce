@@ -1,13 +1,12 @@
 #ifndef main_h
 #define main_h
 
+/* Library imports */
 // TODO: da filtrare
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include <time.h>
 #include <stddef.h>
-#include <limits.h>
 #include <unistd.h>
 #include <string.h>
 #include <sys/types.h>
@@ -15,11 +14,29 @@
 #include <cassert>
 #include <cerrno>
 
+/* Local imports */
+
 #include "../../../../lib/con2db/pgsql.h"
 #include "../../../../lib/con2redis/src/con2redis.h"
 #include "test_stream.h"
+#include "../../../../classes/src/supplier.h"
+#include "../../../../utils/src/utils.h"
+#include "../../../../utils/src/const.h"
+
+/* Constants */
+
+#define READ_STREAM "add-supplier-in"
+#define WRITE_STREAM "add-supplier-out"
+
+#define REDIS_SERVER "localhost"
+#define REDIS_PORT 6379
+
+#define POSTGRESQL_SERVER "localhost"
+#define POSTGRESQL_PORT "5432"
+#define POSTGRESQL_USER "supplier"
+#define POSTGRESQL_PSW "supplier"
+#define POSTGRESQL_DBNAME "ecommerce"
 
 using namespace std;
-int micro_sleep(long usec);
 
 #endif
