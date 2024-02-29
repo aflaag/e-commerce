@@ -71,7 +71,6 @@ int main() {
         }
 
         send_response_status(c2r, WRITE_STREAM, client_id, "INSERT#SUCCESS", msg_id);
-        
     }
 
     db.finish();

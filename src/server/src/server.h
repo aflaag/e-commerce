@@ -19,12 +19,13 @@
 
 class Server {
     public:
-        Server(int);
+        Server(int port);
         void run();
 
     private:
         void add_new_clients();
-        void receive(int);
+        void receive(int i);
+        void close_connections();
 
         int sockfd;
         int sockPort;
