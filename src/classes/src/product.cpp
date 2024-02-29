@@ -27,10 +27,10 @@ Product* Product::from_stream(redisReply* reply, int stream_num, int msg_num, in
     char key[PARAMETERS_LEN];
     char value[PARAMETERS_LEN];
 
-    char product[PARAMETERS_LEN];
+    char code[PARAMETERS_LEN];
     char price[PARAMETERS_LEN];
     char description[PARAMETERS_LEN];
-    char name[PARAMETERS_LEN]
+    char name[PARAMETERS_LEN];
 
     char read_fields = 0b0000;
 
@@ -39,11 +39,11 @@ Product* Product::from_stream(redisReply* reply, int stream_num, int msg_num, in
         ReadStreamMsgVal(reply, stream_num, msg_num, field_num + 1, value);
                     
         if (!strcmp(key, "code")) {
-            sprintf(product, "%s", value);
+            sprintf(code, "%s", value);
             read_fields |=0b0001;
 
         } else if (!strcmp(key, "price")) {
-            sprintf(quantity, "%s", value);
+            sprintf(price, "%s", value);
             read_fields |=0b0010;
 
         } else if (!strcmp(key, "description")) {
@@ -72,9 +72,8 @@ std::string Product::to_insert_query() {
     std::string str_description = description;
     std::string str_price = price;
 
-    
-    replaceSubstring(str_name SPACE_REDIS_STRING, SPACE);
-    replaceSubstring(str_description SPACE_REDIS_STRING, SPACE);
+    replaceSubstring(str_name, SPACE_REDIS_STRING, SPACE);
+    replaceSubstring(str_description, SPACE_REDIS_STRING, SPACE);
 
     return "INSERT INTO Products (code, name, description, price) VALUES (\'" + str_code + "\', \'" + str_name + "\', \'" + str_description + "\', \'" + str_description + "\')";
 }

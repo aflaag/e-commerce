@@ -1,7 +1,11 @@
 #ifndef utils_h
 #define utils_h
 
-/* Libraries */
+/* Library imports */
+
+#include <string>
+
+/* Local imports */
 
 #include "../../lib/con2redis/src/con2redis.h"
 

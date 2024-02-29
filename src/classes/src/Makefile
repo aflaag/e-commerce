@@ -16,16 +16,20 @@ DEPS = $(wildcard $(IDIR)/*.h)
 SRC = $(wildcard *.cpp)
 OBJ = $(patsubst %.cpp, $(ODIR)/%.o, $(SRC))
 
+utils_OBJ=$(wildcard ../../../../utils/obj/*.o)
+
 #all:	$(ODIR)/%.o
 
-all:	create_dirs $(ODIR)/$(OBJ)
+all:	create_dirs utils $(ODIR)/$(OBJ)
 
 create_dirs:
 	mkdir -p $(ODIR)
 
+utils:
+	$(MAKE) -C ../../utils/src/
+
 $(ODIR)/%.o: %.cpp $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
-
 
 .PHONY: clean
 
