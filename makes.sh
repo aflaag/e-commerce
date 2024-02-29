@@ -56,7 +56,7 @@ make_folder() {
 
 check_arguments $1
 
-printf "\n\n\n############## 🍳🍳🥩🥩 STARTED COOKIN' 🥩🥩🍳🍳 ##############\n\n\n\n"
+printf "\n\n\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥 🍳🍳🥩🥩 STARTED COOKIN' 🥩🥩🍳🍳 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n\n\n\n"
 
 printf "############## LIB ##############\n\n"
 
@@ -95,5 +95,7 @@ set_current_root src/supplier/managers
 
 make_folder add-supplier/src
 make_folder add-restock/src
+make_folder add-product/src
+make_folder update-product/src
 
-printf "\n\n\n############## 🍳🍳🥩🥩 FINISHED COOKIN' 🥩🥩🍳🍳 ##############\n\n\n\n"
+printf "\n\n\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥 🍳🍳🥩🥩 FINISHED COOKIN' 🥩🥩🍳🍳 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n\n\n\n"
