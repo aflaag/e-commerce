@@ -1,5 +1,5 @@
-#ifndef ordered_product_h
-#define ordered_product_h
+#ifndef product_h
+#define product_h
 
 /* Library imports */
 
@@ -13,7 +13,7 @@
 
 /* Classes */
 
-class OrderedProduct {
+class Product {
     public:
         char *name;
         char *code;
