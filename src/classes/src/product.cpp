@@ -16,6 +16,19 @@ Product::Product(char* product_code,
     strcpy(price, product_price);
 }
 
+Product::Product(char* product_code, 
+        char* product_description){
+
+    code = (char*) malloc(sizeof(char) * 100);
+    name = (char*) malloc(sizeof(char) * 100);
+    description = (char*) malloc(sizeof(char) * 100);
+    price = (char*) malloc(sizeof(char) * 100);
+
+    strcpy(code, product_code);
+    strcpy(description, product_description);
+}
+
+
 Product::~Product(){
     free(code);
     free(name);
@@ -23,7 +36,7 @@ Product::~Product(){
     free(price);
 }
 
-Product* Product::from_stream(redisReply* reply, int stream_num, int msg_num, int starting_value) {
+Product* Product::from_stream(redisReply* reply, int stream_num, int msg_num) {
     char key[PARAMETERS_LEN];
     char value[PARAMETERS_LEN];
 
@@ -34,7 +47,7 @@ Product* Product::from_stream(redisReply* reply, int stream_num, int msg_num, in
 
     char read_fields = 0b0000;
 
-    for (int field_num = starting_value; field_num < ReadStreamMsgNumVal(reply, stream_num, msg_num); field_num += 2) {
+    for (int field_num = 2; field_num < ReadStreamMsgNumVal(reply, stream_num, msg_num); field_num += 2) {
         ReadStreamMsgVal(reply, stream_num, msg_num, field_num, key);
         ReadStreamMsgVal(reply, stream_num, msg_num, field_num + 1, value);
                     
@@ -65,15 +78,37 @@ Product* Product::from_stream(redisReply* reply, int stream_num, int msg_num, in
 
     return new Product(code, name, description, price);
 }
-    
-std::string Product::to_insert_query() {
-    std::string str_code = code;
-    std::string str_name = name;
-    std::string str_description = description;
-    std::string str_price = price;
 
-    replaceSubstring(str_name, SPACE_REDIS_STRING, SPACE);
-    replaceSubstring(str_description, SPACE_REDIS_STRING, SPACE);
 
-    return "INSERT INTO Products (code, name, description, price) VALUES (\'" + str_code + "\', \'" + str_name + "\', \'" + str_description + "\', \'" + str_description + "\')";
+Product* Product::update_from_stream(redisReply* reply, int stream_num, int msg_num) {
+    char key[PARAMETERS_LEN];
+    char value[PARAMETERS_LEN];
+
+    char code[PARAMETERS_LEN];
+    char description[PARAMETERS_LEN];
+
+    char read_fields = 0b00;
+
+    for (int field_num = 2; field_num < ReadStreamMsgNumVal(reply, stream_num, msg_num); field_num += 2) {
+        ReadStreamMsgVal(reply, stream_num, msg_num, field_num, key);
+        ReadStreamMsgVal(reply, stream_num, msg_num, field_num + 1, value);
+                    
+        if (!strcmp(key, "code")) {
+            sprintf(code, "%s", value);
+            read_fields |=0b01;
+
+        } else if (!strcmp(key, "description")) {
+            sprintf(description, "%s", value);
+            read_fields |=0b10;
+
+        }else {
+            throw std::invalid_argument("Stream error: invalid fields");
+        }
+    }
+
+    if (read_fields != 0b11) {
+        throw std::invalid_argument("Stream error: invalid fields");
+    }
+
+    return new Product(code, description);
 }

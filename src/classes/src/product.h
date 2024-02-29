@@ -22,11 +22,12 @@ class Product {
         char *price;
 
         Product(char* code, char* name, char* description, char* price);
+        Product(char* code, char* description);
 
         ~Product();
 
-        static Product* from_stream(redisReply* reply, int stream_num, int msg_num, int starting_value);
-        std::string to_insert_query();
+        static Product* from_stream(redisReply* reply, int stream_num, int msg_num);
+        static Product* update_from_stream(redisReply* reply, int stream_num, int msg_num);
 };
 
 #endif
