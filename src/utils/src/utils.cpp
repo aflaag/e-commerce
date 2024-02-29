@@ -13,10 +13,9 @@ void send_response_status(redisContext* c2r, const char *stream, const char *cli
 
 std::string replaceSubstring(std::string input, const std::string& target, const std::string& replacement) {
     size_t pos = input.find(target);
+
     while (pos != std::string::npos) {
-        printf("%d\n",pos);
         input.replace(pos, target.length(), replacement);
-        printf("%s\n",(char*)input.c_str());
         pos = input.find(target, pos + replacement.length());
     }
 

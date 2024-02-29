@@ -5,10 +5,10 @@
 
 #include <string.h>
 #include <stdexcept>
-#include "../../utils/src/const.h"
 
 /* Local imports */
 
+#include "../../utils/src/const.h"
 #include "../../lib/con2redis/src/con2redis.h"
 
 /* Classes */
