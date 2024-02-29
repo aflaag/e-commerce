@@ -110,5 +110,9 @@ Product* Product::update_from_stream(redisReply* reply, int stream_num, int msg_
         throw std::invalid_argument("Stream error: invalid fields");
     }
 
-    return new Product(code, description);
+    std::string str_description = description;
+
+    str_description = replaceSubstring(str_description, SPACE_REDIS_STRING, SPACE);
+
+    return new Product(code, (char*)str_description.c_str());
 }
