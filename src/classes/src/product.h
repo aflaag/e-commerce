@@ -28,6 +28,7 @@ class Product {
 
         static Product* from_stream(redisReply* reply, int stream_num, int msg_num);
         static Product* update_from_stream(redisReply* reply, int stream_num, int msg_num);
+        std::string to_insert_query();
 };
 
 #endif
