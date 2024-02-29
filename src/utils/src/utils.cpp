@@ -10,3 +10,11 @@ void send_response_status(redisContext* c2r, const char *stream, const char *cli
     assertReplyType(c2r, reply, REDIS_REPLY_STRING);
     freeReplyObject(reply);
 }
+
+void replaceSubstring(std::string& input, const std::string& target, const std::string& replacement) {
+    size_t pos = input.find(target);
+    while (pos != std::string::npos) {
+        input.replace(pos, target.length(), replacement);
+        pos = input.find(target, pos + replacement.length());
+    }
+}
