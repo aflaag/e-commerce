@@ -6,7 +6,8 @@ CURRENT_ROOT=""
 CLEAN=false
 
 check_arguments() {
-    if [ "$1" = "--clean" ] || [ "$1" = "-c" ]; then
+    if [ "$1" = "--clean" ] || [ "$1" = "-c" ]
+    then
         CLEAN=true
     fi
 }
