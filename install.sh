@@ -9,4 +9,4 @@ sudo apt-get install libhiredis-dev
 sudo apt install libpq-dev
 
 # commands
-sudo usermod -aG $1 postgres
+sudo usermod -aG $USER postgres
