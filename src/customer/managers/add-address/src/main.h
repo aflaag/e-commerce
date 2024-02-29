@@ -21,7 +21,7 @@
 #include "test_stream.h"
 #include "../../../../classes/src/address.h"
 #include "../../../../utils/src/utils.h"
-#include "../../../../utils/src/consts.h"
+#include "../../../../utils/src/const.h"
 
 /* Constants */
 

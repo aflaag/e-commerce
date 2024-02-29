@@ -46,6 +46,6 @@ cd ./../delete-purchase/src
 echo "INSIDE delete-purchase/src"
 make clean
 make
-echo "DONE delete-purchase/src"
+echo "DONE delete-/src"
 
 
