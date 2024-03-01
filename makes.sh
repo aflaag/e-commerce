@@ -58,7 +58,7 @@ make_folder() {
 
 check_arguments $1
 
-printf "\n\n\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥 🍳🍳🥩🥩 HOLD ON, LEMME COOK! 🥩🥩🍳🍳 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n\n\n\n"
+printf "\n\n\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥 🍳🍳🥩🥩 HOLD ON, LEMME COOK. 🥩🥩🍳🍳 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n\n\n\n"
 
 printf "############## LIB ##############\n\n"
 
@@ -78,6 +78,12 @@ printf "############## CLASSES ##############\n\n"
 set_current_root src
 
 make_folder classes/src
+
+printf "############## SERVER ##############\n\n"
+
+set_current_root src
+
+make_folder server/src
 
 printf "############## CUSTOMER ##############\n\n"
 

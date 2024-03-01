@@ -88,7 +88,6 @@ int main() {
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
             freeReplyObject(reply);
 
-            printf("ciao\n");
         }
 
         // read_from_stream();

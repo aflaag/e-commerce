@@ -1,8 +1,8 @@
 #include "server.h"
 
-Server::Server(int port) {
+Server::Server(int server_port, const char* redis_ip, int redis_port, std::string req_types[], int num_req_types) {
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    sockPort = port;
+    sockPort = server_port;
     
     if (sockfd < 0) {
         throw std::invalid_argument("Error creating the socket");
@@ -17,7 +17,7 @@ Server::Server(int port) {
     
     sockaddr_in serverAddress;
     serverAddress.sin_family = AF_INET; 
-    serverAddress.sin_port = htons(port); 
+    serverAddress.sin_port = htons(server_port); 
     serverAddress.sin_addr.s_addr = INADDR_ANY;
 
     if (bind(sockfd, (struct sockaddr*) &serverAddress, sizeof(serverAddress)) == -1){
@@ -26,6 +26,8 @@ Server::Server(int port) {
     if (listen(sockfd, MAX_CONNECTIONS) == -1) {
         throw std::invalid_argument("Error listening in socket");
     }
+
+    handler = new Handler(redis_ip, redis_port, req_types, num_req_types);
 }
 
 void Server::run(){
@@ -34,13 +36,13 @@ void Server::run(){
     char buffer[1000];
     int rc, i, new_client, ready_requests = 0;
     struct timeval timeout;
+    std::string out_str;
+    int client_id;
+    bool response;
 
     FD_ZERO(&current_set);
     max_fd = sockfd;
     FD_SET(sockfd, &current_set);
-
-    timeout.tv_sec  = 1;
-    timeout.tv_usec = 0;
 
     while(!end_server) {
         printf("select failed\n");
@@ -54,11 +56,11 @@ void Server::run(){
             printf("select failed");
             break;
         }
-        if (rc == 0) {
-            timeout.tv_sec  = 1;
-            timeout.tv_usec = 0;
-            continue;
-        }
+        // if (rc == 0) {
+        //     timeout.tv_sec  = 1;
+        //     timeout.tv_usec = 0;
+        //     continue;
+        // }
 
         ready_requests = rc;
 
@@ -81,9 +83,23 @@ void Server::run(){
                 }
             }
         }
-        // Read from managers (usare pair per ritornare lista di tuple (socket, stringa))
 
-        // Send responses
+        // Read managers responses and send to clients
+        response = true;
+        while(response){
+            out_str = "";
+            client_id = -1;
+
+            response = handler->read_from_managers(&out_str, &client_id);
+
+            if(response){
+                std::cout << client_id << " - " << out_str << std::endl;
+                send(client_id, out_str.c_str(), out_str.length(), 0);
+            }
+        }
+
+        timeout.tv_sec  = 1;
+        timeout.tv_usec = 0;
     }
 
     // Close connections
@@ -127,6 +143,7 @@ void Server::receive(int i) {
     do {
         bzero(buffer, 100);
         rc = recv(i, buffer, sizeof(buffer), 0);
+
         if (rc < 0) {
             if (errno != EWOULDBLOCK) {
                 close_conn = TRUE;
@@ -138,7 +155,7 @@ void Server::receive(int i) {
             break;
         }
         msg.append(buffer);
-        std::cout << buffer << std::endl;
+
     } while (TRUE);
 
     // If conncetion was closed by client or crashed
@@ -153,17 +170,19 @@ void Server::receive(int i) {
         return;
     }
 
-    std::istringstream iss(msg);
-    std::vector<std::string> lines;
+    // std::istringstream iss(msg);
+    // std::vector<std::string> lines;
 
-    std::string line;
-    while (std::getline(iss, line, '\n')) {
-        lines.push_back(line);
-    }
+    // std::string line;
+    // while (std::getline(iss, line, '\n')) {
+    //     lines.push_back(line);
+    // }
 
-    for (const auto& l : lines) {
-        std::cout << l << std::endl;
-    }
+    // for (const auto& l : lines) {
+    //     std::cout << l << std::endl;
+    // }
+
+    handler->send_to_managers(i, msg);
 }
 
 void Server::close_connections() {

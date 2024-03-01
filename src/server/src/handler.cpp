@@ -1,8 +1,8 @@
 #include "handler.h"
 
-Handler::Handler(const char* redis_server, int redis_port, std::string req_types[], int num_req_types){
+Handler::Handler(const char* redis_ip, int redis_port, std::string req_types[], int num_req_types){
     
-    c2r = redisConnect(redis_server, redis_port);
+    c2r = redisConnect(redis_ip, redis_port);
     types = req_types;
     num_types = num_req_types;
 
