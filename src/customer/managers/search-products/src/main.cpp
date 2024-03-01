@@ -6,8 +6,7 @@ int main() {
 
     PGresult *query_res;
 
-    char response[100], msg_id[30], first_key[30], client_id[30];
-    string query;
+    char query[QUERY_LEN], response[100], msg_id[30], first_key[30], client_id[30], second_key[30], product_name[100];
 
     Con2DB db(POSTGRESQL_SERVER, POSTGRESQL_PORT, POSTGRESQL_USER, POSTGRESQL_PSW, POSTGRESQL_DBNAME);
     c2r = redisConnect(REDIS_SERVER, REDIS_PORT);
@@ -27,17 +26,15 @@ int main() {
     
     add_to_stream(); // DA TOGLIERE
 
-    Product *product;
-
     while(1) {
 
-        reply = RedisCommand(c2r, "XREADGROUP GROUP main supplier BLOCK 0 COUNT 1 STREAMS %s >", READ_STREAM);
+        reply = RedisCommand(c2r, "XREADGROUP GROUP main customer BLOCK 0 COUNT 1 STREAMS %s >", READ_STREAM);
 
         assertReply(c2r, reply);
 
         if (ReadNumStreams(reply) == 0) {
             continue;
-        }
+        } 
 
         // Only one stream --> stream_num = 0
         // Only one message in stream --> msg_num = 0
@@ -52,25 +49,37 @@ int main() {
             continue;
         }
 
-        // Convert request
-        try {
-            product = Product::from_stream(reply, 0, 0);
-        }
-        catch(std::invalid_argument exp) {
-            send_response_status(c2r, WRITE_STREAM, client_id, "INVALID#REQUEST", msg_id, 0);
-            continue;
-        }
+        // Check if the first key/value pair is the client_id
+        ReadStreamMsgVal(reply, 0, 0, 2, second_key);    // Index of first field of msg = 0
+        ReadStreamMsgVal(reply, 0, 0, 3, product_name);  // Index of second field of msg = 1
 
-        query = product->to_insert_query();
+        std::string str_product_name = product_name;
+        std::string search_parameter = "%"+ str_product_name + "%";
+        sprintf(query, "SELECT * FROM Product WHERE name LIKE \'%s\' ", (char*)search_parameter.c_str());
 
-        query_res = db.RunQuery((char *) query.c_str(), false);
-        
+        query_res = db.RunQuery(query, true);
+
         if (PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) {
             send_response_status(c2r, WRITE_STREAM, client_id, "DB#ERROR", msg_id, 0);
             continue;
         }
 
-        send_response_status(c2r, WRITE_STREAM, client_id, "INSERT#SUCCESS", msg_id, 0);
+        std::list<Product> products;
+
+        for(int row = 0; row < PQntuples(query_res); row++){
+            Product * product;
+            product = new Product(PQgetvalue(query_res, row, PQfnumber(query_res, "code")),
+                                        PQgetvalue(query_res, row, PQfnumber(query_res, "name")),
+                                        PQgetvalue(query_res, row, PQfnumber(query_res, "description")),
+                                        PQgetvalue(query_res, row, PQfnumber(query_res, "price")));
+            
+            products.push_back(* product);
+        }
+
+        send_response_status(c2r, WRITE_STREAM, client_id, "SELECT#SUCCESS", msg_id, PQntuples(query_res));
+
+        read_from_stream();
+        
     }
 
     db.finish();

@@ -47,7 +47,7 @@ int main() {
         ReadStreamMsgVal(reply, 0, 0, 1, client_id);    // Index of second field of msg = 1
 
         if(strcmp(first_key, "client_id")){
-            send_response_status(c2r, WRITE_STREAM, client_id, "INVALID#CLIENT#STREAM", msg_id);
+            send_response_status(c2r, WRITE_STREAM, client_id, "INVALID#CLIENT#STREAM", msg_id, 0);
             continue;
         }
 
@@ -56,7 +56,7 @@ int main() {
             refund = Refund::from_stream(reply, 0, 0);
         }
         catch(std::invalid_argument exp){
-            send_response_status(c2r, WRITE_STREAM, client_id, "INVALID#REQUEST", msg_id);
+            send_response_status(c2r, WRITE_STREAM, client_id, "INVALID#REQUEST", msg_id, 0);
             continue;
         }
 
@@ -70,13 +70,13 @@ int main() {
 
 
         if (PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) {
-            send_response_status(c2r, WRITE_STREAM, client_id, "DB#ERROR", msg_id);
+            send_response_status(c2r, WRITE_STREAM, client_id, "DB#ERROR", msg_id, 0);
             continue;
         }
         
         // check if the id was created
         if (PQntuples(query_res) != 1) {
-            send_response_status(c2r, WRITE_STREAM, client_id, "DB#ERROR", msg_id);
+            send_response_status(c2r, WRITE_STREAM, client_id, "DB#ERROR", msg_id, 0);
             continue;
         }
 
@@ -98,7 +98,7 @@ int main() {
             query_res = db.RunQuery(query_find_product, true);
 
             if (PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) {
-                send_response_status(c2r, WRITE_STREAM, client_id, "DB#ERROR", msg_id);
+                send_response_status(c2r, WRITE_STREAM, client_id, "DB#ERROR", msg_id, 0);
 
                 invalid_product = true;
 
@@ -116,7 +116,7 @@ int main() {
         query_res = db.RunQuery((char*) query_products.c_str(), false);
 
         if (PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) {
-            send_response_status(c2r, WRITE_STREAM, client_id, "DB#ERROR", msg_id);
+            send_response_status(c2r, WRITE_STREAM, client_id, "DB#ERROR", msg_id, 0);
 
             char delete_op[QUERY_LEN];
 
@@ -125,7 +125,7 @@ int main() {
             query_res = db.RunQuery(delete_op, false);
 
             if (PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) {
-                send_response_status(c2r, WRITE_STREAM, client_id, "DB#ERROR", msg_id);
+                send_response_status(c2r, WRITE_STREAM, client_id, "DB#ERROR", msg_id, 0);
 
                 continue;
             }
@@ -133,7 +133,7 @@ int main() {
             continue;
         }
 
-        send_response_status(c2r, WRITE_STREAM, client_id, "INSERT#SUCCESS", msg_id);
+        send_response_status(c2r, WRITE_STREAM, client_id, "INSERT#SUCCESS", msg_id, 0);
     }
 
     db.finish();
