@@ -24,7 +24,7 @@ class Handler{
         Handler(const char* redis_server, int redis_port, std::string req_types[], int num_req_types);
 
         void send_to_managers(int client_id, std::string cmd);
-        std::string read_from_managers();
+        bool read_from_managers(std::string* out_str_ptr, int* client_id_ptr);
 
     private:
         redisContext *c2r;

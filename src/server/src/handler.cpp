@@ -54,8 +54,100 @@ void Handler::send_to_managers(int client_id, std::string msg){
     dumpReply(reply, 0);
 }
 
-std::string Handler::read_from_managers(){
-    return "";
+bool Handler::read_from_managers(std::string* out_str_ptr, int* client_id_ptr){
+
+    redisReply* reply;
+    char response[1000], msg_id[30], tmp_buffer[30], client_id[30], resp_status[30], num_rows[30], row[30];
+    int i, j, num_rows_int, curr_row, row_columns;
+    std::string tmp_str;
+    std::string out_str;
+
+    for(i = 0; i < num_types; i++){
+        reply = RedisCommand(c2r, "XREADGROUP GROUP main handler COUNT 1 STREAMS %s-out >", types[i].c_str());
+
+        assertReply(c2r, reply);
+        if (ReadNumStreams(reply) == 0)     // If empty, check next manager
+            continue;
+
+        // Get client id
+        ReadStreamMsgVal(reply, 0, 0, 0, tmp_buffer);
+        ReadStreamMsgVal(reply, 0, 0, 1, client_id);    
+
+        if(strcmp(tmp_buffer, "client_id"))
+            continue;   // Ignore invalid response
+
+        *client_id_ptr = strtol(client_id, NULL, 10);
+        
+        // Get num rows
+        ReadStreamMsgVal(reply, 0, 0, 4, tmp_buffer);
+        ReadStreamMsgVal(reply, 0, 0, 5, num_rows);     
+
+        if(strcmp(tmp_buffer, "num_rows"))
+            continue;   // Ignore invalid response
+
+        num_rows_int = strtol(num_rows, NULL, 10);
+
+        // Get resp status
+        ReadStreamMsgVal(reply, 0, 0, 2, tmp_buffer);
+        ReadStreamMsgVal(reply, 0, 0, 3, resp_status);
+
+        if(strcmp(tmp_buffer, "resp_status"))
+            continue;   // Ignore invalid response
+
+        if(strcmp(resp_status, "REQUEST#SUCCESS"))
+            num_rows_int = 0;   // "Burn" possible tuples
+
+        freeReplyObject(reply);
+
+        curr_row = 0;
+
+        // Add response status
+        tmp_str = resp_status;
+        out_str = tmp_str + "\n";
+        
+        while(curr_row < num_rows_int - 1){
+            reply = RedisCommand(c2r, "XREADGROUP GROUP main handler BLOCK 0 COUNT 1 STREAMS %s-out >", types[i].c_str());
+
+            assertReply(c2r, reply);
+            if (ReadNumStreams(reply) == 0){
+                out_str = "BAD#RESPONSE";
+                break;
+            }
+
+            // Check if the first key/value pair is the num_rows
+            ReadStreamMsgVal(reply, 0, 0, 0, tmp_buffer);    // Index of first field of msg = 0
+            ReadStreamMsgVal(reply, 0, 0, 1, row);    
+
+            if(strcmp(tmp_buffer, "row")){
+                out_str = "BAD#TUPLES";
+                break;
+            }
+
+            curr_row = strtol(row, NULL, 10);
+            row_columns = ReadStreamMsgNumVal(reply, 0, 0);
+
+            out_str = out_str + "{";
+
+            for(j = 2; j < row_columns; j += 2){
+
+                ReadStreamMsgVal(reply, 0, 0, j, tmp_buffer);    
+                tmp_str = tmp_buffer;
+                out_str = out_str + tmp_str +": ";
+
+                ReadStreamMsgVal(reply, 0, 0, j+1, tmp_buffer);    
+                tmp_str = tmp_buffer;
+                out_str = out_str + tmp_str +", ";
+            }
+
+            out_str = out_str + "}\n";
+        }
+
+        *out_str_ptr = out_str;
+
+        return true;
+    }
+
+    return false;
 }
 
 void Handler::init_streams(){

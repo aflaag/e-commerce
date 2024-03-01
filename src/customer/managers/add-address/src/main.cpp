@@ -11,20 +11,20 @@ int main() {
     Con2DB db(POSTGRESQL_SERVER, POSTGRESQL_PORT, POSTGRESQL_USER, POSTGRESQL_PSW, POSTGRESQL_DBNAME);
     c2r = redisConnect(REDIS_SERVER, REDIS_PORT);
 
-    // delete stream if exists
-    reply = RedisCommand(c2r, "DEL %s", READ_STREAM);
-    assertReply(c2r, reply);
-    dumpReply(reply, 0);
+    // // delete stream if exists
+    // reply = RedisCommand(c2r, "DEL %s", READ_STREAM);
+    // assertReply(c2r, reply);
+    // dumpReply(reply, 0);
 
-    reply = RedisCommand(c2r, "DEL %s", WRITE_STREAM);
-    assertReply(c2r, reply);
-    dumpReply(reply, 0);
+    // reply = RedisCommand(c2r, "DEL %s", WRITE_STREAM);
+    // assertReply(c2r, reply);
+    // dumpReply(reply, 0);
 
-    // initialize stream
-    initStreams(c2r, READ_STREAM);
-    initStreams(c2r, WRITE_STREAM);
+    // // initialize stream
+    // initStreams(c2r, READ_STREAM);
+    // initStreams(c2r, WRITE_STREAM);
     
-    add_to_stream(); // DA TOGLIERE
+    // add_to_stream(); // DA TOGLIERE
 
     Address* address;
 
@@ -71,7 +71,7 @@ int main() {
             continue;
         }
 
-        send_response_status(c2r, WRITE_STREAM, client_id, "INSERT#SUCCESS", msg_id, 0);
+        send_response_status(c2r, WRITE_STREAM, client_id, "REQUEST#SUCCESS", msg_id, 0);
         
     }
 

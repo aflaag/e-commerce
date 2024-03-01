@@ -69,7 +69,7 @@ int main() {
             continue;
         }
 
-        send_response_status(c2r, WRITE_STREAM, client_id, "UPDATE#SUCCESS", msg_id, 0);
+        send_response_status(c2r, WRITE_STREAM, client_id, "REQUEST#SUCCESS", msg_id, 0);
     }
 
     db.finish();

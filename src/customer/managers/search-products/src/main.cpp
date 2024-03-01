@@ -11,20 +11,20 @@ int main() {
     Con2DB db(POSTGRESQL_SERVER, POSTGRESQL_PORT, POSTGRESQL_USER, POSTGRESQL_PSW, POSTGRESQL_DBNAME);
     c2r = redisConnect(REDIS_SERVER, REDIS_PORT);
 
-    // delete stream if exists
-    reply = RedisCommand(c2r, "DEL %s", READ_STREAM);
-    assertReply(c2r, reply);
-    dumpReply(reply, 0);
+    // // delete stream if exists
+    // reply = RedisCommand(c2r, "DEL %s", READ_STREAM);
+    // assertReply(c2r, reply);
+    // dumpReply(reply, 0);
 
-    reply = RedisCommand(c2r, "DEL %s", WRITE_STREAM);
-    assertReply(c2r, reply);
-    dumpReply(reply, 0);
+    // reply = RedisCommand(c2r, "DEL %s", WRITE_STREAM);
+    // assertReply(c2r, reply);
+    // dumpReply(reply, 0);
 
-    // initialize stream
-    initStreams(c2r, READ_STREAM);
-    initStreams(c2r, WRITE_STREAM);
+    // // initialize stream
+    // initStreams(c2r, READ_STREAM);
+    // initStreams(c2r, WRITE_STREAM);
     
-    add_to_stream(); // DA TOGLIERE
+    // add_to_stream(); // DA TOGLIERE
 
     while(1) {
 
@@ -76,7 +76,7 @@ int main() {
             products.push_back(product);
         }
 
-        send_response_status(c2r, WRITE_STREAM, client_id, "SELECT#SUCCESS", msg_id, PQntuples(query_res));
+        send_response_status(c2r, WRITE_STREAM, client_id, "REQUEST#SUCCESS", msg_id, PQntuples(query_res));
         
         for(int row = 0; row<PQntuples(query_res); row++){
 
@@ -87,9 +87,11 @@ int main() {
             reply = RedisCommand(c2r, "XADD %s * row %d code %s name %s description %s price %s", WRITE_STREAM, row, p->code, p->name, p->description, p->price);
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
             freeReplyObject(reply);
+
+            printf("ciao\n");
         }
 
-        read_from_stream();
+        // read_from_stream();
         
     }
 
