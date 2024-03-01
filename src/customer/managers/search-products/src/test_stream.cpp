@@ -45,11 +45,26 @@ int read_from_stream(){
     ReadStreamMsgVal(reply, 0, 0, 1, client_id);    // Index of second field of msg = 1
 
     // Check if the first key/value pair is the client_id
-    ReadStreamMsgVal(reply, 0, 0, 5, str_rows);    // Index of second field of msg = 1
+    ReadStreamMsgVal(reply, 0, 0, 5, str_rows);    // Index of second field of msg = 
 
-    printf("\n\nrows number : %d\n",atoi(str_rows));
+    char key[100], value[100];
 
-    freeReplyObject(reply);
+    for(int i = 0; i< atoi(str_rows); i++){
+        reply = RedisCommand(c2r, "XREADGROUP GROUP main customer BLOCK 0 COUNT 1 STREAMS %s >", READ_STREAM);
+
+        if (ReadNumStreams(reply) == 0) {
+            i--;
+            continue;
+        } 
+
+        for (int field_num = 2; field_num < ReadStreamMsgNumVal(reply, 0, 0); field_num += 2) {
+            ReadStreamMsgVal(reply, 0, 0, field_num, key);
+            ReadStreamMsgVal(reply, 0, 0, field_num + 1, value);
+
+            printf("%s %s\n", key, value);
+        }
+
+    }
 
     return 0;
 }

@@ -64,7 +64,7 @@ int main() {
             continue;
         }
 
-        std::list<Product> products;
+        std::list<Product*> products;
 
         for(int row = 0; row < PQntuples(query_res); row++){
             Product * product;
@@ -73,10 +73,21 @@ int main() {
                                         PQgetvalue(query_res, row, PQfnumber(query_res, "description")),
                                         PQgetvalue(query_res, row, PQfnumber(query_res, "price")));
             
-            products.push_back(* product);
+            products.push_back(product);
         }
 
         send_response_status(c2r, WRITE_STREAM, client_id, "SELECT#SUCCESS", msg_id, PQntuples(query_res));
+        
+        for(int row = 0; row<PQntuples(query_res); row++){
+
+            Product *p = products.front();
+
+            products.pop_front();
+
+            reply = RedisCommand(c2r, "XADD %s * row %d code %s name %s description %s price %s", WRITE_STREAM, row, p->code, p->name, p->description, p->price);
+            assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+            freeReplyObject(reply);
+        }
 
         read_from_stream();
         
