@@ -1,7 +1,7 @@
 #include "test_stream.h"
 
-#define WRITE_STREAM "search-products-in"
-#define READ_STREAM "search-products-out"
+#define WRITE_STREAM "view-order-in"
+#define READ_STREAM "view-order-out"
 
 int add_to_stream() {
     redisContext *c2r;
@@ -12,7 +12,7 @@ int add_to_stream() {
     // initialize stream
     initStreams(c2r, WRITE_STREAM);
 
-    reply = RedisCommand(c2r, "XADD %s * client_id 1 product rt", WRITE_STREAM);
+    reply = RedisCommand(c2r, "XADD %s * client_id 1 purchase 2", WRITE_STREAM);
     assertReplyType(c2r, reply, REDIS_REPLY_STRING);
     freeReplyObject(reply);
 

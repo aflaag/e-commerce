@@ -13,6 +13,15 @@ VALUES ('2024-02-22 10:30:00', 0.0, 'user1@gmail.com', '1234567890123456', '0102
 INSERT INTO OrderedProducts (product, purchase, quantity)
 VALUES ('P1', 1, 10);
 
+WITH p2 AS (
+INSERT INTO Purchase (purchase_instant, fare, customer, card, zip_code, street, street_number)
+VALUES ('2024-02-22 10:30:00', 0.0, 'user1@gmail.com', '1234567890123456', '01028', 'boh', '1a')
+)
+INSERT INTO OrderedProducts (product, purchase, quantity)
+VALUES ('P1', 2, 10);
+INSERT INTO OrderedProducts (product, purchase, quantity)
+VALUES ('P2', 2, 20);
+
 INSERT INTO AssignedDelivery 
 VALUES('bho2','2024-02-22 10:30:00','2024-02-22 10:30:00', '2024-02-22 10:30:00','Delivered',null, 'courier1',1);
 

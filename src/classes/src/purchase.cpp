@@ -1,7 +1,6 @@
 #include "purchase.h"
 
 Purchase::Purchase(
-        char* purchase_id,
         char* purchase_instant_in,
         char* purchase_fare,
         char* purchase_customer, 
@@ -10,9 +9,29 @@ Purchase::Purchase(
         char* purchase_street, 
         char* purchase_street_number){
 
+    purchase_instant = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    fare = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    customer = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    card = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    zip_code = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    street = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    street_number = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+
+    strcpy(purchase_instant, purchase_instant_in);
+    strcpy(fare, purchase_fare);
+    strcpy(customer, purchase_customer);
+    strcpy(card, purchase_card);
+    strcpy(zip_code, purchase_zip_code);
+    strcpy(street, purchase_street);
+    strcpy(street_number, purchase_street_number);
+}
+
+Purchase::Purchase(char* purchase_id, char* purchase_instant_in, char* purchase_fare, char* purchase_cancel_instant, char* purchase_customer, char* purchase_card, char* purchase_zip_code, char* purchase_street, char* purchase_street_number) {
+
     id = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
     purchase_instant = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
     fare = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    cancel_instant = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
     customer = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
     card = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
     zip_code = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
@@ -22,6 +41,7 @@ Purchase::Purchase(
     strcpy(id, purchase_id);
     strcpy(purchase_instant, purchase_instant_in);
     strcpy(fare, purchase_fare);
+    strcpy(cancel_instant, purchase_cancel_instant);
     strcpy(customer, purchase_customer);
     strcpy(card, purchase_card);
     strcpy(zip_code, purchase_zip_code);
@@ -33,6 +53,7 @@ Purchase::~Purchase(){
     free(id);
     free(purchase_instant);
     free(fare);
+    free(cancel_instant);
     free(customer);
     free(card);
     free(zip_code);
@@ -41,11 +62,9 @@ Purchase::~Purchase(){
 }
 
 Purchase* Purchase::from_stream(redisReply* reply, int stream_num, int msg_num){
-
     char key[PARAMETERS_LEN];
     char value[PARAMETERS_LEN];
 
-    char id[PARAMETERS_LEN];
     char* purchase_instant;
     char fare[PARAMETERS_LEN];
     char customer[PARAMETERS_LEN];
@@ -65,7 +84,6 @@ Purchase* Purchase::from_stream(redisReply* reply, int stream_num, int msg_num){
         ReadStreamMsgVal(reply, stream_num, msg_num, field_num, key);
         ReadStreamMsgVal(reply, stream_num, msg_num, field_num + 1, value);
                     
-        // printf("%b\n", read_fields);
         if (!strcmp(key, "fare")) {
             sprintf(fare, "%s", value);
             read_fields |=0b000001;
@@ -100,6 +118,6 @@ Purchase* Purchase::from_stream(redisReply* reply, int stream_num, int msg_num){
         throw std::invalid_argument("Stream error: invalid fields");
     }
 
-    return new Purchase(id, purchase_instant, fare, customer, card, zip_code, street, street_number);
+    return new Purchase(purchase_instant, fare, customer, card, zip_code, street, street_number);
 }
     

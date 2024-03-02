@@ -62,8 +62,3 @@ VALUES
     ('courier2'),
     ('courier3');
 
-INSERT INTO Courier (business_name)
-VALUES
-    ('courier1'),
-    ('courier2'),
-    ('courier3');

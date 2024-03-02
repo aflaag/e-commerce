@@ -97,6 +97,7 @@ make_folder add-rating/src
 make_folder add-refund-request/src
 make_folder delete-purchase/src
 make_folder search-products/src
+make_folder view-order/src
 
 printf "############## SUPPLIER ##############\n\n"
 
