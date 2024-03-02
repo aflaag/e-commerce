@@ -1,3 +1,5 @@
+src/server/bin
+
 src/courier/handler/*/bin
 src/courier/managers/*/bin
 
