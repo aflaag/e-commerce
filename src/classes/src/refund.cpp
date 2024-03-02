@@ -17,6 +17,28 @@ Refund::Refund(char* refund_id,
     
 }
 
+Refund:: Refund(char* refund_id, char* request_instant_, char* refund_assignment_instant_, char* refund_start_, 
+                char* refund_end_, char* refund_state_, char* courier_, char* purchase_) {
+
+    id = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    request_instant = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    assigment_instant = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    start = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    end = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    state = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    courier = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    purchase = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+
+    strcpy(id, refund_id);
+    strcpy(request_instant, request_instant_);
+    strcpy(assigment_instant, refund_assignment_instant_);
+    strcpy(start, refund_start_);
+    strcpy(end, refund_end_);
+    strcpy(state, refund_state_);
+    strcpy(courier, courier_);
+    strcpy(purchase, purchase_);
+}
+
 Refund::~Refund(){
     free(id);
     free(request_instant);

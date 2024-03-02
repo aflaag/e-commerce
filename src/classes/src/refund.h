@@ -26,8 +26,10 @@ class Refund{
         char *state;
         char *assigned_delivery;
         char *courier;
+        char *purchase;
 
         Refund(char* refund_id, char* refund_request_instant, char* refund_state, char* refund_assigned_delivery);
+        Refund(char* refund_id, char* request_instant_, char* refund_assignment_instant_, char* refund_start_, char* refund_end_, char* refund_state_, char* courier_, char* purchase);
 
         ~Refund();
 
