@@ -38,7 +38,7 @@ GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO :supplier;
 
 GRANT SELECT ON Purchase TO :courier;
 GRANT INSERT, UPDATE, SELECT ON AssignedDelivery TO :courier;
-GRANT UPDATE ON RefundRequest TO :courier;
+GRANT UPDATE, SELECT ON RefundRequest TO :courier;
 
 -- supplier
 

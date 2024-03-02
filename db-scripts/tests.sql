@@ -18,3 +18,6 @@ VALUES('bho2','2024-02-22 10:30:00','2024-02-22 10:30:00', '2024-02-22 10:30:00'
 
 INSERT INTO Restock (quantity, supplier, product)
 VALUES(100, 'Supplier1', 'P1');
+
+INSERT INTO RefundRequest (request_instant, refund_state, assigned_delivery)
+VALUES ('2024-02-22 10:30:00', 'Requested', 'bho2');
