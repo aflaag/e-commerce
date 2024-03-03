@@ -46,6 +46,7 @@ GRANT INSERT, UPDATE, SELECT, DELETE ON Product TO :supplier;
 GRANT INSERT, SELECT ON Product TO :supplier;
 GRANT INSERT ON Supplier TO :supplier;
 GRANT INSERT ON Restock TO :supplier;
+GRANT SELECT ON OrderedProducts TO :supplier;
 
 -- customer
 

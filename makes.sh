@@ -107,6 +107,7 @@ make_folder add-product/src
 make_folder add-restock/src
 make_folder add-supplier/src
 make_folder update-product/src
+make_folder view-statistic/src
 
 printf "############## COURIER ##############\n\n"
 
