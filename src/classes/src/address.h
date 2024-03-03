@@ -15,11 +15,11 @@
 
 class Address{
     public:
-        char *email;
-        char *zip_code;
-        char *street;
-        char *street_number;
-        char *city;
+        char *email = NULL;
+        char *zip_code = NULL;
+        char *street = NULL;
+        char *street_number = NULL;
+        char *city = NULL;
 
         Address(char* address_owner_email, char* address_zip_code, char* address_street, char* address_steet_number, char* address_city);
 

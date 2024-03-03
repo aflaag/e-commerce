@@ -18,15 +18,15 @@
 
 class Refund{
     public:
-        char *id;
-        char *request_instant;
-        char *assigment_instant;
-        char *start;
-        char *end;
-        char *state;
-        char *assigned_delivery;
-        char *courier;
-        char *purchase;
+        char *id = NULL;
+        char *request_instant = NULL;
+        char *assigment_instant = NULL;
+        char *start = NULL;
+        char *end = NULL;
+        char *state = NULL;
+        char *assigned_delivery = NULL;
+        char *courier = NULL;
+        char *purchase = NULL;
 
         Refund(char* refund_id, char* refund_request_instant, char* refund_state, char* refund_assigned_delivery);
         Refund(char* refund_id, char* request_instant_, char* refund_assignment_instant_, char* refund_start_, char* refund_end_, char* refund_state_, char* courier_, char* purchase);

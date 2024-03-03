@@ -15,7 +15,7 @@
 
 class Supplier{
     public:
-        char *business_name;
+        char *business_name = NULL;
 
         Supplier(char* supplier_business_name);
 

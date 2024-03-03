@@ -15,9 +15,9 @@
 
 class OrderedProduct {
     public:
-        char *product;
-        char *purchase;
-        char *quantity;
+        char *product = NULL;
+        char *purchase = NULL;
+        char *quantity = NULL;
 
         OrderedProduct(char* order_product, char* order_purchase, char* order_quantity);
 

@@ -36,7 +36,3 @@ VALUES (1, 'P1', 10);
 
 INSERT INTO RefundedProduct (refund_request, product, quantity)
 VALUES (1, 'P2', 10);
-
-SELECT rp.product AS product, rp.quantity AS quantity, rr.refund_state AS state,rr.request_instant AS request_instant, rr.refund_assignment_instant AS assigned, rr.refund_start AS refund_start, rr.refund_end AS refund_end, rr.courier AS courier, ad.purchase AS purchase 
-FROM RefundRequest AS rr, RefundedProduct AS rp, AssignedDelivery AS ad 
-WHERE rr.id = '1' AND rr.id = rp.refund_request AND ad.delivery_code = rr.assigned_delivery;

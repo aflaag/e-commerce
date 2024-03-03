@@ -15,9 +15,9 @@
 
 class Rating{
     public:
-        char *product;
-        char *customer;
-        char *stars;
+        char *product = NULL;
+        char *customer = NULL;
+        char *stars = NULL;
 
         Rating(char* rating_product, char* rating_customer, char* rating_stars);
 

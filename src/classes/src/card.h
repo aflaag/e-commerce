@@ -15,8 +15,8 @@
 
 class Card{
     public:
-        char *number;
-        char *email;
+        char *number = NULL;
+        char *email = NULL;
 
         Card(char* card_number, char* card_owner_email);
 

@@ -16,11 +16,11 @@
 
 class DeliveryPurchase {
     public:
-        char *delivery_code;
-        char *time;
-        char *courier;
-        char *purchase;
-        char *state;
+        char *delivery_code = NULL;
+        char *time = NULL;
+        char *courier = NULL;
+        char *purchase = NULL;
+        char *state = NULL;
 
         DeliveryPurchase(char* purchase_id, char* del_code, char* courier_id);
         DeliveryPurchase(char* del_code, char* timestamp, char* update_state, int);

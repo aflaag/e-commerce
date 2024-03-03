@@ -15,9 +15,9 @@
 
 class RefundedProduct {
     public:
-        char *refund_request;
-        char *product;
-        char *quantity;
+        char *refund_request = NULL;
+        char *product = NULL;
+        char *quantity = NULL;
 
         RefundedProduct(char* refund_request_in, char* refunded_product, char* refund_quantity);
 

@@ -16,10 +16,10 @@
 
 class Product {
     public:
-        char *name;
-        char *code;
-        char *description;
-        char *price;
+        char *name = NULL;
+        char *code = NULL;
+        char *description = NULL;
+        char *price = NULL;
 
         Product(char* code, char* name, char* description, char* price);
         Product(char* code, char* description);

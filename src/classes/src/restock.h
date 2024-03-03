@@ -15,10 +15,10 @@
 
 class Restock {
     public:
-        char *id;
-        char *quantity;
-        char *supplier;
-        char *product;
+        char *id = NULL;
+        char *quantity = NULL;
+        char *supplier = NULL;
+        char *product = NULL;
 
         Restock(char* restock_id, char* restock_quantity, char* restock_supplier, char* restock_product);
 

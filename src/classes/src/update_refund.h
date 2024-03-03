@@ -16,10 +16,10 @@
 
 class UpdateRefund {
     public:
-        char *refund_request;
-        char *new_time;
-        char *courier;
-        char *state;
+        char *refund_request = NULL;
+        char *new_time = NULL;
+        char *courier = NULL;
+        char *state = NULL;
 
         UpdateRefund(char* refund_request_in, char* timestamp, char* next_state);
         UpdateRefund(char* refund_request_in, char* courier_id);

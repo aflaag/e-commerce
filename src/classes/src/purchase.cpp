@@ -26,6 +26,35 @@ Purchase::Purchase(
     strcpy(street_number, purchase_street_number);
 }
 
+Purchase::Purchase(
+        char* purchase_id,
+        char* purchase_instant_in,
+        char* purchase_fare,
+        char* purchase_customer, 
+        char* purchase_card,
+        char* purchase_zip_code, 
+        char* purchase_street, 
+        char* purchase_street_number){
+
+    id = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    purchase_instant = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    fare = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    customer = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    card = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    zip_code = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    street = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+    street_number = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
+
+    strcpy(id, purchase_id);
+    strcpy(purchase_instant, purchase_instant_in);
+    strcpy(fare, purchase_fare);
+    strcpy(customer, purchase_customer);
+    strcpy(card, purchase_card);
+    strcpy(zip_code, purchase_zip_code);
+    strcpy(street, purchase_street);
+    strcpy(street_number, purchase_street_number);
+}
+
 Purchase::Purchase(char* purchase_id, char* purchase_instant_in, char* purchase_fare, char* purchase_cancel_instant, char* purchase_customer, char* purchase_card, char* purchase_zip_code, char* purchase_street, char* purchase_street_number) {
 
     id = (char*) malloc(sizeof(char) * PARAMETERS_LEN);
