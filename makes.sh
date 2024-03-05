@@ -87,35 +87,42 @@ make_folder server/src
 
 printf "############## CUSTOMER ##############\n\n"
 
-set_current_root src/customer/managers
+set_current_root src/customer
 
-make_folder add-address/src
-make_folder add-card/src
-make_folder add-customer/src
-make_folder add-purchase/src
-make_folder add-rating/src
-make_folder add-refund-request/src
-make_folder delete-purchase/src
-make_folder search-products/src
-make_folder view-order/src
+make_folder handler/src
+
+make_folder managers/add-address/src
+make_folder managers/add-card/src
+make_folder managers/add-customer/src
+make_folder managers/add-purchase/src
+make_folder managers/add-rating/src
+make_folder managers/add-refund-request/src
+make_folder managers/delete-purchase/src
+make_folder managers/search-products/src
+make_folder managers/view-order/src
+make_folder managers/view-refund/src
 
 printf "############## SUPPLIER ##############\n\n"
 
-set_current_root src/supplier/managers
+set_current_root src/supplier
 
-make_folder add-product/src
-make_folder add-restock/src
-make_folder add-supplier/src
-make_folder update-product/src
-make_folder view-statistic/src
+make_folder handler/src
+
+make_folder managers/add-product/src
+make_folder managers/add-restock/src
+make_folder managers/add-supplier/src
+make_folder managers/update-product/src
+make_folder managers/view-statistic/src
 
 printf "############## COURIER ##############\n\n"
 
-set_current_root src/courier/managers
+set_current_root src/courier
 
-make_folder take-purchase-delivery/src
-make_folder update-assigned-delivery/src
-make_folder update-refund-request/src
-make_folder view-available-purchase/src
+make_folder handler/src
+
+make_folder managers/take-purchase-delivery/src
+make_folder managers/update-assigned-delivery/src
+make_folder managers/update-refund-request/src
+make_folder managers/view-available-purchase/src
 
 printf "\n\n\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥 🍳🍳🥩🥩 FINISHED COOKIN' 🥩🥩🍳🍳 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n\n\n\n"
