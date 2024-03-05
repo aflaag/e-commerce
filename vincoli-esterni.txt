@@ -60,3 +60,10 @@ ALL cp, icp, ipu    CanceledPurchase(cp) & cancelInstant(cp, icp) & purchaseInst
 
 [V.RefoundedProducts.quantitaConsistente]
 ALL pr, pu, q    Purchase(pu) & orderedProducts(pu, pr) & quantity(pu, pr, q) -> q >= sumOfRefoundedProductsPerPurchase(pu, pr)
+
+-- TODO: ricontrollare
+[V.Client.fileDescriptor]
+ALL c, ic   Client(c) & connection_instant(c, ic) -> NOT EXISTS(c', ic' Client(c') & c != c'
+            & connection_instant(c', ic') & EXISTS(t timestamp(t) t >= ic & t >= ic' 
+            & (EXIST id disconnection_instant(c, id) -> t <= id) 
+            & (EXIST id' disconnection_instant(c', id') -> t <= id'))
