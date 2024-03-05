@@ -2,7 +2,7 @@
 
 ## TODO list
 
-- fare server per ogni handler
+- fare server per ogni handler [X]
 - test generator
 - monitor (funzionali e non funzionali)
     - non funzionali:
