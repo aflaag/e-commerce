@@ -116,6 +116,6 @@ set_current_root src/courier/managers
 make_folder take-purchase-delivery/src
 make_folder update-assigned-delivery/src
 make_folder update-refund-request/src
-make_folder view-avaible-purchase/src
+make_folder view-available-purchase/src
 
 printf "\n\n\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥 🍳🍳🥩🥩 FINISHED COOKIN' 🥩🥩🍳🍳 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n\n\n\n"
