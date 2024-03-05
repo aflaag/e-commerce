@@ -2,6 +2,31 @@
 
 ## TODO list
 
+- fare server per ogni handler
+- test generator
+- monitor (funzionali e non funzionali)
+    - non funzionali:
+        - il tempo medio di sessione
+        - il tempo medio di risposta ad una richiesta
+    - funzionali
+        - loggare i risultati delle richiete nel db perchè i monitor sono i trigger ed i vincoli messi nella creazione del db
+- creare db log
+- loggare i dati
+- relazione
+    - sistemare descrzione problema
+    - figura che illustra sistema 
+    - figura che illustra l'ambiente (è quello che abbiamo messo nella system architecture piccolo???)
+    - controllare requisiti di sistema scritti
+    - controllare diagramma architettura sistema (è quello che abbiamo messo nella system architecture grande)
+    - activity diagram per mostrare come le varie componenti intervengono per soddisfare i requisiti funzionali (almeno uno)
+    - state diagram per una delle componenti del sistema (almeno uno)
+    - message sequence chart diagram per la comunicazione tra le componenti del sistema (almeno uno)
+    - descrizione generale implementazione per ogni componente (manager, server, handler)
+    - schema dei db (er log, er principale)
+    - descrizione connessioni Redis
+    - descrizioni risultati
+
+
 ### Altro
 
 
