@@ -18,6 +18,7 @@
 /* Local imports */
 
 #include "../../lib/con2redis/src/con2redis.h"
+#include "../../lib/con2db/pgsql.h"
 
 class Handler{
     public:

@@ -58,21 +58,21 @@ int main()
     send(clientSocket, message1, strlen(message1), 0);
     rc = recv(clientSocket, buffer, sizeof(buffer), 0);
 
-    printf("%s", buffer);
+    printf("%s\n", buffer);
 
     memset(buffer, 0, 1000);
     const char* message2 = "add-address email user2@gmail.com zip_code 0000 street ivan street_number 1b city 1"; 
     send(clientSocket, message2, strlen(message2), 0);
     rc = recv(clientSocket, buffer, sizeof(buffer), 0);
 
-    printf("%s", buffer);
+    printf("%s\n", buffer);
 
     memset(buffer, 0, 1000);
     const char* message3 = "search-products product rt"; 
     send(clientSocket, message3, strlen(message3), 0);
     rc = recv(clientSocket, buffer, sizeof(buffer), 0);
 
-    printf("%s", buffer);
+    printf("%s\n", buffer);
 
     memset(buffer, 0, 1000);
 
