@@ -1,4 +1,4 @@
--- try to understant if we need USAGE ON LANGUAGE
+-- try to understand if we need USAGE ON LANGUAGE
 \c :log_dbname postgres
 
 -- user already exists

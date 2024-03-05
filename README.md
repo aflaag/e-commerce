@@ -6,11 +6,11 @@
 - test generator
 - monitor (funzionali e non funzionali)
     - non funzionali:
-        - il tempo medio di sessione
+        - il tempo medio di sessione 
         - il tempo medio di risposta ad una richiesta
     - funzionali
         - loggare i risultati delle richiete nel db perchè i monitor sono i trigger ed i vincoli messi nella creazione del db
-- creare db log
+- creare db log [X]
 - loggare i dati
 - relazione
     - sistemare descrzione problema
