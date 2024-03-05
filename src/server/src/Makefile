@@ -22,7 +22,7 @@ con2redis_OBJ=$(wildcard ../../lib/con2redis/obj/*.o)
 classes_OBJ=$(wildcard ../..classes/obj/*.o)
 utils_OBJ=$(wildcard ../../utils/obj/*.o)
 
-all:	create_dirs con2db con2redis classes utils $(BDIR)/main
+all:	create_dirs con2db con2redis classes utils $(ODIR)/$(OBJ)
 
 create_dirs:
 	mkdir -p $(BDIR)
