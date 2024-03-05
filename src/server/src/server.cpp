@@ -103,8 +103,10 @@ void Server::run(){
                 std::string first_line = out_str.substr(0, pos);
                 std::cout << first_line << std::endl;
 
-                sprintf(query, "UPDATE Communication SET response = \'%s\', response_instant = CURRENT_TIMESTAMP "
-                               "WHERE client_file_descriptor = %d AND client_connection_instant = (SELECT max(connection_instant) FROM Client WHERE file_descriptor = %d) AND request_instant = (SELECT MAX(request_instant) FROM Communication WHERE client_file_descriptor = %d AND client_connection_instant = (SELECT max(connection_instant) FROM Client WHERE file_descriptor = %d))", first_line.c_str(), client_id, client_id, client_id, client_id);
+                sprintf(query, "WITH max_client_conn AS (SELECT max(connection_instant) AS instant FROM Client WHERE file_descriptor = %d), "
+                               "     last_request AS (SELECT MAX(c.request_instant) AS instant FROM Communication AS c, max_client_conn AS m WHERE c.client_file_descriptor = %d AND c.client_connection_instant = m.instant) "
+                               "UPDATE Communication SET response = \'%s\', response_instant = CURRENT_TIMESTAMP "
+                               "WHERE client_file_descriptor = %d AND client_connection_instant = (SELECT instant FROM max_client_conn) AND request_instant = (SELECT instant FROM last_request)", client_id, client_id, first_line.c_str(), client_id);
                 query_res = log_db.RunQuery(query, false);
 
                 if (PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) {
