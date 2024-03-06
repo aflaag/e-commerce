@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS Client (
 CREATE TABLE IF NOT EXISTS Communication (
         request StringL NOT NULL,
         request_instant timestamp NOT NULL,
-        response StringS,
+        response_status StringS,
         response_instant timestamp,
         client_file_descriptor integer NOT NULL,
         client_connection_instant timestamp NOT NULL,
@@ -33,12 +33,13 @@ CREATE TABLE IF NOT EXISTS Communication (
 CREATE TABLE IF NOT EXISTS SessionStatistic (
         id SERIAL NOT NULL PRIMARY KEY,
         type SessionStatisticType NOT NULL,
-        start_instant timestamp NOT NULL,
+        -- start_instant timestamp NOT NULL,
         end_instant timestamp NOT NULL,
         value RealGEZ NOT NULL,
-        response StringS NOT NULL,
+        response_status StringS NOT NULL,
 
-        UNIQUE (type, start_instant, end_instant),
-        CONSTRAINT end_instant_after_start_instant CHECK (end_instant >= start_instant)
+        -- UNIQUE (type, start_instant, end_instant),
+        UNIQUE (type, end_instant)
+        -- CONSTRAINT end_instant_after_start_instant CHECK (end_instant >= start_instant)
 
 );

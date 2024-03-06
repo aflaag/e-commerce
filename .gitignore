@@ -1,4 +1,5 @@
 src/server/bin
+src/non-functional-req/bin
 
 src/courier/handler/bin
 src/courier/managers/*/bin

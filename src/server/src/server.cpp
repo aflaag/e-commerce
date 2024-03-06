@@ -105,7 +105,7 @@ void Server::run(){
 
                 sprintf(query, "WITH max_client_conn AS (SELECT max(connection_instant) AS instant FROM Client WHERE file_descriptor = %d), "
                                "     last_request AS (SELECT MAX(c.request_instant) AS instant FROM Communication AS c, max_client_conn AS m WHERE c.client_file_descriptor = %d AND c.client_connection_instant = m.instant) "
-                               "UPDATE Communication SET response = \'%s\', response_instant = CURRENT_TIMESTAMP "
+                               "UPDATE Communication SET response_status = \'%s\', response_instant = CURRENT_TIMESTAMP "
                                "WHERE client_file_descriptor = %d AND client_connection_instant = (SELECT instant FROM max_client_conn) AND request_instant = (SELECT instant FROM last_request)", client_id, client_id, first_line.c_str(), client_id);
                 query_res = log_db.RunQuery(query, false);
 

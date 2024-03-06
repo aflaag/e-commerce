@@ -65,7 +65,7 @@ int main() {
             send_response_status(c2r, WRITE_STREAM, client_id, "DB#ERROR", msg_id, 0);
             continue;
         }
-        printf("ciao0\n");
+
         Refund* refund;
         refund = new Refund(refund_id,
                             PQgetvalue(query_res, 0, PQfnumber(query_res, "request_instant")),

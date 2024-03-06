@@ -85,6 +85,12 @@ set_current_root src
 
 make_folder server/src
 
+printf "############## NON FUNCTIONAL REQ ##############\n\n"
+
+set_current_root src
+
+make_folder non-functional-req/src
+
 printf "############## CUSTOMER ##############\n\n"
 
 set_current_root src/customer
