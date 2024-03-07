@@ -7,12 +7,7 @@ int add_to_stream() {
     redisReply *reply;
 
     c2r = redisConnect("localhost", 6379);
-
-    // delete stream if exists
-    // reply = RedisCommand(c2r, "DEL %s", WRITE_STREAM2);
-    // assertReply(c2r, reply);
-    // dumpReply(reply, 0);
-
+    
     // initialize stream
     initStreams(c2r, WRITE_STREAM);
 

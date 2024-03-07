@@ -1,5 +1,46 @@
 # API DOC
 
+##Supplier
+- add-product
+	- code: ProductCode
+	- name: StringS
+	- description: StringL
+	- price: RealGEZ
+	> Example: add-product code banana name yoyo description ahahahaha##baba price 341.3243
+- add-restock
+	- quantity: IntGZ
+	- supplier: StringS
+	- product: ProductCode
+	> Example: add-restock quantity 10 supplier Supplier1 product P1
+- add-supplier
+	- business_name: StringS
+	> Example: add-supplier business_name Supplier5
+- update-product
+	- code: ProductCode
+	- description: StringL
+	> Example: update-product code P1 description ho##capito
+- view-statistic
+	- supplier: StringS
+	> Example: view-statistic supplier Supplier1
+
+
+## Courier
+- take-purchase-delivery
+	- courier: StringS
+	- purchase: integer
+	- deliverycode: DeliveryCode
+	> Example take-purchase-delivery courier courier1 purchase 1 deliverycode aifjifa
+- update-assigned-delivery
+	- deliverycode: DeliveryCode
+	- lost: timestamp
+	> Example update-assigned-delivery deliverycode bho2 lost 2024-02-29##19:41:42
+- update-refund-request
+	- refund: integer
+	- refund_end: timestamp
+	> Example update-refund-request refund 1 refund_end 2024-03-02##11:05:42.660825
+- view-available-purchase
+	> Example view-available-purchase
+
 ## Customer
 - add-address
 	- email: Email
