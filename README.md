@@ -7,7 +7,7 @@
 - monitor (funzionali e non funzionali)
     - non funzionali:
         - il tempo medio di sessione [X]
-        - il tempo medio di risposta ad una richiesta
+        - il tempo medio di risposta ad una richiesta [X]
     - funzionali
         - loggare i risultati delle richiete nel db perchè i monitor sono i trigger ed i vincoli messi nella creazione del db [X]
 - creare db log [X]
