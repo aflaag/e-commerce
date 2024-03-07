@@ -17,6 +17,7 @@ CREATE DOMAIN AlphaNumeric AS StringS CHECK (VALUE ~* E'^[A-Z0-9]$')
 CREATE DOMAIN ProductCode AS AlphaNumeric;
 CREATE DOMAIN ZipCode AS AlphaNumeric;
 CREATE DOMAIN StreetNumber AS AlphaNumeric;
+CREATE DOMAIN DeliveryCode AS AlphaNumeric;
 
 CREATE DOMAIN Stars AS integer CHECK (VALUE >= 1 AND VALUE <= 5);
 
@@ -133,7 +134,7 @@ CREATE TABLE IF NOT EXISTS Courier (
 );
 
 CREATE TABLE IF NOT EXISTS AssignedDelivery (
-        delivery_code StringS NOT NULL PRIMARY KEY,
+        delivery_code DeliveryCode NOT NULL PRIMARY KEY,
         delivery_assignment_instant timestamp NOT NULL,
         delivery_start timestamp,
         delivery_end timestamp,
