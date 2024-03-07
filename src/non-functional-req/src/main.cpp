@@ -52,7 +52,28 @@ int main() {
 
         query_res = log_db.RunQuery(query, false);
 
-        printf("done\n");
+        sprintf(query, "SELECT EXTRACT(EPOCH FROM AVG(response_instant - request_instant)) * 1000 as avg FROM Communication WHERE response_instant IS NOT NULL");
+
+        query_res = log_db.RunQuery(query, true);
+
+        if ((PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) || PQntuples(query_res) <= 0) {
+            // send_response_status(c2r, WRITE_STREAM, client_id, "DB#ERROR", msg_id, 0);
+            printf("DB#ERROR\n");
+            continue;
+        }
+
+        average = PQgetvalue(query_res, 0, PQfnumber(query_res, "avg"));
+
+        if (atof(average) <= MAX_RESPONSE_TIME_AVG) {
+            sprintf(response_status, "SUCCESS");
+        } else {
+            sprintf(response_status, "ERROR");
+        }
+
+        sprintf(query, "INSERT INTO SessionStatistic(type, end_instant, value, response_status) VALUES ('Response', CURRENT_TIMESTAMP, %s, \'%s\')", average, response_status);
+
+        query_res = log_db.RunQuery(query, false);
+
         micro_sleep(60000000);
     }
 

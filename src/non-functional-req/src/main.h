@@ -20,6 +20,7 @@
 #include "../../lib/con2db/pgsql.h"
 
 #define MAX_CONNECTION_TIME_AVG 30000.0
+#define MAX_RESPONSE_TIME_AVG 30000.0
 
 #define POSTGRESQL_SERVER "localhost"
 #define POSTGRESQL_PORT "5432"
