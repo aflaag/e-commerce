@@ -13,7 +13,10 @@ CREATE DOMAIN RealGEZ AS real CHECK (VALUE >= 0);
 CREATE DOMAIN Email AS VARCHAR(255) CHECK (VALUE ~* E'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$');
 CREATE DOMAIN PhoneNumber AS VARCHAR(20) CHECK (VALUE ~* E'^\\+?[0-9-]+[0-9]+$');
 CREATE DOMAIN CardNumber AS VARCHAR(20) CHECK (VALUE ~* E'^[0-9]{13,19}$');
-CREATE DOMAIN ProductCode AS StringS CHECK (VALUE ~* E'^[A-Z0-9]{1,20}$');
+CREATE DOMAIN AlphaNumeric AS StringS CHECK (VALUE ~* E'^[A-Z0-9]$')
+CREATE DOMAIN ProductCode AS AlphaNumeric;
+CREATE DOMAIN ZipCode AS AlphaNumeric;
+CREATE DOMAIN StreetNumber AS AlphaNumeric;
 
 CREATE DOMAIN Stars AS integer CHECK (VALUE >= 1 AND VALUE <= 5);
 
@@ -33,9 +36,9 @@ CREATE TABLE IF NOT EXISTS City (
 );
 
 CREATE TABLE IF NOT EXISTS Address (
-        zip_code StringS NOT NULL,
+        zip_code ZipCode NOT NULL,
         street StringM NOT NULL,
-        street_number StringS NOT NULL,
+        street_number StreetNumber NOT NULL,
         city integer NOT NULL,
 
         PRIMARY KEY (zip_code, street, street_number),
