@@ -32,11 +32,11 @@
 	> Example: request take-purchase-delivery courier courier1 purchase 1 deliverycode aifjifa
 - update-assigned-delivery
 	- deliverycode: DeliveryCode
-	- lost: timestamp
+	- [start, lost, end] : timestamp
 	> Example: request update-assigned-delivery deliverycode bho2 lost 2024-02-29##19:41:42
 - update-refund-request
 	- refund: integer
-	- refund_end: timestamp
+	- [refund_start, refund_end]: timestamp | courier: StringS
 	> Example: request update-refund-request refund 1 refund_end 2024-03-02##11:05:42.660825
 - view-available-purchase
 	> Example: request view-available-purchase
@@ -46,7 +46,7 @@
 	- email: Email
 	- zip_code: ZipCode
 	- street_number: StreetNumber
-	- street: StringS
+	- street: StringM
 	- city: IntGZ
 	> Example: request add-address email user@gmail.com zip_code 2C4A street_number 2B street aldo city 1
 - add-card
@@ -64,7 +64,7 @@
 	- customer: Email
 	- card: CardNumber
 	- zip_code: ZipCode
-	- street: StringS
+	- street: StringM
 	- street_number: StreetNumber
 	- product: ProductCode
 	- quantity: INTGZ
