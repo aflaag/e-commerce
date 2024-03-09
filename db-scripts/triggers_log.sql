@@ -24,7 +24,7 @@ BEGIN
         WHERE NEW.file_descriptor = Client.file_descriptor
         AND (Client.disconnection_instant IS NULL OR NEW.connection_instant <= Client.disconnection_instant)
     ) IS TRUE THEN
-        RAISE EXCEPTION 'invalid file descriptor';
+        RAISE EXCEPTION 'file descriptor connection not closed';
     END IF;
 
     RETURN NEW;

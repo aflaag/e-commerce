@@ -16,6 +16,7 @@
 #include <cerrno>
 #include <vector>
 #include <sstream>
+#include <signal.h>
 
 #include "handler.h"
 #include "../../lib/con2db/pgsql.h"

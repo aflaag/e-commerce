@@ -45,6 +45,7 @@ void Server::run(){
     int client_id;
     bool response;
     char query[1000];
+    unsigned int counter;
 
     FD_ZERO(&current_set);
     max_fd = sockfd;
@@ -53,8 +54,11 @@ void Server::run(){
     timeout.tv_sec  = 1;
     timeout.tv_usec = 0;
 
-    while(!end_server) {
-        printf("select failed\n");
+    counter = 0;
+
+    while(!end_server && counter <= 20) {
+        printf("Working... - Listen counter: %d\n", counter);
+        counter++;
 
         memcpy(&working_set, &current_set, sizeof(current_set));
 
@@ -70,8 +74,12 @@ void Server::run(){
 
         // For all connections (itself included)
 
-        for (i = 0; i <= max_fd && ready_requests > 0; ++i) {
+        if(ready_requests > 0){
+            counter = 0;    // reset server timeout counter
+        }
 
+        for (i = 0; i <= max_fd && ready_requests > 0; ++i) {
+            
             if (FD_ISSET(i, &working_set)) {
                 ready_requests -= 1;
                 
@@ -85,6 +93,7 @@ void Server::run(){
                     printf("new msg\n");
                     receive(i);
                 }
+
             }
         }
 
@@ -97,6 +106,8 @@ void Server::run(){
             response = handler->read_from_managers(&out_str, &client_id);
 
             if(response){
+                counter = 0;    // reset server timeout counter
+
                 size_t pos = out_str.find('\n');
 
                 // Extract the first line
@@ -123,7 +134,7 @@ void Server::run(){
         timeout.tv_sec  = 1;
         timeout.tv_usec = 0;
     }
-    printf("boh\n");    
+
     // Close connections
     close_connections();
 }
@@ -216,7 +227,9 @@ void Server::receive(int i) {
         return;
     }
 
-    handler->send_to_managers(i, msg);
+    if(!handler->send_to_managers(i, msg)){
+        send(i, "BAD_REQUEST", 18, 0);
+    }
 }
 
 void Server::close_connections() {

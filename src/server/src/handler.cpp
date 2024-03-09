@@ -9,7 +9,7 @@ Handler::Handler(const char* redis_ip, int redis_port, std::string req_types[], 
     init_streams();
 }
 
-void Handler::send_to_managers(int client_id, std::string msg){
+bool Handler::send_to_managers(int client_id, std::string msg){
 
     redisReply* reply;
     bool is_valid_req;
@@ -23,7 +23,7 @@ void Handler::send_to_managers(int client_id, std::string msg){
     if (i >= msg.length()){
         // Invalid msg
         std::cout << "Invalid msg" << std::endl;
-        return;
+        return false;
     }
 
     std::string req_type = msg.substr(0, i);
@@ -40,7 +40,7 @@ void Handler::send_to_managers(int client_id, std::string msg){
     if(!is_valid_req){
         // Invalid request type
         std::cout << "Invalid request type" << std::endl;
-        return;
+        return false;
     }
 
     // Send command on the -in stream of the corresponding manager
@@ -52,6 +52,8 @@ void Handler::send_to_managers(int client_id, std::string msg){
 
     assertReply(c2r, reply);
     dumpReply(reply, 0);
+
+    return true;
 }
 
 bool Handler::read_from_managers(std::string* out_str_ptr, int* client_id_ptr){

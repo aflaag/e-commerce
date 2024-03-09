@@ -13,7 +13,7 @@ CREATE DOMAIN RealGEZ AS real CHECK (VALUE >= 0);
 CREATE DOMAIN Email AS VARCHAR(255) CHECK (VALUE ~* E'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$');
 CREATE DOMAIN PhoneNumber AS VARCHAR(20) CHECK (VALUE ~* E'^\\+?[0-9-]+[0-9]+$');
 CREATE DOMAIN CardNumber AS VARCHAR(20) CHECK (VALUE ~* E'^[0-9]{13,19}$');
-CREATE DOMAIN AlphaNumeric AS StringS CHECK (VALUE ~* E'^[A-Z0-9]$')
+CREATE DOMAIN AlphaNumeric AS StringS CHECK (VALUE ~* E'^[A-Z0-9]+$');
 CREATE DOMAIN ProductCode AS AlphaNumeric;
 CREATE DOMAIN ZipCode AS AlphaNumeric;
 CREATE DOMAIN StreetNumber AS AlphaNumeric;
@@ -86,14 +86,14 @@ CREATE TABLE IF NOT EXISTS Restock (
         id SERIAL PRIMARY KEY,
         quantity IntGZ NOT NULL,
         supplier StringS NOT NULL,
-        product StringS NOT NULL,
+        product ProductCode NOT NULL,
 
         CONSTRAINT fk_restock_supplier FOREIGN KEY (supplier) REFERENCES Supplier(business_name),
         CONSTRAINT fk_restock_product FOREIGN KEY (product) REFERENCES Product(code)
 );
 
 CREATE TABLE IF NOT EXISTS Rating (
-        product StringS NOT NULL,
+        product ProductCode NOT NULL,
         customer Email NOT NULL,
         stars Stars NOT NULL,
 
@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS Purchase (
 );
 
 CREATE TABLE IF NOT EXISTS OrderedProducts (
-        product StringS NOT NULL,
+        product ProductCode NOT NULL,
         purchase integer NOT NULL,
         quantity IntGZ NOT NULL,
 
@@ -196,7 +196,7 @@ CREATE TABLE IF NOT EXISTS RefundRequest (
 
 CREATE TABLE IF NOT EXISTS RefundedProduct (
         refund_request integer NOT NULL,
-        product StringS NOT NULL,
+        product ProductCode NOT NULL,
         quantity IntGZ NOT NULL,
 
         PRIMARY KEY (refund_request, product),
