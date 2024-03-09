@@ -61,7 +61,10 @@
   - refund: `integer`
   - _switch_
     - _option_
-      - timestamp: `StringS`
+      - courier: `StringS`
+          ```
+          update-refund-request TODO
+          ```
     - _option_
       - refund_start: `timestamp`
       - refund_end: `timestamp`
@@ -102,7 +105,7 @@
       add-customer name user surname resu email user@gmail.com phone-number +393714393392
       ```
 
-- add-purchase
+- add-purchase *[order matters]*
   - fare: `RealGEZ`
   - customer: `Email`
   - card: `CardNumber`
@@ -116,8 +119,6 @@
       ```
       add-purchase fare 0.95 customer user@gmail.com card 007865432872 zip_code 2C4A street aldo street_number 23B product P1 quantity 2  $\dots$ quantity 4 product P2
       ```
-  
-    The purchase information must be before the acquired product information.
 
 - add-rating
   - product: `ProductCode`
@@ -140,7 +141,7 @@
 - delete-purchase
   - purchase: `IntGZ`
       ```
-      elete-purchase purchase 1
+      delete-purchase purchase 1
       ```
 
 - search-products
