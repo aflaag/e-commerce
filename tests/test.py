@@ -36,7 +36,7 @@ while counter:
     true_args =  random.randint(0, min(len(requests[k]), args))
     false_args = args - true_args
 
-    req = "request " + k
+    req = k + " "
     to_insert = [i for i in range(len(requests[k]))]
 
     for i in range(args, 0, -2):
@@ -75,7 +75,7 @@ while counter:
     #print(req + "\n")
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((HOST, PORT))
-        s.sendall(b"serch-products boh a")
+        s.sendall(req.encode("utf-8"))
         data = s.recv(2048)
 
     print(f"Received {data!r}")

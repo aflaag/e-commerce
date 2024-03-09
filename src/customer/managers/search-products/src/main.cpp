@@ -37,7 +37,7 @@ int main() {
         // Take the input
         ReadStreamMsgVal(reply, 0, 0, 2, second_key);    // Index of first field of msg = 0
         ReadStreamMsgVal(reply, 0, 0, 3, product_name);  // Index of second field of msg = 1
-
+        
         std::string str_product_name = product_name;
         std::string search_parameter = "%"+ str_product_name + "%";
         sprintf(query, "SELECT * FROM Product WHERE name LIKE \'%s\' ", (char*)search_parameter.c_str());

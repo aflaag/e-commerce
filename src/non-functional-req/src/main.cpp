@@ -40,6 +40,12 @@ int main() {
 
         char* average = PQgetvalue(query_res, 0, PQfnumber(query_res, "avg"));
 
+        if(strlen(average)==0){
+            sprintf(average, "0");
+        }
+
+        printf("media |%s|\n", average);
+
         char response_status[8];
 
         if (atof(average) <= MAX_CONNECTION_TIME_AVG) {
@@ -52,6 +58,8 @@ int main() {
 
         query_res = log_db.RunQuery(query, false);
 
+
+
         sprintf(query, "SELECT EXTRACT(EPOCH FROM AVG(response_instant - request_instant)) * 1000 as avg FROM Communication WHERE response_instant IS NOT NULL");
 
         query_res = log_db.RunQuery(query, true);
@@ -63,6 +71,10 @@ int main() {
         }
 
         average = PQgetvalue(query_res, 0, PQfnumber(query_res, "avg"));
+
+        if(strlen(average) == 0){
+            sprintf(average, "0");
+        }
 
         if (atof(average) <= MAX_RESPONSE_TIME_AVG) {
             sprintf(response_status, "SUCCESS");
