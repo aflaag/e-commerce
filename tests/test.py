@@ -72,9 +72,6 @@ while counter:
 
         to_insert.pop(pop_i)
     print(req)
-    for ch in req:
-        if ord(ch) < 32 or ord(ch) >= 127:
-            print("booooooo") 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((HOST, PORT))
         s.send(req.encode())

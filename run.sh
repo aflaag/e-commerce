@@ -33,12 +33,18 @@ set_current_root() {
     try_cd "$ROOT/$CURRENT_ROOT"
 }
 
+try_main() {
+    ./main &
+
+    check_last_command
+}
+
 run_main() {
     try_cd $1
 
     printf "INSIDE $1\n"
 
-    ./main &
+    try_main
 
     printf "DONE $1\n\n"
 
@@ -48,7 +54,6 @@ run_main() {
 check_arguments $1
 
 printf "\n\n\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥 🍳🍳🥩🥩 HOLD ON, LEMME COOK. 🥩🥩🍳🍳 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n\n\n\n"
-
 
 printf "############## NON FUNCTIONAL REQ ##############\n\n"
 
@@ -97,4 +102,3 @@ run_main managers/update-refund-request/bin
 run_main managers/view-available-purchase/bin
 
 printf "\n\n\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥 🍳🍳🥩🥩 FINISHED COOKIN' 🥩🥩🍳🍳 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n\n\n\n"
-

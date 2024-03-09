@@ -214,8 +214,6 @@ void Server::receive(int i) {
             break;
         }
         msg.append(buffer);
-        printf("%sbanana\n", buffer);
-
     } while (TRUE);
 
     // If conncetion was closed by client or crashed
