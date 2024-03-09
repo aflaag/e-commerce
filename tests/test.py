@@ -2,7 +2,6 @@ import random
 from requests_init import requests
 import socket
 
-
 HOST = "127.0.0.1"  # The server's hostname or IP address
 PORT = 42069  # The port used by the server
 
@@ -17,7 +16,7 @@ Test generator
         key, value are separated by spaces, if exists a space in value it cointain the next key, same but different for key
         spaces in key,value are ##
 """
-counter = [(k, 1000) for k in requests.keys()]
+counter = [(k, 1) for k in requests.keys()]
 
 while counter:
     i = random.randint(0, len(counter) -1)
@@ -36,7 +35,7 @@ while counter:
     true_args =  random.randint(0, min(len(requests[k]), args))
     false_args = args - true_args
 
-    req = k + " "
+    req = k
     to_insert = [i for i in range(len(requests[k]))]
 
     for i in range(args, 0, -2):
@@ -72,10 +71,13 @@ while counter:
             false_args -= 1
 
         to_insert.pop(pop_i)
-    #print(req + "\n")
+    print(req)
+    for ch in req:
+        if ord(ch) < 32 or ord(ch) >= 127:
+            print("booooooo") 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((HOST, PORT))
-        s.sendall(req.encode("utf-8"))
+        s.send(bytes(req, "utf-8"))
         data = s.recv(2048)
 
-    print(f"Received {data!r}")
+    print(f"Received {data!r}\n")

@@ -31,7 +31,7 @@ bool Handler::send_to_managers(int client_id, std::string msg){
 
     is_valid_req = false;
     for(i = 0; i < num_types; i++){
-        if(req_type.compare(types[i])){
+        if(req_type.compare(types[i]) == 0){
             is_valid_req = true;
             break;
         }
