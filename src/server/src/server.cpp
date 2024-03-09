@@ -1,11 +1,19 @@
 #include "server.h"
 
 Server::Server(int server_port, const char* redis_ip, int redis_port, std::string req_types[], int num_req_types) {
+    int on = 1;
+
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     sockPort = server_port;
     
     if (sockfd < 0) {
         throw std::invalid_argument("Error creating the socket");
+    }
+
+    if (setsockopt(sockfd, SOL_SOCKET,  SO_REUSEADDR, (char *)&on, sizeof(on)) < 0) {
+        perror("setsockopt() failed");
+        close(sockfd);
+        exit(-1);
     }
 
     int flags = fcntl(sockfd, F_GETFL, 0);
@@ -108,26 +116,7 @@ void Server::run(){
             if(response){
                 counter = 0;    // reset server timeout counter
 
-                size_t pos = out_str.find('\n');
-
-                // Extract the first line
-                std::string first_line = out_str.substr(0, pos);
-                std::cout << first_line << std::endl;
-
-                sprintf(query, "WITH max_client_conn AS (SELECT max(connection_instant) AS instant FROM Client WHERE file_descriptor = %d), "
-                               "     last_request AS (SELECT MAX(c.request_instant) AS instant FROM Communication AS c, max_client_conn AS m WHERE c.client_file_descriptor = %d AND c.client_connection_instant = m.instant) "
-                               "UPDATE Communication SET response_status = \'%s\', response_instant = CURRENT_TIMESTAMP "
-                               "WHERE client_file_descriptor = %d AND client_connection_instant = (SELECT instant FROM max_client_conn) AND request_instant = (SELECT instant FROM last_request)", client_id, client_id, first_line.c_str(), client_id);
-                query_res = log_db.RunQuery(query, false);
-
-                if (PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) {
-                    send(new_client, "SERVER_ERROR", 12, 0);
-                    continue;
-                }
-
-
-                std::cout << client_id << " - " << out_str << std::endl;
-                send(client_id, out_str.c_str(), out_str.length(), 0);
+                send_response(client_id, out_str);
             }
         }
 
@@ -174,6 +163,31 @@ void Server::add_new_clients() {
 		    printf("flag set error");
         }
     } while (new_client != -1);
+}
+
+void Server::send_response(int client_id, std::string out_str) {
+    char query[1000];
+
+    size_t pos = out_str.find('\n');
+
+    // Extract the first line
+    std::string first_line = out_str.substr(0, pos);
+    std::cout << first_line << std::endl;
+
+    sprintf(query, "WITH max_client_conn AS (SELECT max(connection_instant) AS instant FROM Client WHERE file_descriptor = %d), "
+                    "     last_request AS (SELECT MAX(c.request_instant) AS instant FROM Communication AS c, max_client_conn AS m WHERE c.client_file_descriptor = %d AND c.client_connection_instant = m.instant) "
+                    "UPDATE Communication SET response_status = \'%s\', response_instant = CURRENT_TIMESTAMP "
+                    "WHERE client_file_descriptor = %d AND client_connection_instant = (SELECT instant FROM max_client_conn) AND request_instant = (SELECT instant FROM last_request)", client_id, client_id, first_line.c_str(), client_id);
+    query_res = log_db.RunQuery(query, false);
+
+    if (PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) {
+        send(client_id, "SERVER_ERROR", 12, 0);
+        return;
+    }
+
+
+    std::cout << client_id << " - " << out_str << std::endl;
+    send(client_id, out_str.c_str(), out_str.length(), 0);
 }
 
 
@@ -228,7 +242,7 @@ void Server::receive(int i) {
     }
 
     if(!handler->send_to_managers(i, msg)){
-        send(i, "BAD_REQUEST", 18, 0);
+        send_response(i, "BAD_REQUEST");
     }
 }
 

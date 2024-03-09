@@ -41,6 +41,7 @@ class Server {
         void add_new_clients();
         void receive(int i);
         void close_connections();
+        void send_response(int client_id, std::string out_str);
 
         int sockfd;
         int sockPort;
