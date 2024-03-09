@@ -2,9 +2,11 @@
 
 ## TODO list
 
-- [x] refactoring
+- [ ] refactoring
     - [x] usare costanti per dichiarazione dimensione buffer
     - [x] INVALID#REQUEST e REQUEST#SUCCESS va messo l'underscore
+    - [ ] controllare print fatti e togliere quelli inutili
+    - [ ] filtrare librerie necessarie
 
 - relazione
     - sistemare descrzione problema
@@ -30,6 +32,7 @@
         - [x] loggare i risultati delle richiete nel db perchè i monitor sono i trigger ed i vincoli messi nella creazione del db
 - [x] creare db log
 - [x] loggare i dati
+- [ ] vedere come, caso di sigint, chiudere le connessioni
 
 ### Altro
 
