@@ -2,16 +2,6 @@
 
 ## TODO list
 
-- fare server per ogni handler [X]
-- test generator
-- monitor (funzionali e non funzionali)
-    - non funzionali:
-        - il tempo medio di sessione [X]
-        - il tempo medio di risposta ad una richiesta [X]
-    - funzionali
-        - loggare i risultati delle richiete nel db perchè i monitor sono i trigger ed i vincoli messi nella creazione del db [X]
-- creare db log [X]
-- loggare i dati [X]
 - relazione
     - sistemare descrzione problema
     - figura che illustra sistema 
@@ -26,9 +16,18 @@
     - descrizione connessioni Redis
     - descrizioni risultati
 
+- [x] fare server per ogni handler
+- [x] test generator
+- [x] monitor (funzionali e non funzionali)
+    - [x] non funzionali:
+        - [x] il tempo medio di sessione
+        - [x] il tempo medio di risposta ad una richiesta
+    - funzionali
+        - [x] loggare i risultati delle richiete nel db perchè i monitor sono i trigger ed i vincoli messi nella creazione del db [X]
+- [x] creare db log
+- [x] loggare i dati
 
 ### Altro
-
 
 ### Relazione
 
