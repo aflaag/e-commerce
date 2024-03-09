@@ -80,3 +80,10 @@ requests = {
  
  "view-available-purchase" : []
 }
+
+
+apis = {"courier" : ["take-purchase-delivery", "update-assigned-delivery", "update-refund-request", "view-available-purchase"],
+       "customer" : ["add-customer", "add-address", "search-products", "add-card", "add-purchase", "add-rating", "add-refund-request", "delete-purchase", "view-order", "view-refund"],
+       "supplier" : ["add-product", "add-restock", "add-supplier", "update-product", "view-statistic"]}
+
+ports = [("courier", 42070), ("customer", 42069), ("supplier", 42071)]
