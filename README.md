@@ -2,6 +2,10 @@
 
 ## TODO list
 
+- [ ] refactoring
+    - [ ] usare costanti per dichiarazione dimensione buffer
+    - [ ] INVALID#REQUEST e REQUEST#SUCCESS va messo l'underscore
+
 - relazione
     - sistemare descrzione problema
     - figura che illustra sistema 
@@ -23,7 +27,7 @@
         - [x] il tempo medio di sessione
         - [x] il tempo medio di risposta ad una richiesta
     - funzionali
-        - [x] loggare i risultati delle richiete nel db perchè i monitor sono i trigger ed i vincoli messi nella creazione del db [X]
+        - [x] loggare i risultati delle richiete nel db perchè i monitor sono i trigger ed i vincoli messi nella creazione del db
 - [x] creare db log
 - [x] loggare i dati
 

@@ -1,4 +1,5 @@
 from .param_interface import ParamInterface
+from .alphabet import *
 
 import re
 import random
@@ -18,7 +19,7 @@ class Card(ParamInterface):
                 return card
     
     def wrong(self):
-        chars = string.ascii_letters + string.digits + string.punctuation.replace("\'", "")
+        chars = string.ascii_letters + string.digits + ALLOWED_CHARS
 
         while True:
             card = "".join(random.choices(chars, k = random.randint(1, 30)))

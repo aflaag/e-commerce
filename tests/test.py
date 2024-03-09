@@ -16,7 +16,7 @@ Test generator
         key, value are separated by spaces, if exists a space in value it cointain the next key, same but different for key
         spaces in key,value are ##
 """
-counter = [(k, 1) for k in requests.keys()]
+counter = [(k, 100) for k in requests.keys()]
 
 while counter:
     i = random.randint(0, len(counter) -1)

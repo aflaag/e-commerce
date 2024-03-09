@@ -1,4 +1,5 @@
 from .param_interface import ParamInterface
+from .alphabet import *
 
 import random
 import string
@@ -26,7 +27,7 @@ class Email(ParamInterface):
                 return param
     
     def wrong(self):
-        chars = string.ascii_letters + string.digits + string.punctuation.replace("\'", "")
+        chars = string.ascii_letters + string.digits + ALLOWED_CHARS
 
         while True:
             param = "".join(random.choices(chars, k = random.randint(1, 256)))

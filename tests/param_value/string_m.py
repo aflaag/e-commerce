@@ -1,11 +1,12 @@
 from .param_interface import ParamInterface
+from .alphabet import *
 
 import random
 import string
 
 class StringM(ParamInterface):
     def __init__(self):
-        self.chars = string.ascii_letters + string.digits + string.punctuation.replace("\'", "")
+        self.chars = string.ascii_letters + string.digits + ALLOWED_CHARS
         pass
 
     def right(self):

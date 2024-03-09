@@ -59,13 +59,12 @@ void Server::run(){
     max_fd = sockfd;
     FD_SET(sockfd, &current_set);
 
-    timeout.tv_sec  = 1;
-    timeout.tv_usec = 0;
+    timeout.tv_sec  = 0;
+    timeout.tv_usec = 500000;
 
     counter = 0;
 
     while(!end_server && counter <= 20) {
-        printf("Working... - Listen counter: %d\n", counter);
         counter++;
 
         memcpy(&working_set, &current_set, sizeof(current_set));
@@ -93,12 +92,10 @@ void Server::run(){
                 
                 // If it's itself
                 if (i == sockfd) {
-                    printf("new client\n");
                     add_new_clients();
 
                 // If it's a client
                 } else {
-                    printf("new msg\n");
                     receive(i);
                 }
 

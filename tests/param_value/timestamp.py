@@ -1,4 +1,5 @@
 from .param_interface import ParamInterface
+from .alphabet import *
 
 import random
 import datetime
@@ -19,7 +20,7 @@ class Timestamp(ParamInterface):
         return start_date + datetime.timedelta(seconds=random_seconds)
     
     def wrong(self):
-        chars = string.ascii_letters + string.digits + string.punctuation.replace("\'", "")
+        chars = string.ascii_letters + string.digits + ALLOWED_CHARS
         while True:
             s = "".join(random.choices(chars, k = random.randint(1, 50)))
             if not re.match(self.regex, s):
