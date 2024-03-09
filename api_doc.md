@@ -1,6 +1,7 @@
 # API DOC
 
-##Supplier
+## Supplier
+
 - add-product
 	- code: ProductCode
 	- name: StringS
@@ -23,8 +24,8 @@
 	- supplier: StringS
 	> Example: view-statistic supplier Supplier1
 
-
 ## Courier
+
 - take-purchase-delivery
 	- courier: StringS
 	- purchase: integer
@@ -42,6 +43,7 @@
 	> Example: view-available-purchase
 
 ## Customer
+
 - add-address
 	- email: Email
 	- zip_code: ZipCode
