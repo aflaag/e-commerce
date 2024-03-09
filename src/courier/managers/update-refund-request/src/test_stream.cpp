@@ -11,7 +11,7 @@ int add_to_stream() {
     // initialize stream
     initStreams(c2r, WRITE_STREAM);
 
-    reply = RedisCommand(c2r, "XADD %s * client_id 1 refund 1 refund_end 2024-03-02##11:05:42.660825", WRITE_STREAM);
+    reply = RedisCommand(c2r, "XADD %s * client_id 6  courier jqCr7uLJ~Oe}|d=3[33-dikbvdkEof{[@h0]NT>[Zy&&zO9tIWG?BQ.cDqW|J]o_CCy>tfbX1E6U:F)U~8^L7ms2y:i<]~x44!KjKWkJ~n;y3j;9zFFU05a(~HAV-MHu/D|2vC|?{cw?AVB3 refund 46", WRITE_STREAM);
     assertReplyType(c2r, reply, REDIS_REPLY_STRING);
     freeReplyObject(reply);
 
