@@ -51,10 +51,10 @@ Refund* Refund::from_stream(redisReply* reply, int stream_num, int msg_num){
     char key[PARAMETERS_LEN];
     char value[PARAMETERS_LEN];
 
-    char id[100];
+    char id[PARAMETERS_LEN];
     char* request_instant;
-    char state[100] = "Requested";
-    char assigned_delivery[100];
+    char state[PARAMETERS_LEN] = "Requested";
+    char assigned_delivery[PARAMETERS_LEN];
 
     // prendo il timestamp corrente
     auto current_time = std::chrono::system_clock::now();

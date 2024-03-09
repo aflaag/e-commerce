@@ -6,7 +6,7 @@ int main() {
 
     PGresult *query_res;
 
-    char response[100], msg_id[30], first_key[30], client_id[30];
+    char response[RESPONSE_LEN], msg_id[MESSAGE_ID_LEN], first_key[KEY_LEN], client_id[VALUE_LEN];
     string query;
 
     Con2DB db(POSTGRESQL_SERVER, POSTGRESQL_PORT, POSTGRESQL_USER, POSTGRESQL_PSW, POSTGRESQL_DBNAME);
@@ -33,7 +33,7 @@ int main() {
         ReadStreamMsgVal(reply, 0, 0, 1, client_id);    // Index of second field of msg = 1
 
         if(strcmp(first_key, "client_id")){
-            send_response_status(c2r, WRITE_STREAM, client_id, "INVALID#CLIENT#STREAM", msg_id, 0);
+            send_response_status(c2r, WRITE_STREAM, client_id, "INVALID_CLIENT#STREAM", msg_id, 0);
             continue;
         }
 
@@ -42,7 +42,7 @@ int main() {
             product = Product::from_stream(reply, 0, 0);
         }
         catch(std::invalid_argument exp) {
-            send_response_status(c2r, WRITE_STREAM, client_id, "INVALID#REQUEST", msg_id, 0);
+            send_response_status(c2r, WRITE_STREAM, client_id, "INVALID_REQUEST", msg_id, 0);
             continue;
         }
 
@@ -51,7 +51,7 @@ int main() {
         query_res = db.RunQuery((char *) query.c_str(), false);
         
         if (PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) {
-            send_response_status(c2r, WRITE_STREAM, client_id, "DB#ERROR", msg_id, 0);
+            send_response_status(c2r, WRITE_STREAM, client_id, "DB_ERROR", msg_id, 0);
             continue;
         }
 

@@ -18,6 +18,7 @@
 #include <sstream>
 
 #include "../../lib/con2db/pgsql.h"
+#include "../../utils/src/const.h"
 
 #define MAX_CONNECTION_TIME_AVG 30000.0
 #define MAX_RESPONSE_TIME_AVG 30000.0

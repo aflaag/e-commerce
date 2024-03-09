@@ -19,6 +19,7 @@
 
 #include "../../lib/con2redis/src/con2redis.h"
 #include "../../lib/con2db/pgsql.h"
+#include "../../utils/src/const.h"
 
 class Handler{
     public:

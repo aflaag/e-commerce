@@ -6,7 +6,7 @@ int main() {
 
     PGresult *query_res;
 
-    char query[QUERY_LEN], response[100], msg_id[30], first_key[30], client_id[30], second_key[30], supplier_id[100];
+    char query[QUERY_LEN], response[RESPONSE_LEN], msg_id[MESSAGE_ID_LEN], first_key[KEY_LEN], client_id[VALUE_LEN], second_key[KEY_LEN], supplier_id[VALUE_LEN];
 
     Con2DB db(POSTGRESQL_SERVER, POSTGRESQL_PORT, POSTGRESQL_USER, POSTGRESQL_PSW, POSTGRESQL_DBNAME);
     c2r = redisConnect(REDIS_SERVER, REDIS_PORT);
@@ -29,7 +29,7 @@ int main() {
         ReadStreamMsgVal(reply, 0, 0, 1, client_id);    // Index of second field of msg = 1
 
         if(strcmp(first_key, "client_id")){
-            send_response_status(c2r, WRITE_STREAM, client_id, "INVALID#CLIENT#STREAM", msg_id, 0);
+            send_response_status(c2r, WRITE_STREAM, client_id, "INVALID_CLIENT#STREAM", msg_id, 0);
             continue;
         }
 
@@ -38,7 +38,7 @@ int main() {
         ReadStreamMsgVal(reply, 0, 0, 1, supplier_id);    // Index of second field of msg = 1
 
         if(strcmp(first_key, "supplier")){
-            send_response_status(c2r, WRITE_STREAM, client_id, "INVALID#CLIENT#STREAM", msg_id, 0);
+            send_response_status(c2r, WRITE_STREAM, client_id, "INVALID_CLIENT#STREAM", msg_id, 0);
             continue;
         }
 
@@ -48,7 +48,7 @@ int main() {
         query_res = db.RunQuery(query, true);
 
         if (PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) {
-            send_response_status(c2r, WRITE_STREAM, client_id, "DB#ERROR", msg_id, 0);
+            send_response_status(c2r, WRITE_STREAM, client_id, "DB_ERROR", msg_id, 0);
             continue;
         }
 

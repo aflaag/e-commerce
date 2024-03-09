@@ -2,9 +2,9 @@
 
 ## TODO list
 
-- [ ] refactoring
-    - [ ] usare costanti per dichiarazione dimensione buffer
-    - [ ] INVALID#REQUEST e REQUEST#SUCCESS va messo l'underscore
+- [x] refactoring
+    - [x] usare costanti per dichiarazione dimensione buffer
+    - [x] INVALID#REQUEST e REQUEST#SUCCESS va messo l'underscore
 
 - relazione
     - sistemare descrzione problema

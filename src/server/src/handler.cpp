@@ -59,7 +59,7 @@ bool Handler::send_to_managers(int client_id, std::string msg){
 bool Handler::read_from_managers(std::string* out_str_ptr, int* client_id_ptr){
 
     redisReply* reply;
-    char response[1000], msg_id[30], tmp_buffer[30], client_id[30], resp_status[30], num_rows[30], row[30];
+    char msg_id[MESSAGE_ID_LEN], tmp_buffer[30], client_id[VALUE_LEN], resp_status[30], num_rows[30], row[30];
     int i, j, num_rows_int, curr_row, row_columns;
     std::string tmp_str;
     std::string out_str;
@@ -112,7 +112,7 @@ bool Handler::read_from_managers(std::string* out_str_ptr, int* client_id_ptr){
 
             assertReply(c2r, reply);
             if (ReadNumStreams(reply) == 0){
-                out_str = "BAD#RESPONSE";
+                out_str = "BAD_RESPONSE";
                 break;
             }
 
@@ -121,7 +121,7 @@ bool Handler::read_from_managers(std::string* out_str_ptr, int* client_id_ptr){
             ReadStreamMsgVal(reply, 0, 0, 1, row);    
 
             if(strcmp(tmp_buffer, "row")){
-                out_str = "BAD#TUPLES";
+                out_str = "BAD_TUPLES";
                 break;
             }
 

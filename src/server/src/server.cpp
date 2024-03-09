@@ -46,13 +46,12 @@ Server::~Server() {
 void Server::run(){
 
     fd_set working_set;
-    char buffer[1000];
     int rc, i, new_client, ready_requests = 0;
     struct timeval timeout;
     std::string out_str;
     int client_id;
     bool response;
-    char query[1000];
+    char query[QUERY_LEN];
     unsigned int counter;
 
     FD_ZERO(&current_set);
@@ -129,7 +128,7 @@ void Server::run(){
 void Server::add_new_clients() {
     // Accept incoming conncetions
     int new_client;
-    char query[1000];
+    char query[QUERY_LEN];
 
     do {
         new_client = accept(sockfd, NULL, NULL);
@@ -163,7 +162,7 @@ void Server::add_new_clients() {
 }
 
 void Server::send_response(int client_id, std::string out_str) {
-    char query[1000];
+    char query[QUERY_LEN];
 
     size_t pos = out_str.find('\n');
 
@@ -193,11 +192,11 @@ void Server::receive(int i) {
     char buffer[100];
     int rc;
     int close_conn = FALSE;
-    char query[1000];
+    char query[QUERY_LEN];
 
     // Read incoming data
     do {
-        bzero(buffer, 100);
+        bzero(buffer, sizeof(buffer));
         rc = recv(i, buffer, sizeof(buffer) -1, 0);
 
         if (rc < 0) {
@@ -244,7 +243,7 @@ void Server::receive(int i) {
 
 void Server::close_connections() {
     int i;
-    char query[1000];
+    char query[QUERY_LEN];
 
     for (i=0; i <= max_fd; ++i){
         if (FD_ISSET(i, &current_set)) {
