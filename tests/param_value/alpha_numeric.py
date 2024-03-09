@@ -19,7 +19,7 @@ class AlphaNumeric(ParamInterface):
                 return s
     
     def wrong(self):
-        chars = string.ascii_letters + string.digits + string.punctuation
+        chars = string.ascii_letters + string.digits + string.punctuation.replace("\'", "")
 
         while True:
             s = "".join(random.choices(chars, k = random.randint(1, 50)))

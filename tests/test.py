@@ -77,7 +77,7 @@ while counter:
             print("booooooo") 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((HOST, PORT))
-        s.send(bytes(req, "utf-8"))
+        s.send(req.encode())
         data = s.recv(2048)
 
     print(f"Received {data!r}\n")

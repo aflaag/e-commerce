@@ -18,7 +18,7 @@ class Card(ParamInterface):
                 return card
     
     def wrong(self):
-        chars = string.ascii_letters + string.digits + string.punctuation
+        chars = string.ascii_letters + string.digits + string.punctuation.replace("\'", "")
 
         while True:
             card = "".join(random.choices(chars, k = random.randint(1, 30)))

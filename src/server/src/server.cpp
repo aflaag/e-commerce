@@ -201,7 +201,7 @@ void Server::receive(int i) {
     // Read incoming data
     do {
         bzero(buffer, 100);
-        rc = recv(i, buffer, sizeof(buffer), 0);
+        rc = recv(i, buffer, sizeof(buffer) -1, 0);
 
         if (rc < 0) {
             if (errno != EWOULDBLOCK) {
@@ -214,6 +214,7 @@ void Server::receive(int i) {
             break;
         }
         msg.append(buffer);
+        printf("%sbanana\n", buffer);
 
     } while (TRUE);
 

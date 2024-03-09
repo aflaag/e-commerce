@@ -26,7 +26,7 @@ class Email(ParamInterface):
                 return param
     
     def wrong(self):
-        chars = string.ascii_letters + string.digits + string.punctuation
+        chars = string.ascii_letters + string.digits + string.punctuation.replace("\'", "")
 
         while True:
             param = "".join(random.choices(chars, k = random.randint(1, 256)))

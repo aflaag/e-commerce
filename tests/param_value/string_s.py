@@ -5,7 +5,7 @@ import string
 
 class StringS(ParamInterface):
     def __init__(self):
-        self.chars = string.ascii_letters + string.digits + string.punctuation
+        self.chars = string.ascii_letters + string.digits + string.punctuation.replace("\'", "")
         pass
 
     def right(self):

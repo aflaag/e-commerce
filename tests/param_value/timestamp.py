@@ -19,7 +19,7 @@ class Timestamp(ParamInterface):
         return start_date + datetime.timedelta(seconds=random_seconds)
     
     def wrong(self):
-        chars = string.ascii_letters + string.digits + string.punctuation
+        chars = string.ascii_letters + string.digits + string.punctuation.replace("\'", "")
         while True:
             s = "".join(random.choices(chars, k = random.randint(1, 50)))
             if not re.match(self.regex, s):
