@@ -73,9 +73,9 @@
           ```
 
 - view-available-purchase
-      ```sh
-      view-available-purchase
-      ```
+    ```
+    view-available-purchase
+    ```
 
 ## Customer
 
