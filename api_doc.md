@@ -7,10 +7,9 @@
   - name: `StringS`
   - description: `StringL`
   - price: `RealGEZ`
-  - example:
-  ```
-  add-product code banana name yoyo description ahahahaha##baba price 341.3243
-  ```
+      ```
+      add-product code banana name yoyo description ahahahaha##baba price 341.3243
+      ```
 
 - add-restock
   - quantity: `IntGZ`
