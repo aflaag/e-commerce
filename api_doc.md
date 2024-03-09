@@ -73,7 +73,7 @@
           ```
 
 - view-available-purchase
-      ```txt
+      ```sh
       view-available-purchase
       ```
 
