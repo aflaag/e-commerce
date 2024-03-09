@@ -50,17 +50,24 @@
 
 - update-assigned-delivery
   - deliverycode: `DeliveryCode`
-  - [start, lost, end] : timestamp
+  - start: `timestamp`
+  - lost: `timestamp`
+  - end: `timestamp`
       ```
       update-assigned-delivery deliverycode bho2 lost 2024-02-29##19:41:42
       ```
 
 - update-refund-request
   - refund: `integer`
-  - [refund_start, refund_end]: timestamp | courier: StringS
-      ```
-      update-refund-request refund 1 refund_end 2024-03-02##11:05:42.660825
-      ```
+  - _switch_
+    - _option_
+      - timestamp: `StringS`
+    - _option_
+      - refund_start: `timestamp`
+      - refund_end: `timestamp`
+          ```
+          update-refund-request refund 1 refund_end 2024-03-02##11:05:42.660825
+          ```
 
 - view-available-purchase
       ```
@@ -124,7 +131,6 @@
   - assigned_delivery: `DeliveryCode`
   - product: `ProductCode`
   - quantity: `IntGZ`
-  $\vdots$
   - product: `ProductCode`
   - quantity: `IntGZ`
       ```
