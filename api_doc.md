@@ -73,7 +73,7 @@
           ```
 
 - view-available-purchase
-      ```
+      ```text
       view-available-purchase
       ```
 
@@ -105,7 +105,7 @@
       add-customer name user surname resu email user@gmail.com phone-number +393714393392
       ```
 
-- add-purchase *[order matters]*
+- add-purchase **[order matters]**
   - fare: `RealGEZ`
   - customer: `Email`
   - card: `CardNumber`
