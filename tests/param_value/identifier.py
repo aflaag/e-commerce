@@ -1,6 +1,11 @@
 from .param_interface import ParamInterface
 
+
 import random
+
+
+RANDOM_SEED = 7
+random.seed(RANDOM_SEED)
 
 class Identifier(ParamInterface):
     def __init__(self):

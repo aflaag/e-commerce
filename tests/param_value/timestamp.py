@@ -1,10 +1,14 @@
 from .param_interface import ParamInterface
 from .alphabet import *
 
+
 import random
 import datetime
 import string
 import re
+
+RANDOM_SEED = 7
+random.seed(RANDOM_SEED)
 
 start_date = datetime.datetime(2024, 1, 1)
 end_date = datetime.datetime.now()

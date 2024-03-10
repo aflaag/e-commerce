@@ -40,19 +40,19 @@ Customer* Customer::from_stream(redisReply* reply, int stream_num, int msg_num){
         ReadStreamMsgVal(reply, stream_num, msg_num, field_num + 1, value);
         
         if (!strcmp(key, "name")) {
-            snprintf(name, 100, "%s", value);
+            snprintf(name, PARAMETERS_LEN, "%s", value);
             read_fields |= 0b0001;
 
         } else if (!strcmp(key, "email")) {
-            snprintf(email, 100, "%s", value);
+            snprintf(email, PARAMETERS_LEN, "%s", value);
             read_fields |= 0b0010;
 
         } else if (!strcmp(key, "surname")) {
-            snprintf(surname, 100, "%s", value);
+            snprintf(surname, PARAMETERS_LEN, "%s", value);
             read_fields |= 0b0100;
 
         } else if (!strcmp(key, "phone_number")) {
-            snprintf(phone_number, 100, "%s", value);
+            snprintf(phone_number, PARAMETERS_LEN, "%s", value);
             read_fields |= 0b1000;
 
         } else {

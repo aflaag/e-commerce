@@ -1,10 +1,12 @@
-import random
 from requests_init import requests, apis, ports
+
 import socket
+import random
 
 HOST = "127.0.0.1"  # The server's hostname or IP address
+RANDOM_SEED = 7
 
-random.seed(7)
+random.seed(RANDOM_SEED)
 
 #set a seed for random
 """
@@ -40,7 +42,7 @@ def check_response(response, type, handler):
                 print(f"WRONG:\n\tExpected: BAD_REQUEST | DB_ERROR\n\tRecived: {response}")
             else:
                 print("CORRECT")
-
+    print()
 
 if __name__ == "__main__":
     ajfaj = 0
