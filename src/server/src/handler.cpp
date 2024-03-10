@@ -93,7 +93,7 @@ bool Handler::read_from_managers(std::string* out_str_ptr, int* client_id_ptr){
         if(strcmp(tmp_buffer, "resp_status"))
             continue;   // Ignore invalid response
 
-        if(strcmp(resp_status, "REQUEST#SUCCESS"))
+        if(strcmp(resp_status, "REQUEST_SUCCESS"))
             num_rows_int = 0;   // "Burn" possible tuples
 
         freeReplyObject(reply);

@@ -4,7 +4,7 @@
 
 - [ ] refactoring
     - [x] usare costanti per dichiarazione dimensione buffer
-    - [x] INVALID#REQUEST e REQUEST#SUCCESS va messo l'underscore
+    - [x] INVALID#REQUEST e REQUEST_SUCCESS va messo l'underscore
     - [ ] controllare print fatti e togliere quelli inutili
     - [ ] filtrare librerie necessarie
 

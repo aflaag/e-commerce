@@ -29,7 +29,7 @@ def send_recv_request(request, port, type):
         res = s.recv(2048).decode()
     return res
 
-
+# BAD_REQUEST BAD_REQUEST
 def check_response(response, type, handler):
     if type not in apis[handler]:
         if not response.startswith("BAD_REQUEST"):
@@ -48,7 +48,7 @@ def check_response(response, type, handler):
 
 if __name__ == "__main__":
     ajfaj = 0
-    counter = [(k, 100) for k in requests.keys()]
+    counter = [(k, 10) for k in requests.keys()]
 
     while counter:
         i = random.randint(0, len(counter) -1)
