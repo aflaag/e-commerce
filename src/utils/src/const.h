@@ -1,5 +1,7 @@
 #ifndef const_h
 
+/* Constants */
+
 #define QUERY_LEN 1000
 #define RESPONSE_LEN 100
 #define PARAMETERS_LEN 300

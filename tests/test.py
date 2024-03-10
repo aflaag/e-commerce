@@ -32,7 +32,7 @@ def send_recv_request(request, port, type):
 
 def check_response(response, type, handler):
     if type not in apis[handler]:
-        if response != "BAD_REQUEST":
+        if not response.startswith("BAD_REQUEST"):
             print(f"WRONG:\n\tExpected: BAD_REQUEST\n\tRecived: {response}")
         else:
             print("CORRECT")
@@ -40,7 +40,7 @@ def check_response(response, type, handler):
         if true_response:
             print(f"Expected unknow\n\tResponse: {response}")
         else:
-            if response != "BAD_REQUEST" and response != "DB_ERROR":
+            if not response.startswith("BAD_REQUEST") and not response.startswith("DB_ERROR"):
                 print(f"WRONG:\n\tExpected: BAD_REQUEST | DB_ERROR\n\tRecived: {response}")
             else:
                 print("CORRECT")

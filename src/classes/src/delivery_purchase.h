@@ -1,12 +1,12 @@
 #ifndef delivery_purchase_h
 #define delivery_purchase_h
 
-/* Library imports */
+/* System libraries */
 
 #include <string.h>
 #include <stdexcept>
 
-/* Local imports */
+/* Local libraries */
 
 #include "../../lib/con2redis/src/con2redis.h"
 #include "../../utils/src/const.h"

@@ -1,7 +1,7 @@
 #ifndef refund_h
 #define refun_h
 
-/* Library imports */
+/* System libraries */
 
 #include <string.h>
 #include <stdexcept>
@@ -9,7 +9,7 @@
 #include <chrono>
 #include <ctime>
 
-/* Local imports */
+/* Local libraries */
 
 #include "../../lib/con2redis/src/con2redis.h"
 #include "../../utils/src/const.h"

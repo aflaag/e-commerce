@@ -21,7 +21,8 @@ BEGIN
     IF EXISTS (
         SELECT 1 
         FROM Client
-        WHERE NEW.file_descriptor = Client.file_descriptor
+        WHERE NEW.server_name = Client.server_name
+        AND NEW.file_descriptor = Client.file_descriptor
         AND (Client.disconnection_instant IS NULL OR NEW.connection_instant <= Client.disconnection_instant)
     ) IS TRUE THEN
         RAISE EXCEPTION 'file descriptor connection not closed';

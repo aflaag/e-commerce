@@ -7,9 +7,10 @@ void handle_signals(int s){
     printf("\nKilling server...\n");
 }
 
-Server::Server(int server_port, const char* redis_ip, int redis_port, std::string req_types[], int num_req_types) {
+Server::Server(const char* server_id, int server_port, const char* redis_ip, int redis_port, std::string req_types[], int num_req_types) {
     int on = 1;
 
+    server = server_id;
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     sockPort = server_port;
     
@@ -155,7 +156,7 @@ void Server::add_new_clients() {
             break;
         }
 
-        sprintf(query, "INSERT INTO Client(file_descriptor, connection_instant) VALUES (%d, CURRENT_TIMESTAMP)", new_client);
+        sprintf(query, "INSERT INTO Client(server_name, file_descriptor, connection_instant) VALUES (\'%s\', %d, CURRENT_TIMESTAMP)", server, new_client);
         query_res = log_db.RunQuery(query, false);
 
         if (PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) {
@@ -183,10 +184,10 @@ void Server::send_response(int client_id, std::string out_str) {
     std::string first_line = out_str.substr(0, pos);
     std::cout << first_line << std::endl;
 
-    sprintf(query, "WITH max_client_conn AS (SELECT max(connection_instant) AS instant FROM Client WHERE file_descriptor = %d), "
-                    "     last_request AS (SELECT MAX(c.request_instant) AS instant FROM Communication AS c, max_client_conn AS m WHERE c.client_file_descriptor = %d AND c.client_connection_instant = m.instant) "
+    sprintf(query, "WITH max_client_conn AS (SELECT max(connection_instant) AS instant FROM Client WHERE server_name = \'%s\' AND file_descriptor = %d), "
+                    "     last_request AS (SELECT MAX(c.request_instant) AS instant FROM Communication AS c, max_client_conn AS m WHERE c.client_server_name = \'%s\' AND c.client_file_descriptor = %d AND c.client_connection_instant = m.instant) "
                     "UPDATE Communication SET response_status = \'%s\', response_instant = CURRENT_TIMESTAMP "
-                    "WHERE client_file_descriptor = %d AND client_connection_instant = (SELECT instant FROM max_client_conn) AND request_instant = (SELECT instant FROM last_request)", client_id, client_id, first_line.c_str(), client_id);
+                    "WHERE client_server_name = \'%s\' AND client_file_descriptor = %d AND client_connection_instant = (SELECT instant FROM max_client_conn) AND request_instant = (SELECT instant FROM last_request)", server, client_id, server, client_id, first_line.c_str(), server, client_id);
     query_res = log_db.RunQuery(query, false);
 
     if (PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) {
@@ -225,9 +226,9 @@ void Server::receive(int i) {
         msg.append(buffer);
     } while (TRUE);
 
-    // If conncetion was closed by client or crashed
+    // If connection was closed by client or crashed
     if (close_conn) {
-        sprintf(query, "UPDATE Client SET disconnection_instant = CURRENT_TIMESTAMP WHERE file_descriptor = %d AND disconnection_instant IS NULL", i);
+        sprintf(query, "UPDATE Client SET disconnection_instant = CURRENT_TIMESTAMP WHERE server_name = \'%s\' AND file_descriptor = %d AND disconnection_instant IS NULL", server, i);
         query_res = log_db.RunQuery(query, false);
 
         close(i);
@@ -240,8 +241,8 @@ void Server::receive(int i) {
         return;
     }
 
-    sprintf(query, "INSERT INTO Communication(request, request_instant, client_file_descriptor, client_connection_instant)"
-                   "VALUES (\'%s\', CURRENT_TIMESTAMP, %d, (SELECT connection_instant FROM Client WHERE disconnection_instant IS NULL and file_descriptor = %d))", msg.c_str(), i, i);
+    sprintf(query, "INSERT INTO Communication(request, request_instant, client_server_name, client_file_descriptor, client_connection_instant)"
+                   "VALUES (\'%s\', CURRENT_TIMESTAMP, \'%s\', %d, (SELECT connection_instant FROM Client WHERE disconnection_instant IS NULL and server_name = \'%s\' and file_descriptor = %d))", msg.c_str(), server, i, server, i);
 
     query_res = log_db.RunQuery(query, false);
     if (PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) {
@@ -260,7 +261,7 @@ void Server::close_connections() {
 
     for (i=0; i <= max_fd; ++i){
         if (FD_ISSET(i, &current_set)) {
-            sprintf(query, "UPDATE Client SET disconnection_instant = CURRENT_TIMESTAMP WHERE file_descriptor = %d AND disconnection_instant IS NULL", i);
+            sprintf(query, "UPDATE Client SET disconnection_instant = CURRENT_TIMESTAMP WHERE server_name = \'%s\' AND file_descriptor = %d AND disconnection_instant IS NULL", server, i);
             query_res = log_db.RunQuery(query, false);
             close(i);
         }

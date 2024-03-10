@@ -1,16 +1,14 @@
 #ifndef purchase_h
 #define purchase_h
 
-/* Library imports */
+/* System libraries */
 
 #include <string.h>
 #include <stdexcept>
-// Da tenere per il tempo corrente, non provare a toglierle
-#include <iostream>
 #include <chrono>
 #include <ctime>
 
-/* Local imports */
+/* Local libraries */
 
 #include "../../lib/con2redis/src/con2redis.h"
 #include "../../utils/src/const.h"

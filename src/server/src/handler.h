@@ -1,22 +1,21 @@
 #ifndef handler_h
 #define handler_h
 
-/* Library imports */
+/* System libraries */
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include <stddef.h>
 #include <unistd.h>
+#include <time.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/times.h>
 #include <cassert>
 #include <cerrno>
 #include <iostream>
-#include <fcntl.h>
 
-/* Local imports */
+/* Local libraries */
 
 #include "../../lib/con2redis/src/con2redis.h"
 #include "../../lib/con2db/pgsql.h"

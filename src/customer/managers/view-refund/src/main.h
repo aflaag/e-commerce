@@ -1,7 +1,7 @@
 #ifndef main_h
 #define main_h
 
-/* Library imports */
+/* System libraries */
 // TODO: da filtrare
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,7 +16,7 @@
 #include <list>
 #include <utility>
 
-/* Local imports */
+/* Local libraries */
 
 #include "../../../../lib/con2db/pgsql.h"
 #include "../../../../lib/con2redis/src/con2redis.h"

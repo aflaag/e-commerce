@@ -1,14 +1,14 @@
 #ifndef supplier_h
 #define supplier_h
 
-/* Library imports */
+/* System libraries */
 
 #include <string.h>
 #include <stdexcept>
+
+/* Local libraries */
+
 #include "../../utils/src/const.h"
-
-/* Local imports */
-
 #include "../../lib/con2redis/src/con2redis.h"
 
 /* Classes */

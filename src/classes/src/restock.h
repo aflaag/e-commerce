@@ -1,12 +1,12 @@
 #ifndef restock_h
 #define restock_h
 
-/* Library imports */
+/* System libraries */
 
 #include <string.h>
 #include <stdexcept>
 
-/* Local imports */
+/* Local libraries */
 
 #include "../../utils/src/const.h"
 #include "../../lib/con2redis/src/con2redis.h"

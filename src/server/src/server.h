@@ -33,7 +33,7 @@
 
 class Server {
     public:
-        Server(int server_port, const char* redis_ip, int redis_port, std::string req_types[], int num_req_types);
+        Server(const char* server_id, int server_port, const char* redis_ip, int redis_port, std::string req_types[], int num_req_types);
         void run();
         ~Server();
 
@@ -43,6 +43,7 @@ class Server {
         void close_connections();
         void send_response(int client_id, std::string out_str);
 
+        const char* server;
         int sockfd;
         int sockPort;
         fd_set current_set;
