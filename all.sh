@@ -17,7 +17,7 @@ check_last_command() {
 }
 
 try_sh() {
-    sh $1
+    sh $1 $2
 
     check_last_command
 }
