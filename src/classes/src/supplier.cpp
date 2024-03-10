@@ -20,10 +20,13 @@ Supplier* Supplier::from_stream(redisReply* reply, int stream_num, int msg_num){
 
     ReadStreamMsgVal(reply, stream_num, msg_num, 2, key);
     ReadStreamMsgVal(reply, stream_num, msg_num, 3, value);
+
+    if (ReadStreamMsgNumVal(reply, stream_num, msg_num) > 4) {
+        throw std::invalid_argument("Stream error: invalid fields");
+    }
                     
     if (!strcmp(key, "business_name")) {
         sprintf(business_name, "%s", value);
-
     } else {
         throw std::invalid_argument("Stream error: invalid fields");
     }

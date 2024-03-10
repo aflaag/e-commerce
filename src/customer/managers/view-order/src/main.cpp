@@ -37,6 +37,10 @@ int main() {
         ReadStreamMsgVal(reply, 0, 0, 2, second_key);    // Index of first field of msg = 0
         ReadStreamMsgVal(reply, 0, 0, 3, purchase_id);  // Index of second field of msg = 1
 
+        if(strcmp(second_key, "purchase_id") || (ReadStreamMsgNumVal(reply, 0, 0) > 4)){
+            send_response_status(c2r, WRITE_STREAM, client_id, "BAD_REQUEST", msg_id, 0);
+            continue;
+        }
         // std::string str_purchase_id = purchase_id;
         // std::string search_parameter = "%"+ str_purchase_id + "%";
         // sprintf(query, "SELECT * FROM Purchase WHERE name LIKE \'%s\' ", (char*)search_parameter.c_str());

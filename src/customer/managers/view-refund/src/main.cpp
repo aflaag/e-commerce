@@ -36,6 +36,11 @@ int main() {
         ReadStreamMsgVal(reply, 0, 0, 2, second_key);    // Index of first field of msg = 0
         ReadStreamMsgVal(reply, 0, 0, 3, refund_id);  // Index of second field of msg = 1
 
+        if(strcmp(second_key, "refund_id") || (ReadStreamMsgNumVal(reply, 0, 0) > 4)){
+            send_response_status(c2r, WRITE_STREAM, client_id, "BAD_REQUEST", msg_id, 0);
+            continue;
+        }
+
         std::string str_refund_id = refund_id;
         sprintf(query,  "SELECT rp.product AS product, rp.quantity AS quantity, rr.refund_state AS state, "
                         "       rr.request_instant AS request_instant, rr.refund_assignment_instant AS assigned, "

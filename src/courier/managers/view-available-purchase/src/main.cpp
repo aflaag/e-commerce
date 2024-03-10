@@ -28,7 +28,7 @@ int main() {
         ReadStreamMsgVal(reply, 0, 0, 0, first_key);    // Index of first field of msg = 0
         ReadStreamMsgVal(reply, 0, 0, 1, client_id);    // Index of second field of msg = 1
 
-        if(strcmp(first_key, "client_id")){
+        if(strcmp(first_key, "client_id") || (ReadStreamMsgNumVal(reply, 0, 0) > 2)){
             send_response_status(c2r, WRITE_STREAM, client_id, "BAD_REQUEST", msg_id, 0);
             continue;
         }

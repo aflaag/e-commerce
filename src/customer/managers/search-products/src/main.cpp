@@ -38,6 +38,11 @@ int main() {
         ReadStreamMsgVal(reply, 0, 0, 2, second_key);    // Index of first field of msg = 0
         ReadStreamMsgVal(reply, 0, 0, 3, product_name);  // Index of second field of msg = 1
         
+        if(strcmp(second_key, "product_name") || (ReadStreamMsgNumVal(reply, 0, 0) > 4)){
+            send_response_status(c2r, WRITE_STREAM, client_id, "BAD_REQUEST", msg_id, 0);
+            continue;
+        }
+
         std::string str_product_name = product_name;
         std::string search_parameter = "%"+ str_product_name + "%";
         sprintf(query, "SELECT * FROM Product WHERE name LIKE \'%s\' ", (char*)search_parameter.c_str());
