@@ -14,6 +14,7 @@
 #include <cassert>
 #include <cerrno>
 #include <iostream>
+#include <fcntl.h>
 
 /* Local imports */
 

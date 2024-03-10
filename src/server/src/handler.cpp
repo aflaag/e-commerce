@@ -49,10 +49,7 @@ bool Handler::send_to_managers(int client_id, std::string msg){
     std::cout << "\n" << redis_cmd << std::endl; 
 
     reply = RedisCommand(c2r, redis_cmd.c_str());
-
     assertReply(c2r, reply);
-    dumpReply(reply, 0);
-
     return true;
 }
 
@@ -153,10 +150,12 @@ bool Handler::read_from_managers(std::string* out_str_ptr, int* client_id_ptr){
 }
 
 void Handler::init_streams(){
+
     redisReply* reply;
     std::string read_stream;
     std::string write_stream;
 
+    // Clear streams
     for(int i = 0; i < num_types; i++){
 
         read_stream = types[i] + "-in";
@@ -164,11 +163,9 @@ void Handler::init_streams(){
 
         reply = RedisCommand(c2r, "DEL %s", read_stream.c_str());
         assertReply(c2r, reply);
-        dumpReply(reply, 0);
 
         reply = RedisCommand(c2r, "DEL %s", write_stream.c_str());
         assertReply(c2r, reply);
-        dumpReply(reply, 0);
 
         initStreams(c2r, read_stream.c_str());
         initStreams(c2r, write_stream.c_str());

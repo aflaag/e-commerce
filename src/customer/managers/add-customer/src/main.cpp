@@ -30,7 +30,6 @@ int main() {
         ReadStreamMsgVal(reply, 0, 0, 0, first_key);    // Index of first field of msg = 0
         ReadStreamMsgVal(reply, 0, 0, 1, client_id);    // Index of second field of msg = 1
 
-        printf("%s\n", first_key);
         if(strcmp(first_key, "client_id")){
             send_response_status(c2r, WRITE_STREAM, client_id, "INVALID_CLIENT#STREAM", msg_id, 0);
             continue;

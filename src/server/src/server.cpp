@@ -1,5 +1,12 @@
 #include "server.h"
 
+int kill_server = FALSE;
+
+void handle_signals(int s){
+    kill_server = TRUE;
+    printf("\nKilling server...\n");
+}
+
 Server::Server(int server_port, const char* redis_ip, int redis_port, std::string req_types[], int num_req_types) {
     int on = 1;
 
@@ -45,15 +52,26 @@ Server::~Server() {
 
 void Server::run(){
 
+    struct sigaction signalHandler;
+
     fd_set working_set;
-    int rc, i, new_client, ready_requests = 0;
+    int rc, i, new_client, ready_requests;
     struct timeval timeout;
-    std::string out_str;
+    unsigned int counter;
+
     int client_id;
     bool response;
     char query[QUERY_LEN];
-    unsigned int counter;
+    std::string out_str;
 
+    signalHandler.sa_handler = handle_signals;
+    sigemptyset(&signalHandler.sa_mask);
+    signalHandler.sa_flags = 0;
+
+    sigaction(SIGINT, &signalHandler, NULL);
+    sigaction(SIGTERM, &signalHandler, NULL);
+
+    ready_requests = 0;
     FD_ZERO(&current_set);
     max_fd = sockfd;
     FD_SET(sockfd, &current_set);
@@ -63,9 +81,10 @@ void Server::run(){
 
     counter = 0;
 
-    while(!end_server && counter <= 20) {
+    while(!kill_server && counter <= 20) {
         counter++;
 
+        printf("ciao\n");
         memcpy(&working_set, &current_set, sizeof(current_set));
 
         // Listens for incoming requests. Returns the number of incoming requests
@@ -124,7 +143,6 @@ void Server::run(){
     close_connections();
 }
 
-
 void Server::add_new_clients() {
     // Accept incoming conncetions
     int new_client;
@@ -137,7 +155,7 @@ void Server::add_new_clients() {
 
             if (errno != EWOULDBLOCK) {
                 printf("accept error");
-                end_server = TRUE;
+                kill_server = TRUE;
             }
             break;
         }

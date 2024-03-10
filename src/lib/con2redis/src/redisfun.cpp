@@ -43,6 +43,7 @@ void dumpReply(redisReply *r, int indent) {
 
     sds buffer = sdsempty();
 
+    printf("%d", r->type);
     switch (r->type) {
         case REDIS_REPLY_STRING:
             buffer = sdscatfmt(buffer, "(string) %s\n", r->str);
@@ -57,7 +58,7 @@ void dumpReply(redisReply *r, int indent) {
             buffer = sdscatlen(buffer, "(nill)\n", 7);
             break;
         case REDIS_REPLY_ERROR:
-            buffer = sdscatfmt(buffer, " (error) %s", r->str);
+            buffer = sdscatfmt(buffer, "(error) %s", r->str);
             break;
         case REDIS_REPLY_ARRAY:
             for (size_t i = 0; i < r->elements; i++) {

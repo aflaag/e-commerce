@@ -45,7 +45,6 @@ class Server {
 
         int sockfd;
         int sockPort;
-        int end_server = 0;
         fd_set current_set;
         int max_fd;
         Handler* handler;
