@@ -18,37 +18,12 @@ Test generator
         spaces in key,value are ##
 """
 
-def send_recv_request(request, port, type):
-    res = ""
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect((HOST, port))
-        print(f"Sending to {handler} a {type} request")
-
-        s.send(request.encode())
-
-        res = s.recv(2048).decode()
-    return res
-
-# BAD_REQUEST BAD_REQUEST
-def check_response(response, type, handler):
-    if type not in apis[handler]:
-        if not response.startswith("BAD_REQUEST"):
-            print(f"WRONG:\n\tExpected: BAD_REQUEST\n\tRecived: {response}")
-        else:
-            print("CORRECT")
-    else:
-        if true_response:
-            print(f"Expected unknow\n\tResponse: {response}")
-        else:
-            if not response.startswith("BAD_REQUEST") and not response.startswith("DB_ERROR"):
-                print(f"WRONG:\n\tExpected: BAD_REQUEST | DB_ERROR\n\tRecived: {response}")
-            else:
-                print("CORRECT")
-    print()
-
 if __name__ == "__main__":
-    ajfaj = 0
-    counter = [(k, 10) for k in requests.keys()]
+    counter = [(k, 100) for k in requests.keys()]
+    num_requests = sum([v for _, v in counter])
+    test = 1
+    correct = unknow = wrong = 0
+    to_save = []
 
     while counter:
         i = random.randint(0, len(counter) -1)
@@ -67,7 +42,7 @@ if __name__ == "__main__":
         true_args =  random.randint(0, min(len(requests[k]), args))
         false_args = args - true_args
 
-        true_response = True if false_args == 0 else False
+        true_response = True if false_args <= 0 else False
 
         req = k
         to_insert = [i for i in range(len(requests[k]))]
@@ -108,6 +83,43 @@ if __name__ == "__main__":
         
         handler, port = ports[random.randint(0, 2)]
 
-        response = send_recv_request(req, port, k)
+        response = ""
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.connect((HOST, port))
+            print(f"TEST[{test}/{num_requests}]")
+            print(f"Sending to {handler} a {k} request")
 
-        check_response(response, k, handler)
+            s.send(req.encode())
+
+            response = s.recv(2048).decode()
+
+        if k not in apis[handler]:
+            if not response.startswith("BAD_REQUEST"):
+                print(f"WRONG:\n\tExpected: BAD_REQUEST\n\tRecived: {response}")
+                wrong += 1
+                to_save.append(("1", k, handler, req, response))
+            else:
+                print("CORRECT")
+                correct += 1
+        else:
+            if true_response:
+                print(f"Expected unknow\n\tResponse: {response}")
+                unknow += 1
+            else:
+                if not response.startswith("BAD_REQUEST") and not response.startswith("DB_ERROR"):
+                    print(f"WRONG:\n\tExpected: BAD_REQUEST | DB_ERROR\n\tRecived: {response}")
+                    wrong += 1
+                    to_save.append(("2", k, handler, req, response))
+                else:
+                    print("CORRECT")
+                    correct += 1
+        print()
+        test += 1
+    
+    print(f"Runned {num_requests} tests:")
+    print(f"\tCorrect {correct} / {num_requests} tests")
+    print(f"\tUnknow {unknow} / {num_requests} tests")
+    print(f"\tWrong {wrong} / {num_requests} tests")
+
+    for p0, p1, p2, p3, p4 in to_save:
+        print(p0, p1, p2, p3, p4)
