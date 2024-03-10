@@ -77,7 +77,7 @@ void Server::run(){
     FD_SET(sockfd, &current_set);
 
     timeout.tv_sec  = 0;
-    timeout.tv_usec = 500000;
+    timeout.tv_usec = 5000;
 
     counter = 0;
 
@@ -105,19 +105,14 @@ void Server::run(){
 
         for (i = 0; i <= max_fd && ready_requests > 0; ++i) {
             
-            if (FD_ISSET(i, &working_set)) {
+            if ((i != sockfd) && FD_ISSET(i, &working_set)) {
                 ready_requests -= 1;
-                
-                // If it's itself
-                if (i == sockfd) {
-                    add_new_clients();
-
-                // If it's a client
-                } else {
                     receive(i);
-                }
-
             }
+        }
+
+        if (FD_ISSET(sockfd, &working_set)) {
+            add_new_clients();
         }
 
         // Read managers responses and send to clients

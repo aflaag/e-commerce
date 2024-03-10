@@ -4,11 +4,12 @@ void send_response_status(redisContext* c2r, const char *stream, const char *cli
     redisReply *reply;
 
     // LOG
-    printf("Response: %s %s %s %s\n", stream, client_id, resp_status, msg_id);
+    printf("Response: %s %s %s %s %d\n", stream, client_id, resp_status, msg_id, nrows);
 
     reply = RedisCommand(c2r, "XADD %s * client_id %s resp_status %s num_rows %d", stream, client_id, resp_status, nrows);
     assertReplyType(c2r, reply, REDIS_REPLY_STRING);
     freeReplyObject(reply);
+    printf("sended\n");
 }
 
 std::string replace_substring(std::string input, const std::string& target, const std::string& replacement) {

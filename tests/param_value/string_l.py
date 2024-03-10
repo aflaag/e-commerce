@@ -11,6 +11,7 @@ random.seed(RANDOM_SEED)
 class StringL(ParamInterface):
     def __init__(self):
         self.chars = string.ascii_letters + string.digits + ALLOWED_CHARS
+        pass
 
     def right(self):
         return "".join(random.choices(self.chars, k = random.randint(1, 200)))

@@ -13,6 +13,7 @@ random.seed(RANDOM_SEED)
 class AlphaNumeric(ParamInterface):
     def __init__(self):
         self.regex = r'^[A-Z0-9]{1,50}$'
+        pass
     
     def right(self):
         chars = string.ascii_uppercase + string.digits

@@ -14,6 +14,7 @@ class Email(ParamInterface):
     
     def __init__(self):
         self.regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        pass
 
     def right(self):
         chars = string.ascii_letters + string.digits

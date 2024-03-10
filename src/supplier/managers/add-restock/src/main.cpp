@@ -42,7 +42,7 @@ int main() {
         }
         catch(std::invalid_argument exp){
             printf("qui?\n");
-            send_response_status(c2r, WRITE_STREAM, client_id, "INVALID_REQUEST", msg_id, 0);
+            send_response_status(c2r, WRITE_STREAM, client_id, "BAD_REQUEST", msg_id, 0);
             continue;
         }
 

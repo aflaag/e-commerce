@@ -13,6 +13,7 @@ random.seed(RANDOM_SEED)
 class PhoneNumber(ParamInterface):
     def __init__(self):
         self.regex = r'^\+?[0-9-]{1,18}[0-9]$'
+        pass
     
     def right(self):
         chars = string.digits + "-"

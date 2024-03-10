@@ -41,7 +41,7 @@ int main() {
         ReadStreamMsgVal(reply, 0, 0, 3, purchase);    // Index of second field of msg = 1
 
         if(strcmp(second_key, "purchase")){
-            send_response_status(c2r, WRITE_STREAM, client_id, "INVALID_REQUEST#STREAM", msg_id, 0);
+            send_response_status(c2r, WRITE_STREAM, client_id, "BAD_REQUEST#STREAM", msg_id, 0);
             continue;
         }
 

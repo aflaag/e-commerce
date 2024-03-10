@@ -19,19 +19,21 @@ Test generator
 """
 
 def send_recv_request(request, port, type):
+    res = ""
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((HOST, port))
         print(f"Sending to {handler} a {type} request")
 
         s.send(request.encode())
 
-        return s.recv(2048).decode()
+        res = s.recv(2048).decode()
+    return res
 
 
 def check_response(response, type, handler):
     if type not in apis[handler]:
         if response != "BAD_REQUEST":
-            print(f"WRONG:\n\tExpected: INVALID_REQUEST\n\tRecived: {response}")
+            print(f"WRONG:\n\tExpected: BAD_REQUEST\n\tRecived: {response}")
         else:
             print("CORRECT")
     else:

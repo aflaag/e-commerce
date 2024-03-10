@@ -13,6 +13,7 @@ class Card(ParamInterface):
 
     def __init__(self):
         self.regex = r'^[0-9]{13,19}$'
+        pass
 
     def right(self):
         chars = string.digits
