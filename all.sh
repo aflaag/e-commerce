@@ -1,11 +1,28 @@
 #!/bin/bash
 
-cd db-scripts
+check_last_command() {
+    if [ $? -ne 0 ]
+    then
+        printf "\n\n\n ✨✨✨✨✨✨✨✨✨✨ IT FAILED :((( ✨✨✨✨✨✨✨✨✨✨ \n"
+        exit
+    fi
+}
 
-sh create.sh
+try_sh() {
+    sh $1
 
-cd ..
+    check_last_command
+}
 
-sh makes.sh --clean
-sh makes.sh
-sh run.sh
+try_cd() {
+    cd $1
+
+    check_last_command
+}
+
+try_cd db-scripts
+try_sh create.sh
+try_cd ..
+try_sh makes.sh --clean
+try_sh makes.sh
+try_sh run.sh
