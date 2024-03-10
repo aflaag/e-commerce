@@ -1,8 +1,12 @@
 from .param_interface import ParamInterface
 from .alphabet import *
 
+
 import random
 import string
+
+RANDOM_SEED = 7
+random.seed(RANDOM_SEED)
 
 class StringM(ParamInterface):
     def __init__(self):
