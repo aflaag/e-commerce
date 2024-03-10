@@ -96,10 +96,10 @@ if __name__ == "__main__":
             # check for value wrong or right
             if random.randint(0, i -1) >= false_args:
                 # put a true one
-                req += " " + str(requests[k][index][arg_index][1]().right())
+                req += " " + str(requests[k][index][arg_index][1]().right()).replace(" ", "##")
                 true_args -= 1
             else:
-                req += " " + str(requests[k][index][arg_index][1]().wrong())
+                req += " " + str(requests[k][index][arg_index][1]().wrong()).replace(" ", "##")
                 false_args -= 1
 
             to_insert.pop(pop_i)
