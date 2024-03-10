@@ -36,6 +36,7 @@
 - [ ] risolvere i seguenti tests
     - [ ] 2 view-order customer view-order purchase_id -73 REQUEST_SUCCESS (select su prodotto)
     - [ ] 2 search-products customer search-products product_name "cose a caso" REQUEST_SUCCESS (non dovrebbe essere un errore, maybe brutforce sui test, ma attentezione su il fatto che debba essere vero o meno in base anche ad altri parametri)
+        - [ ] Soluzione consigliata (e piu semplice) vedi se la parola da cercare nella tabbella rispetta il dominio del nome (alfanumerico)
     - [ ] 2 update-refund-request courier update-refund-request refund -34 refund_start 2024-01-29##15:30:37 (select)
     - [ ] 2 delete-purchase customer delete-purchase purchase -11 REQUEST_SUCCESS (select)
 
