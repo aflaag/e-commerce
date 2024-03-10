@@ -25,8 +25,8 @@
 
 /* Constants */
 
-#define READ_STREAM "add-supplier-in"
-#define WRITE_STREAM "add-supplier-out"
+#define READ_STREAM "add-restock-in"
+#define WRITE_STREAM "add-restock-out"
 
 #define REDIS_SERVER "localhost"
 #define REDIS_PORT 6379

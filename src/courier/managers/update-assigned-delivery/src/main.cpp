@@ -17,8 +17,10 @@ int main() {
 
     while(1) {
 
+        printf("ciao\n");
         reply = RedisCommand(c2r, "XREADGROUP GROUP main courier BLOCK 0 COUNT 1 STREAMS %s >", READ_STREAM);
 
+        printf("ciao2 %d\n", ReadNumStreams(reply));
         assertReply(c2r, reply);
 
         if (ReadNumStreams(reply) == 0) {

@@ -55,6 +55,8 @@ check_arguments $1
 
 printf "\n\n\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥 🍳🍳🥩🥩 HOLD ON, LEMME COOK. 🥩🥩🍳🍳 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n\n\n\n"
 
+pkill main
+
 printf "############## NON FUNCTIONAL REQ ##############\n\n"
 
 set_current_root src

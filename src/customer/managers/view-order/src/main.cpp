@@ -106,8 +106,6 @@ int main() {
 
             free(tuple);
         }
-
-        read_from_stream();
     }
 
     db.finish();

@@ -25,8 +25,8 @@
 
 /* Constants */
 
-#define READ_STREAM "take-purchase-delivery-in"
-#define WRITE_STREAM "take-purchase-delivery-out"
+#define READ_STREAM "update-assigned-delivery-in"
+#define WRITE_STREAM "update-assigned-delivery-out"
 
 #define REDIS_SERVER "localhost"
 #define REDIS_PORT 6379

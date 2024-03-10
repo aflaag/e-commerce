@@ -36,9 +36,6 @@ void assertReply(redisContext *c, redisReply *r) {
         dbg_abort("NULL redisReply (error: %s)", c->errstr);
 }
 
-
-
-
 void dumpReply(redisReply *r, int indent) {
 
     sds buffer = sdsempty();

@@ -74,9 +74,6 @@ int main() {
             freeReplyObject(reply);
 
         }
-
-        // read_from_stream();
-        
     }
 
     db.finish();

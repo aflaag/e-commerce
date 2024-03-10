@@ -26,8 +26,8 @@
 
 /* Constants */
 
-#define READ_STREAM "view-avaible-purchase-in"
-#define WRITE_STREAM "view-avaible-purchase-out"
+#define READ_STREAM "view-available-purchase-in"
+#define WRITE_STREAM "view-available-purchase-out"
 
 #define REDIS_SERVER "localhost"
 #define REDIS_PORT 6379

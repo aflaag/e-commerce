@@ -81,10 +81,10 @@ void Server::run(){
 
     counter = 0;
 
-    while(!kill_server && counter <= 20) {
+    // while(!kill_server && counter <= 20) {
+    while(!kill_server) {
         counter++;
 
-        printf("ciao\n");
         memcpy(&working_set, &current_set, sizeof(current_set));
 
         // Listens for incoming requests. Returns the number of incoming requests

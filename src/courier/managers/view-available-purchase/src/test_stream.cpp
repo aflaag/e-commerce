@@ -1,7 +1,7 @@
 #include "test_stream.h"
 
-#define WRITE_STREAM "view-avaible-purchase-in"
-#define READ_STREAM "view-avaible-purchase-out"
+#define WRITE_STREAM "view-available-purchase-in"
+#define READ_STREAM "view-available-purchase-out"
 
 int add_to_stream() {
     redisContext *c2r;

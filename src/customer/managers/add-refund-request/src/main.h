@@ -27,8 +27,8 @@
 
 /* Constants */
 
-#define READ_STREAM "add-refund-in"
-#define WRITE_STREAM "add-refund-out"
+#define READ_STREAM "add-refund-request-in"
+#define WRITE_STREAM "add-refund-request-out"
 
 #define REDIS_SERVER "localhost"
 #define REDIS_PORT 6379

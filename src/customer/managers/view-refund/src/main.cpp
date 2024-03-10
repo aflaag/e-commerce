@@ -19,7 +19,6 @@ int main() {
         if (ReadNumStreams(reply) == 0) {
             continue;
         } 
-        printf("ciao\n");
         // Only one stream --> stream_num = 0
         // Only one message in stream --> msg_num = 0
         ReadStreamNumMsgID(reply, 0, 0, msg_id);
@@ -69,7 +68,6 @@ int main() {
                                                  PQgetvalue(query_res, row, PQfnumber(query_res, "quantity"))));
         }
         
-        printf("ciao2, %d\n", PQntuples(query_res));
         send_response_status(c2r, WRITE_STREAM, client_id, "REQUEST#SUCCESS", msg_id, PQntuples(query_res) + 1);
 
         // send refund information
@@ -89,9 +87,6 @@ int main() {
             row++;
             
         }
-        printf("ciao1\n");
-        read_from_stream();
-        
     }
 
     db.finish();
