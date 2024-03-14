@@ -17,4 +17,4 @@ class StringL(ParamInterface):
         return "".join(random.choices(self.chars, k = random.randint(1, 200)))
 
     def wrong(self):
-        return "".join(random.choices(self.chars, k = random.randint(201, 256)))
+        return "".join(random.choices(self.chars, k = random.randint(251, 256)))

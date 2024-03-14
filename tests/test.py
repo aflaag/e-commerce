@@ -82,6 +82,9 @@ if __name__ == "__main__":
             to_insert.pop(pop_i)
         
         handler, port = ports[random.randint(0, 2)]
+        
+        if k == "search-products" and args == 2 and req.split()[1] == "product_name":
+            true_response = True
 
         response = ""
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:

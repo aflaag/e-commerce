@@ -2,9 +2,9 @@
 
 /* Constants */
 
-#define QUERY_LEN 1000
-#define RESPONSE_LEN 100
-#define PARAMETERS_LEN 300
+#define QUERY_LEN 1500
+#define RESPONSE_LEN 200
+#define PARAMETERS_LEN 400
 #define KEY_LEN 30
 #define VALUE_LEN 30
 #define MESSAGE_ID_LEN 30

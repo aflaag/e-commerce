@@ -47,11 +47,11 @@ int main() {
                         "       rr.refund_start AS refund_start, rr.refund_end AS refund_end, rr.courier AS courier, ad.purchase AS purchase "
                         "FROM RefundRequest AS rr, RefundedProduct AS rp, AssignedDelivery AS ad "
                         "WHERE rr.id = \'%s\' AND rr.id = rp.refund_request AND ad.delivery_code = rr.assigned_delivery", refund_id);
-        printf("%s", query);
+        
         query_res = db.RunQuery(query, true);
         
-        if ((PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) || PQntuples(query_res) <= 0) {
-            send_response_status(c2r, WRITE_STREAM, client_id, "DB_ERROR", msg_id, 0);
+        if ((PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) || (PQntuples(query_res) <= 0)) {
+            send_response_status(c2r, WRITE_STREAM, client_id, "BAD_REQUEST", msg_id, 0);
             continue;
         }
 

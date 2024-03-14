@@ -45,13 +45,16 @@ int main() {
             continue;
         }
 
-        // Take cancel instant
-        auto current_time = std::chrono::system_clock::now();
-        std::time_t current_time_t = std::chrono::system_clock::to_time_t(current_time);
-        cancel_instant = std::ctime(&current_time_t);
-        
+        sprintf(query, "SELECT * FROM Purchase WHERE id = %s", purchase);
 
-        sprintf(query, "UPDATE Purchase SET cancel_instant = \'%s\' WHERE id = %s;", cancel_instant, purchase);
+        query_res = db.RunQuery(query, true);
+
+        if ((PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) || (PQntuples(query_res) != 1)) {
+            send_response_status(c2r, WRITE_STREAM, client_id, "BAD_REQUEST", msg_id, 0);
+            continue;
+        }
+        
+        sprintf(query, "UPDATE Purchase SET cancel_instant = CURRENT_TIMESTAMP WHERE id = %s;", purchase);
 
         query_res = db.RunQuery(query, false);
 
