@@ -50,10 +50,6 @@ int main() {
 
         query_res = db.RunQuery(query, false);
 
-        if(PQresultStatus(query_res)==PGRES_FATAL_ERROR){
-            printf("ionut\n");
-        }
-
         if (PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) {
             send_response_status(c2r, WRITE_STREAM, client_id, "DB_ERROR", msg_id, 0);
             continue;

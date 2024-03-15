@@ -56,8 +56,6 @@ int main() {
 
         // check if the id was created
         if (PQntuples(query_res) != 1) {
-            printf("%d\n", PQntuples(query_res));
-            // printf("%s\n", PQgetvalue(query_res, 0, 0));
             send_response_status(c2r, WRITE_STREAM, client_id, "DB_ERROR", msg_id, 0);
             continue;
         }

@@ -44,8 +44,6 @@ int main() {
             sprintf(average, "0");
         }
 
-        printf("media |%s|\n", average);
-
         char response_status[8];
 
         if (atof(average) <= MAX_CONNECTION_TIME_AVG) {

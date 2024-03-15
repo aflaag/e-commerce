@@ -41,10 +41,7 @@ int main() {
             send_response_status(c2r, WRITE_STREAM, client_id, "BAD_REQUEST", msg_id, 0);
             continue;
         }
-        // std::string str_purchase_id = purchase_id;
-        // std::string search_parameter = "%"+ str_purchase_id + "%";
-        // sprintf(query, "SELECT * FROM Purchase WHERE name LIKE \'%s\' ", (char*)search_parameter.c_str());
-
+        
         sprintf(query, "SELECT pu.id, pu.purchase_instant, pu.cancel_instant, pu.fare, pu.customer, pu.card, pu.zip_code, pu.street, pu.street_number, op.product, op.quantity, ad.delivery_code, ad.delivery_assignment_instant, ad.delivery_start, ad.delivery_end, ad.delivery_state, ad.lost_instant, ad.courier FROM OrderedProducts as op, Purchase as pu LEFT JOIN AssignedDelivery as ad ON pu.id = ad.purchase WHERE pu.id = %s AND op.purchase = pu.id", purchase_id);
 
         query_res = db.RunQuery(query, true);

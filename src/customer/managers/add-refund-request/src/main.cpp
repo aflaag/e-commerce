@@ -45,7 +45,6 @@ int main() {
             continue;
         }
 
-        printf("refund id %s\n\n\n",client_id);
 
         sprintf(query, "INSERT INTO RefundRequest (request_instant, refund_state, assigned_delivery) VALUES (\'%s\', \'%s\', \'%s\') RETURNING id;", refund->request_instant, refund->state, refund->assigned_delivery);
 

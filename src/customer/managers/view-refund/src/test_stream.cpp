@@ -62,8 +62,6 @@ int read_from_stream(){
             memset(value, 0, sizeof(value));
             ReadStreamMsgVal(reply, 0, 0, field_num, key);
             ReadStreamMsgVal(reply, 0, 0, field_num + 1, value);
-
-            printf("%s %s\n", key, value);
         }
 
     }

@@ -85,7 +85,6 @@ int main() {
 
         int row = 1;
         for (const auto& product : products) {
-            printf("%s, %s\n", product.first.c_str(), product.second.c_str());
             reply = RedisCommand(c2r, "XADD %s * row %d product %s quantity %s", WRITE_STREAM, row, product.first.c_str(), product.second.c_str());
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
             freeReplyObject(reply);

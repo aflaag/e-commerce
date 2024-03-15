@@ -138,7 +138,6 @@ Purchase* Purchase::from_stream(redisReply* reply, int stream_num, int msg_num){
             read_fields |=0b100000;
 
         } else {
-            printf("%s\n", key);
             throw std::invalid_argument("Stream error: invalid fields");
         }
     }

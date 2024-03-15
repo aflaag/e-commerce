@@ -60,8 +60,6 @@ int read_from_stream(){
         for (int field_num = 2; field_num < ReadStreamMsgNumVal(reply, 0, 0); field_num += 2) {
             ReadStreamMsgVal(reply, 0, 0, field_num, key);
             ReadStreamMsgVal(reply, 0, 0, field_num + 1, value);
-
-            printf("%s %s\n", key, value);
         }
 
     }
