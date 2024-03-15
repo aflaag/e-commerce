@@ -33,7 +33,6 @@ int main() {
         query_res = log_db.RunQuery(query, true);
 
         if ((PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) || PQntuples(query_res) <= 0) {
-            // send_response_status(c2r, WRITE_STREAM, client_id, "DB_ERROR", msg_id, 0);
             printf("DB_ERROR\n");
             continue;
         }
@@ -56,14 +55,11 @@ int main() {
 
         query_res = log_db.RunQuery(query, false);
 
-
-
         sprintf(query, "SELECT EXTRACT(EPOCH FROM AVG(response_instant - request_instant)) * 1000 as avg FROM Communication WHERE response_instant IS NOT NULL");
 
         query_res = log_db.RunQuery(query, true);
 
         if ((PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) || PQntuples(query_res) <= 0) {
-            // send_response_status(c2r, WRITE_STREAM, client_id, "DB_ERROR", msg_id, 0);
             printf("DB_ERROR\n");
             continue;
         }

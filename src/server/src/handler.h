@@ -21,6 +21,7 @@
 #include "../../lib/con2db/pgsql.h"
 #include "../../utils/src/const.h"
 
+/* Classes */
 class Handler{
     public:
         Handler(const char* redis_ip, int redis_port, std::string req_types[], int num_req_types);

@@ -4,7 +4,7 @@ int kill_server = FALSE;
 
 void handle_signals(int s){
     kill_server = TRUE;
-    printf("\nKilling server...\n");
+    std::cout << "\nKilling server..." << std::endl;
 }
 
 Server::Server(const char* server_id, int server_port, const char* redis_ip, int redis_port, std::string req_types[], int num_req_types) {
@@ -58,7 +58,6 @@ void Server::run(){
     fd_set working_set;
     int rc, i, new_client, ready_requests;
     struct timeval timeout;
-    unsigned int counter;
 
     int client_id;
     bool response;
@@ -80,11 +79,9 @@ void Server::run(){
     timeout.tv_sec  = 0;
     timeout.tv_usec = 5000;
 
-    counter = 0;
+    std::cout << "Running " << server << " server" << std::endl;
 
-    // while(!kill_server && counter <= 20) {
     while(!kill_server) {
-        counter++;
 
         memcpy(&working_set, &current_set, sizeof(current_set));
 
@@ -92,18 +89,13 @@ void Server::run(){
         rc = select(max_fd + 1, &working_set, NULL, NULL, &timeout);
 
         if (rc < 0) {
-            printf("select failed\n");
+            std::cout << "\nSocket selection error" << std::endl;
             break;
         }
 
         ready_requests = rc;
 
         // For all connections (itself included)
-
-        if(ready_requests > 0){
-            counter = 0;    // reset server timeout counter
-        }
-
         for (i = 0; i <= max_fd && ready_requests > 0; ++i) {
             
             if ((i != sockfd) && FD_ISSET(i, &working_set)) {
@@ -125,8 +117,6 @@ void Server::run(){
             response = handler->read_from_managers(&out_str, &client_id);
 
             if(response){
-                counter = 0;    // reset server timeout counter
-
                 send_response(client_id, out_str);
             }
         }
@@ -150,7 +140,7 @@ void Server::add_new_clients() {
         if (new_client < 0) {
 
             if (errno != EWOULDBLOCK) {
-                printf("accept error");
+                std::cout << "\nClient accept failed" << std::endl;
                 kill_server = TRUE;
             }
             break;
@@ -170,7 +160,7 @@ void Server::add_new_clients() {
             max_fd = new_client;
         }
         if (fcntl(new_client, F_SETFL, O_NONBLOCK) == -1) {
-		    printf("flag set error");
+            std::cout << "\nClient accept failed" << std::endl;
         }
     } while (new_client != -1);
 }
@@ -182,7 +172,6 @@ void Server::send_response(int client_id, std::string out_str) {
 
     // Extract the first line
     std::string first_line = out_str.substr(0, pos);
-    std::cout << first_line << std::endl;
 
     sprintf(query, "WITH max_client_conn AS (SELECT max(connection_instant) AS instant FROM Client WHERE server_name = \'%s\' AND file_descriptor = %d), "
                     "     last_request AS (SELECT MAX(c.request_instant) AS instant FROM Communication AS c, max_client_conn AS m WHERE c.client_server_name = \'%s\' AND c.client_file_descriptor = %d AND c.client_connection_instant = m.instant) "
@@ -195,8 +184,7 @@ void Server::send_response(int client_id, std::string out_str) {
         return;
     }
 
-
-    std::cout << client_id << " - " << out_str << std::endl;
+    std::cout << "\nClient id: " << client_id << " - Response: " << out_str << std::endl;
     send(client_id, out_str.c_str(), out_str.length(), 0);
 }
 

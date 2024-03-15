@@ -22,7 +22,7 @@ bool Handler::send_to_managers(int client_id, std::string msg){
     
     if (i >= msg.length()){
         // Invalid msg
-        std::cout << "Invalid msg" << std::endl;
+        std::cout << "\nInvalid msg" << std::endl;
         return false;
     }
 
@@ -39,7 +39,7 @@ bool Handler::send_to_managers(int client_id, std::string msg){
 
     if(!is_valid_req){
         // Invalid request type
-        std::cout << "Invalid request type" << std::endl;
+        std::cout << "\nInvalid request type" << std::endl;
         return false;
     }
 

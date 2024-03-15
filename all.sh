@@ -1,13 +1,5 @@
 #!/bin/bash
 
-# TODO: rimuovi questi
-# cd db-scripts
-# sh create.sh
-# cd ..
-# sh makes.sh --clean
-# sh makes.sh
-# sh run.sh
-
 check_last_command() {
     if [ $? -ne 0 ]
     then

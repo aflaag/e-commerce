@@ -42,6 +42,9 @@ if __name__ == "__main__":
         true_args =  random.randint(0, min(len(requests[k]), args))
         false_args = args - true_args
 
+        ta_cpy = true_args
+        fa_cpy = false_args
+
         true_response = True if false_args <= 0 else False
 
         req = k
@@ -112,7 +115,7 @@ if __name__ == "__main__":
                 if not response.startswith("BAD_REQUEST") and not response.startswith("DB_ERROR"):
                     print(f"WRONG:\n\tExpected: BAD_REQUEST | DB_ERROR\n\tRecived: {response}")
                     wrong += 1
-                    to_save.append(("2", k, handler, req, response))
+                    to_save.append(("2", k, handler, req, response, ta_cpy, fa_cpy))
                 else:
                     print("CORRECT")
                     correct += 1
@@ -124,5 +127,5 @@ if __name__ == "__main__":
     print(f"\tUnknow {unknow} / {num_requests} tests")
     print(f"\tWrong {wrong} / {num_requests} tests")
 
-    for p0, p1, p2, p3, p4 in to_save:
-        print(p0, p1, p2, p3, p4)
+    for elem in to_save:
+        print(elem)
