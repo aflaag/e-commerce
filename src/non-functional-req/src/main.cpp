@@ -55,6 +55,11 @@ int main() {
 
         query_res = log_db.RunQuery(query, false);
 
+        if (PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) {
+            printf("DB_ERROR\n");
+            continue;
+        }
+
         sprintf(query, "SELECT EXTRACT(EPOCH FROM AVG(response_instant - request_instant)) * 1000 as avg FROM Communication WHERE response_instant IS NOT NULL");
 
         query_res = log_db.RunQuery(query, true);
