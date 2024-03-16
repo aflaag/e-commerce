@@ -1,3 +1,5 @@
+.vscode
+
 tests/__pycache__/
 tests/param_value/__pycache__/
 
