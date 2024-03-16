@@ -85,6 +85,11 @@ int main() {
 
         query_res = log_db.RunQuery(query, false);
 
+        if (PQresultStatus(query_res) != PGRES_COMMAND_OK && PQresultStatus(query_res) != PGRES_TUPLES_OK) {
+            printf("DB_ERROR\n");
+            continue;
+        }
+
         micro_sleep(60000000);
     }
 
