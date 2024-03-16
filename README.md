@@ -17,6 +17,10 @@ Il seguente progetto contiene il backend di un sito di e-commerce, ed include le
 - un database per i log di sistema
 - monitor per proprietà funzionali e non funzionali
 
+## Relazione
+
+All'interno della repository è presente una [relazione](relazione/relazione.pdf), contenente dettagli implementativi sull'architettura del progetto.
+
 ## Prerequisiti
 
 Per compilare il progetto sono necessari i seguenti prerequisiti:
