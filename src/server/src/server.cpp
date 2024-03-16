@@ -130,7 +130,7 @@ void Server::run(){
 }
 
 void Server::add_new_clients() {
-    // Accept incoming conncetions
+    // Accept incoming connections
     int new_client;
     char query[QUERY_LEN];
 

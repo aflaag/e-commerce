@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Arch Linux) (preloaded format=pdflatex 2024.2.1)  19 FEB 2024 19:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Arch Linux) (preloaded format=pdflatex 2024.2.24)  16 MAR 2024 19:12
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**relazione.tex
-(./relazione.tex
+**/home/exyss/e-commerce/relazione/relazione.tex
+(/home/exyss/e-commerce/relazione/relazione.tex
 LaTeX2e <2022-11-01> patch level 1
 L3 programming layer <2023-02-22> (/usr/share/texmf-dist/tex/latex/base/report.cls
 Document Class: report 2022/07/02 v1.4n Standard LaTeX document class
@@ -221,8 +221,7 @@ Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
 \Hy@SavedSpaceFactor=\count284
-
-(/usr/share/texmf-dist/tex/latex/hyperref/puenc.def
+ (/usr/share/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2023-02-07 v7.00v Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
@@ -287,7 +286,11 @@ Package hyperref Info: Option `colorlinks' set `true' on input line 18.
 File: l3backend-pdftex.def 2023-01-16 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count292
 \l__pdf_internal_box=\box57
-) (./relazione.aux)
+) (./relazione.aux
+
+LaTeX Warning: Label `fig:message_sequence_chart' multiply defined.
+
+)
 \openout1 = `relazione.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 23.
@@ -357,28 +360,173 @@ l.34     \newpage
 Chapter 1.
 [2
 
-] [3]
-Overfull \hbox (6.62361pt too wide) in paragraph at lines 93--94
-[]\OT1/cmr/m/n/12 gestione prodotti (reg-is-trazione, mod-i-fica, ri-mozione e ri-forn-i-mento) 
+]
+<images/Operating Environment.png, id=115, 343.2825pt x 373.395pt>
+File: images/Operating Environment.png Graphic file (type png)
+<use images/Operating Environment.png>
+Package pdftex.def Info: images/Operating Environment.png  used on input line 53.
+(pdftex.def)             Requested size: 188.80594pt x 205.36787pt.
+ [3 <./images/Operating Environment.png>]
+Chapter 2.
+[4
+
+] [5]
+<images/ER-Expanded.png, id=172, 918.43124pt x 1150.2975pt>
+File: images/ER-Expanded.png Graphic file (type png)
+<use images/ER-Expanded.png>
+Package pdftex.def Info: images/ER-Expanded.png  used on input line 138.
+(pdftex.def)             Requested size: 404.111pt x 506.13248pt.
+
+Overfull \hbox (14.111pt too wide) in paragraph at lines 138--139
+ [][] 
  []
 
-[4] (./relazione.aux)
+<images/Use-cases.png, id=173, 639.38875pt x 458.71375pt>
+File: images/Use-cases.png Graphic file (type png)
+<use images/Use-cases.png>
+Package pdftex.def Info: images/Use-cases.png  used on input line 147.
+(pdftex.def)             Requested size: 383.6362pt x 275.23038pt.
+[6 <./images/ER-Expanded.png>] [7 <./images/Use-cases.png>]
+Overfull \hbox (3.39886pt too wide) in paragraph at lines 163--164
+[]\OT1/cmr/m/n/12 Ogni ac-quisto deve es-sere ef-fet-tuato da un cus-tomer, at-traverso
+ []
+
+[8] [9]
+<images/System Architecture.png, id=223, 492.84125pt x 543.02875pt>
+File: images/System Architecture.png Graphic file (type png)
+<use images/System Architecture.png>
+Package pdftex.def Info: images/System Architecture.png  used on input line 226.
+(pdftex.def)             Requested size: 246.42001pt x 271.5137pt.
+ [10 <./images/System Architecture.png>]
+<images/System Architecture 1.png, id=230, 512.91624pt x 603.25375pt>
+File: images/System Architecture 1.png Graphic file (type png)
+<use images/System Architecture 1.png>
+Package pdftex.def Info: images/System Architecture 1.png  used on input line 239.
+(pdftex.def)             Requested size: 307.75212pt x 361.95503pt.
+<images/System Architecture 2.png, id=231, 522.95375pt x 663.47874pt>
+File: images/System Architecture 2.png Graphic file (type png)
+<use images/System Architecture 2.png>
+Package pdftex.def Info: images/System Architecture 2.png  used on input line 246.
+(pdftex.def)             Requested size: 313.77466pt x 398.0903pt.
+ [11 <./images/System Architecture 1.png>] [12 <./images/System Architecture 2.png>]
+<images/Activity Diagram.png, id=243, 895.345pt x 945.5325pt>
+File: images/Activity Diagram.png Graphic file (type png)
+<use images/Activity Diagram.png>
+Package pdftex.def Info: images/Activity Diagram.png  used on input line 258.
+(pdftex.def)             Requested size: 380.52342pt x 401.85321pt.
+ [13 <./images/Activity Diagram.png>]
+<images/Manager State Diagram.png, id=249, 442.65375pt x 362.35374pt>
+File: images/Manager State Diagram.png Graphic file (type png)
+<use images/Manager State Diagram.png>
+Package pdftex.def Info: images/Manager State Diagram.png  used on input line 269.
+(pdftex.def)             Requested size: 265.59428pt x 217.41393pt.
+ [14 <./images/Manager State Diagram.png>]
+<images/Handler State Diagram.png, id=255, 683.55376pt x 512.91624pt>
+File: images/Handler State Diagram.png Graphic file (type png)
+<use images/Handler State Diagram.png>
+Package pdftex.def Info: images/Handler State Diagram.png  used on input line 282.
+(pdftex.def)             Requested size: 375.95573pt x 282.1048pt.
+ [15 <./images/Handler State Diagram.png>]
+<images/Message Sequence Chart.png, id=261, 702.625pt x 482.80376pt>
+File: images/Message Sequence Chart.png Graphic file (type png)
+<use images/Message Sequence Chart.png>
+Package pdftex.def Info: images/Message Sequence Chart.png  used on input line 295.
+(pdftex.def)             Requested size: 386.44493pt x 265.5429pt.
+ [16 <./images/Message Sequence Chart.png>]
+Chapter 3.
+[17
+
+] [18] [19]
+<images/ER-Restructured.png, id=283, 885.3075pt x 1138.2525pt>
+File: images/ER-Restructured.png Graphic file (type png)
+<use images/ER-Restructured.png>
+Package pdftex.def Info: images/ER-Restructured.png  used on input line 384.
+(pdftex.def)             Requested size: 398.38469pt x 512.20891pt.
+
+Overfull \hbox (8.38469pt too wide) in paragraph at lines 384--385
+ [][] 
+ []
+
+[20 <./images/ER-Restructured.png>]
+Overfull \hbox (3.69987pt too wide) in paragraph at lines 426--426
+ []                \OT1/cmtt/m/n/12 WHERE NEW.product = OrderedProducts.product[] 
+ []
+
+[21{/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
+Overfull \hbox (65.4499pt too wide) in paragraph at lines 455--455
+ []    \OT1/cmtt/m/n/12 CREATE OR REPLACE FUNCTION ordered_product_quantity_consistency()[] 
+ []
+
+
+Overfull \hbox (34.57489pt too wide) in paragraph at lines 455--455
+ []            \OT1/cmtt/m/n/12 SELECT SUM(DISTINCT rq.quantity) >= SUM(op.quantity)[] 
+ []
+
+
+Overfull \hbox (22.22488pt too wide) in paragraph at lines 455--455
+ []            \OT1/cmtt/m/n/12 FROM OrderedProducts AS op, restock_quantity as rq[] 
+ []
+
+
+Overfull \hbox (40.7499pt too wide) in paragraph at lines 455--455
+ []            \OT1/cmtt/m/n/12 RAISE EXCEPTION 'invalid quantity for order request';[] 
+ []
+
+
+Overfull \hbox (3.69987pt too wide) in paragraph at lines 455--455
+ []    \OT1/cmtt/m/n/12 CREATE TRIGGER ordered_product_quantity_consistency_trg[] 
+ []
+
+
+Overfull \hbox (9.87488pt too wide) in paragraph at lines 455--455
+ []    \OT1/cmtt/m/n/12 EXECUTE FUNCTION ordered_product_quantity_consistency();[] 
+ []
+
+[22] [23]
+Overfull \hbox (42.25021pt too wide) in paragraph at lines 549--549
+[]            \OT1/cmtt/m/n/12 EPOCH FROM AVG(disconnection_instant - connection_instant)[] 
+ []
+
+
+Overfull \hbox (23.7252pt too wide) in paragraph at lines 549--549
+[]        \OT1/cmtt/m/n/12 SessionStatistic(type, end_instant, value, response_status)[] 
+ []
+
+
+Overfull \hbox (42.25021pt too wide) in paragraph at lines 549--549
+[]        \OT1/cmtt/m/n/12 VALUES ('Session', CURRENT_TIMESTAMP, average, responseStatus)[] 
+ []
+
+[24]
+Overfull \hbox (23.7252pt too wide) in paragraph at lines 549--549
+[]        \OT1/cmtt/m/n/12 SessionStatistic(type, end_instant, value, response_status)[] 
+ []
+
+
+Overfull \hbox (48.42522pt too wide) in paragraph at lines 549--549
+[]        \OT1/cmtt/m/n/12 VALUES ('Response', CURRENT_TIMESTAMP, average, responseStatus)[] 
+ []
+
+[25] (./relazione.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
 Package rerunfilecheck Info: File `relazione.out' has not changed.
-(rerunfilecheck)             Checksum: C37A619056F27957438B6661A51F1BE3;443.
+(rerunfilecheck)             Checksum: A1717E683CB024A744DC92DFBB78BB37;3217.
  ) 
 Here is how much of TeX's memory you used:
- 11389 strings out of 477974
- 171845 string characters out of 5839631
+ 11578 strings out of 477974
+ 175686 string characters out of 5839630
  1859388 words of memory out of 5000000
- 31407 multiletter control sequences out of 15000+600000
- 521349 words of font info for 67 fonts, out of 8000000 for 9000
+ 31509 multiletter control sequences out of 15000+600000
+ 522509 words of font info for 71 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,6n,76p,862b,688s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on relazione.pdf (5 pages, 46556 bytes).
+ 75i,7n,76p,895b,688s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
+Output written on relazione.pdf (26 pages, 467315 bytes).
 PDF statistics:
- 111 PDF objects out of 1000 (max. 8388607)
- 97 compressed objects within 1 object stream
- 49 named destinations out of 1000 (max. 500000)
- 25 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 367 PDF objects out of 1000 (max. 8388607)
+ 301 compressed objects within 4 object streams
+ 118 named destinations out of 1000 (max. 500000)
+ 208 words of extra memory for PDF output out of 10000 (max. 10000000)
 
