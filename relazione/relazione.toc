@@ -1,5 +1,4 @@
 \contentsline {chapter}{\numberline {1}Descrizione generale}{2}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Specifica dei requisiti}{2}{section.1.1}%
 \contentsline {chapter}{\numberline {2}Analisi del software}{4}{chapter.2}%
 \contentsline {section}{\numberline {2.1}User requirements}{4}{section.2.1}%
 \contentsline {subsection}{\numberline {2.1.1}Lista dei requisiti}{4}{subsection.2.1.1}%
@@ -17,3 +16,4 @@
 \contentsline {section}{\numberline {3.3}Schema del database}{20}{section.3.3}%
 \contentsline {section}{\numberline {3.4}Monitor funzionali}{21}{section.3.4}%
 \contentsline {section}{\numberline {3.5}Monitor non-funzionali}{24}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Risultati sperimentali}{25}{section.3.6}%

@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1710612777 "/home/exyss/e-commerce/relazione/relazione.tex" "relazione.pdf" "relazione" 1710612778 0
-  "/home/exyss/e-commerce/relazione/relazione.tex" 1710612777 24547 1d19961ac56fa79849318e2d4763e04f ""
+["pdflatex"] 1710614632 "/home/exyss/e-commerce/relazione/relazione.tex" "relazione.pdf" "relazione" 1710614633 0
+  "/home/exyss/e-commerce/relazione/relazione.tex" 1710614632 24927 53440a750cd11cc0c7912f3c01024335 ""
   "/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1704400182 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1704400182 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1704400182 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
@@ -98,15 +98,14 @@
   "images/Handler State Diagram.png" 1710612657 54653 c698e1a842a33fb79e05e647c1d9c785 ""
   "images/Manager State Diagram.png" 1710612657 29480 2597e2ed6f3cededa2d8303e4830319f ""
   "images/Message Sequence Chart.png" 1710612657 54184 8336e7df2c9df8c8091f63ccb0c67878 ""
-  "images/Operating Environment.png" 1710612657 22002 ae443def920e78cbd0e4c9e8b5b61467 ""
   "images/System Architecture 1.png" 1710612657 51147 2b84b654cb34c1443cb42d2db323ce7d ""
   "images/System Architecture 2.png" 1710612657 61089 f32a3d11fcd71fd5f1132566dd608b14 ""
   "images/System Architecture.png" 1710612657 38060 c6ee66d3a22c776d59181df6e792eec1 ""
   "images/Use-cases.png" 1710612657 76414 5281edc75788df7857bfd20c467382bd ""
-  "relazione.aux" 1710612778 4359 b86c4232caeec5d0f3a685891198f09b "pdflatex"
-  "relazione.out" 1710612778 3217 a1717e683cb024a744dc92dfbb78bb37 "pdflatex"
-  "relazione.tex" 1710612777 24547 1d19961ac56fa79849318e2d4763e04f ""
-  "relazione.toc" 1710612778 1631 353da56c7770b6e436014121be48966e "pdflatex"
+  "relazione.aux" 1710614633 4359 c1de0c038491498a508b656c0f12bde8 "pdflatex"
+  "relazione.out" 1710614633 3209 b009ea807b495a0494de4ed8717a4501 "pdflatex"
+  "relazione.tex" 1710614632 24927 53440a750cd11cc0c7912f3c01024335 ""
+  "relazione.toc" 1710614633 1631 898a28756998e341b4ed965d6e9d80b0 "pdflatex"
   (generated)
   "relazione.aux"
   "relazione.log"

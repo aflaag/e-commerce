@@ -13,7 +13,7 @@
     linkcolor=black,
     filecolor=magenta,      
     urlcolor=blue,
-    pdftitle={Overleaf Example},
+    pdftitle={Relazione progetto e-commerce},
     pdfpagemode=FullScreen,
 }
 
@@ -25,7 +25,7 @@
     \renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}}
     \renewcommand{\labelenumiv}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.\arabic{enumiv}}
 
-    \title{Progetto e-commerce}
+    \title{Relazione progetto e-commerce}
     \author{A. Bandiera, I. Radu Barbalata, S. Bianco, S. Lazzaroni}
     \date{\today}
 
@@ -35,7 +35,6 @@
 
     \chapter{Descrizione generale}
     
-    \section{Specifica dei requisiti}
 
     Si vuole progettare una piattaforma di e-commerce, nella quale grandi fornitori possono mettere in vendita prodotti per acquirenti privati.
 
@@ -47,11 +46,6 @@
 
     I trasportatori sono costituiti da aziende private di trasporto merci, che possono registrarsi sulla piattaforma attraverso la propria ragione sociale, ed hanno accesso alla gestione delle spedizioni da loro effettuate; in particolare, si occuperanno di prendere in carico gli ordini a cui non è ancora stato assegnato uno spedizioniere, notificare l'avvenuta consegna di un ordine, l'avvenuto reso o l'eventuale perdita del pacco da consegnare.
 
-    \quad
-    
-    \begin{center}
-        \includegraphics[scale=0.55]{images/Operating Environment.png}
-    \end{center}
 
     \chapter{Analisi del software}
 
@@ -548,4 +542,11 @@ while(true) {
 
 \end{verbatim}
 
+\quad
+
+    \section{Risultati sperimentali}
+
+    Nel suo intero, il sistema rappresenta una piattaforma e-commerce consona agli standard moderni e può essere effettivamente utilizzato tramite le API documentate all'interno del file \texttt{README.md} associato con questa cartella.
+
+    I risultati riscontrati tramite il test generator mostrano che la piattaforma sia in grado di gestire correttamente eventuali sovraccarichi tramite la parallelizzazione delle richieste ed eventuali input erronei o inconsistenti.
 \end{document}

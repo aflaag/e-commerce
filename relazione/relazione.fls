@@ -617,11 +617,6 @@ INPUT /usr/share/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
 OUTPUT relazione.toc
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
-INPUT ./images/Operating Environment.png
-INPUT ./images/Operating Environment.png
-INPUT images/Operating Environment.png
-INPUT ./images/Operating Environment.png
-INPUT ./images/Operating Environment.png
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT ./images/ER-Expanded.png
 INPUT ./images/ER-Expanded.png
