@@ -19,7 +19,7 @@ Il seguente progetto contiene il backend di un sito di e-commerce, ed include le
 
 ## Relazione
 
-All'interno della repository è presente una [relazione](relazione/relazione.pdf), contenente dettagli implementativi sull'architettura del progetto.
+All'interno della repository è presente una [relazione](<https://raw.githubusercontent.com/aflaag/e-commerce/main/relazione/relazione.pdf>), contenente dettagli implementativi sull'architettura del progetto.
 
 ## Prerequisiti
 
