@@ -1,106 +1,212 @@
 # e-commerce
 
-## TODO list
+## Progetto
 
-- [ ] refactoring
-    - [x] usare costanti per dichiarazione dimensione buffer
-    - [x] INVALID#REQUEST e REQUEST_SUCCESS va messo l'underscore
-    - [ ] controllare print fatti e togliere quelli inutili
-    - [ ] filtrare librerie necessarie
+Il seguente progetto contiene il backend di un sito di e-commerce, ed include le seguenti componenti:
 
-- relazione
-    - sistemare descrzione problema
-    - figura che illustra sistema 
-    - figura che illustra l'ambiente (è quello che abbiamo messo nella system architecture piccolo???)
-    - controllare requisiti di sistema scritti
-    - controllare diagramma architettura sistema (è quello che abbiamo messo nella system architecture grande)
-    - activity diagram per mostrare come le varie componenti intervengono per soddisfare i requisiti funzionali (almeno uno)
-    - state diagram per una delle componenti del sistema (almeno uno)
-    - message sequence chart diagram per la comunicazione tra le componenti del sistema (almeno uno)
-    - descrizione generale implementazione per ogni componente (manager, server, handler)
-    - schema dei db (er log, er principale)
-    - descrizione connessioni Redis
-    - descrizioni risultati
+- un modello per i customers, ovvero coloro che acquistano i prodotti in vendita
+- un modello per i fornitori, ovvero coloro che registrano nel sito i prodotti da vendere
+- un modello per i trasportatori, ovvero coloro che consegnano i prodotti ai customer
+- dei server ai quali i customers si connettono per interagire con il sistema
+- dei server ai quali i fornitori si connettono per interagire con il sistema
+- dei server ai quali i trasportatori si connettono per interagire con il sistema
+- dei test generator per le operazioni del customer
+- dei test generator per le operazioni dei fornitori
+- dei test generator per le operazioni dei trasportatori
+- un database per i dati
+- un database per i log di sistema
+- monitor per proprietà funzionali e non funzionali
 
-- [x] fare server per ogni handler
-- [x] test generator
-- [x] monitor (funzionali e non funzionali)
-    - [x] non funzionali:
-        - [x] il tempo medio di sessione
-        - [x] il tempo medio di risposta ad una richiesta
-    - funzionali
-        - [x] loggare i risultati delle richiete nel db perchè i monitor sono i trigger ed i vincoli messi nella creazione del db
-- [x] creare db log
-- [x] loggare i dati
-- [x] vedere come, caso di sigint, chiudere le connessioni
-- [x] risolvere i seguenti tests
-    - [x] 2 view-order customer view-order purchase_id -73 REQUEST_SUCCESS (select su prodotto)
-    - [x] 2 search-products customer search-products product_name "cose a caso" REQUEST_SUCCESS (non dovrebbe essere un errore, maybe brutforce sui test, ma attentezione su il fatto che debba essere vero o meno in base anche ad altri parametri)
-        - [x] Soluzione consigliata (e piu semplice) vedi se la parola da cercare nella tabbella rispetta il dominio del nome (alfanumerico)
-    - [x] 2 update-refund-request courier update-refund-request refund -34 refund_start 2024-01-29##15:30:37 (select)
-    - [x] 2 delete-purchase customer delete-purchase purchase -11 REQUEST_SUCCESS (select)
+## Compilazione
 
-### Altro
+Una volta clonata la repository eseguendo
 
-### Relazione
+```sh
+git clone https://github.com/aflaag/e-commerce.git
+```
 
-- generale
-    - diagramma del sistema
-    - diagramma dell'ambiente operativo del sistema
+è possibile compilare il database e proggrammi del progetto attraverso il seguente script:
 
-- requisiti utenti
-    - requisiti numerati
-    - diagrammi UML per almeno 2 use case
+```sh
+sh compile.sh
+```
 
-- requisiti di sistema
-    - diagramma dell'architettura
-    - almeno un activity diargram UML
-    - almeno uno state diagram UML per almeno una componente
-    - almeno un message sequence chart UML
+## Esecuzione
 
-- implementazione
-    - pseudo-codice per tutte le componenti
-    - schema dei DB
-    - descrizione delle connessioni redis
+Una volta che la compilazione è andata a buon fine, è possibile eseguire i vari programmi del progetto mediante il seguente script:
 
-- risultati
-    - descrizione dei risultati
+```sh
+sh run.sh
+```
 
-### Progetto
+inoltre, per terminare tutti i vari processi del progetto è sufficiente eseguire lo stesso script attraverso la seguente flag:
 
-- elementi
-    - test generator (environment)
-        - customers
-        - fornitori
-        - trasportatori
-    - system under design
-        - redis
-        - DB postgresql per i log
-    - monitor
-        - almeno 3 per i requisiti funzionali
-        - almeno 2 per i requisiti non-funzionali
+```sh
+sh run.sh --kill
+```
 
-- componenti
-    - uno o più server per i customers
-    - uno o più server per i fornitori
-    - uno o più server per i produttori
-    - DB dei dati
+****
 
-- [x] funzionalità
-    - [x] customers
-        - [x] registrazione customer
-        - [x] ricerca prodotti
-        - [x] acquisto prodotti
-        - [x] annullamento ordini
-        - [x] restituzione prodotti
-        - [x] feedback prodotti
-        - [x] registrazione carte
-        - [x] registrazione indirizzi
-        - [x] vedere i propri ordini
-    - [x] fornitori
-        - [x] registrazione fornitore
-        - [x] gestione prodotti
-        - [x] classifica prodotti maggiormente venduti in range temporale
-    - [x] trasportatori
-        - [x] registrazione trasportatore
-        - [x] gestione spedizioni
+# Documentazione API
+
+## Supplier
+
+- add-product
+  - code: `ProductCode`
+  - name: `StringS`
+  - description: `StringL`
+  - price: `RealGEZ`
+      ```
+      add-product code banana name yoyo description ahahahaha##baba price 341.3243
+      ```
+
+- add-restock
+  - quantity: `IntGZ`
+  - supplier: `StringS`
+  - product: `ProductCode`
+      ```
+      add-restock quantity 10 supplier Supplier1 product P1
+      ```
+
+- add-supplier
+  - business_name: `StringS`
+      ```
+      add-supplier business_name Supplier5
+      ```
+
+- update-product
+  - code: `ProductCode`
+  - description: `StringL`
+      ```
+      update-product code P1 description ho##capito
+      ```
+
+- view-statistic
+  - supplier: `StringS`
+      ```
+      view-statistic supplier Supplier1
+      ```
+
+## Courier
+
+- take-purchase-delivery
+  - courier: `StringS`
+  - purchase: `integer`
+  - deliverycode: `DeliveryCode`
+      ```
+      take-purchase-delivery courier courier1 purchase 1 deliverycode aifjifa
+      ```
+
+- update-assigned-delivery
+  - deliverycode: `DeliveryCode`
+  - start: `timestamp`
+  - lost: `timestamp`
+  - end: `timestamp`
+      ```
+      update-assigned-delivery deliverycode bho2 lost 2024-02-29##19:41:42
+      ```
+
+- update-refund-request
+  - refund: `integer`
+  - _switch_
+    - _option_
+      - courier: `StringS`
+          ```
+          update-refund-request courier UPS refund 46
+          ```
+    - _option_
+      - refund_start: `timestamp`
+      - refund_end: `timestamp`
+          ```
+          update-refund-request refund 1 refund_end 2024-03-02##11:05:42.660825
+          ```
+
+- view-available-purchase
+    ```
+    view-available-purchase
+    ```
+
+## Customer
+
+- add-address
+  - email: `Email`
+  - zip_code: `ZipCode`
+  - street_number: `StreetNumber`
+  - street: `StringM`
+  - city: `IntGZ`
+      ```
+      add-address email user@gmail.com zip_code 2C4A street_number 2B street aldo city 1
+      ```
+
+- add-card
+  - number: `CardNumber`
+  - email: `Email`
+      ```
+      add-card email user@gmail.com number 007865432872
+      ```
+
+- add-curtomer
+  - name: `StringS`
+  - surname: `StringS`
+  - email: `Email`
+  - phone-number: `PhoneNumber`
+      ```
+      add-customer name user surname resu email user@gmail.com phone-number +393714393392
+      ```
+
+- add-purchase **[order matters]**
+  - fare: `RealGEZ`
+  - customer: `Email`
+  - card: `CardNumber`
+  - zip_code: `ZipCode`
+  - street: `StringM`
+  - street_number: `StreetNumber`
+  - product: `ProductCode`
+  - quantity: `IntGZ`
+  - product: `ProductCode`
+  - quantity: `IntGZ`
+      ```
+      add-purchase fare 0.95 customer user@gmail.com card 007865432872 zip_code 2C4A street aldo street_number 23B product P1 quantity 2  $\dots$ quantity 4 product P2
+      ```
+
+- add-rating
+  - product: `ProductCode`
+  - customer: `Email`
+  - stars: `Stars`
+      ```
+      add-rating product P1 customer user@gmail.com starts 4
+      ```
+
+- add-refund-request
+  - assigned_delivery: `DeliveryCode`
+  - product: `ProductCode`
+  - quantity: `IntGZ`
+  - product: `ProductCode`
+  - quantity: `IntGZ`
+      ```
+      add-refund-request assigned_delivery 3321AD34 product P1 quantity 2 $\dots$ quantity 4 product P2
+      ```
+
+- delete-purchase
+  - purchase: `IntGZ`
+      ```
+      delete-purchase purchase 1
+      ```
+
+- search-products
+  - product_name: `StringS`
+      ```
+      search-products product_name a
+      ```
+
+- view-order
+  - purchase_id: `IntGZ`
+      ```
+      view-order purchase_id 2
+      ```
+
+- view-refund
+  - refund_id: `IntGZ`
+      ```
+      view-refund refund_id 1
+      ```
