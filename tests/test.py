@@ -74,7 +74,7 @@ if __name__ == "__main__":
                 false_args -= 1
 
             # check for value wrong or right
-            if random.randint(0, i -1) >= false_args:
+            if random.randint(1, i -1) > false_args:
                 # put a true one
                 req += " " + str(requests[k][index][arg_index][1]().right()).replace(" ", "##")
                 true_args -= 1
@@ -83,7 +83,7 @@ if __name__ == "__main__":
                 false_args -= 1
 
             to_insert.pop(pop_i)
-        
+
         handler, port = ports[random.randint(0, 2)]
         
         if k == "search-products" and args == 2 and req.split()[1] == "product_name":
