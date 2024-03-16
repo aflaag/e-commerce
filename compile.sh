@@ -3,7 +3,7 @@
 check_last_command() {
     if [ $? -ne 0 ]
     then
-        printf "\n\n\n ✨✨✨✨✨✨✨✨✨✨ IT FAILED :((( ✨✨✨✨✨✨✨✨✨✨ \n"
+        printf "\n\n\n!!!!!!!!!! An error occurred while trying to run the script !!!!!!!!!!\n"
         exit
     fi
 }
@@ -25,4 +25,3 @@ try_sh create.sh
 try_cd ..
 try_sh makes.sh --clean
 try_sh makes.sh
-try_sh run.sh

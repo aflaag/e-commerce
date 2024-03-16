@@ -15,8 +15,7 @@ check_arguments() {
 check_last_command() {
     if [ $? -ne 0 ]
     then
-        printf "\n\n\n😭😭😭😭😭😭😭😭😭😭 FAILED COOKIN' 😭😭😭😭😭😭😭😭😭😭\n"
-        printf "\n\n\n🗣️🗣️🗣️🗣️🗣️🗣️🗣️🗣️ WE 👏 ARE 👏 SO 👏 BACK 🗣️🗣️🗣️🗣️🗣️🗣️🗣️🗣️\n\n\n\n"
+        printf "\n\n\n!!!!!!!!!! An error occurred while trying to run the script !!!!!!!!!!\n"
         exit
     fi
 }
@@ -58,7 +57,7 @@ make_folder() {
 
 check_arguments $1
 
-printf "\n\n\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥 🍳🍳🥩🥩 HOLD ON, LEMME COOK. 🥩🥩🍳🍳 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n\n\n\n"
+printf "\n\n\n########## Started make script ##########\n\n\n\n"
 
 printf "############## LIB ##############\n\n"
 
@@ -131,4 +130,4 @@ make_folder managers/update-assigned-delivery/src
 make_folder managers/update-refund-request/src
 make_folder managers/view-available-purchase/src
 
-printf "\n\n\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥 🍳🍳🥩🥩 FINISHED COOKIN' 🥩🥩🍳🍳 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n\n\n\n"
+printf "\n\n\n########## Make script completed ###########\n\n\n\n"

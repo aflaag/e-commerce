@@ -3,20 +3,18 @@
 ROOT=$(pwd)
 CURRENT_ROOT=""
 
-CLEAN=false
-
 check_arguments() {
-    if [ "$1" = "--clean" ] || [ "$1" = "-c" ]
+    if [ "$1" = "--kill" ] || [ "$1" = "-k" ]
     then
-        CLEAN=true
+        pkill main
+        exit
     fi
 }
 
 check_last_command() {
     if [ $? -ne 0 ]
     then
-        printf "\n\n\n😭😭😭😭😭😭😭😭😭😭 FAILED COOKIN' 😭😭😭😭😭😭😭😭😭😭\n"
-        printf "\n\n\n🗣️🗣️🗣️🗣️🗣️🗣️🗣️🗣️ WE 👏 ARE 👏 SO 👏 BACK 🗣️🗣️🗣️🗣️🗣️🗣️🗣️🗣️\n\n\n\n"
+        printf "\n\n\n!!!!!!!!!! An error occurred while trying to run the script !!!!!!!!!!\n"
         exit
     fi
 }
@@ -53,7 +51,7 @@ run_main() {
 
 check_arguments $1
 
-printf "\n\n\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥 🍳🍳🥩🥩 HOLD ON, LEMME COOK. 🥩🥩🍳🍳 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n\n\n\n"
+printf "\n\n\n########## Started run script ##########\n\n\n\n"
 
 pkill main
 
@@ -103,4 +101,4 @@ run_main managers/update-assigned-delivery/bin
 run_main managers/update-refund-request/bin
 run_main managers/view-available-purchase/bin
 
-printf "\n\n\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥 🍳🍳🥩🥩 FINISHED COOKIN' 🥩🥩🍳🍳 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n\n\n\n"
+printf "\n\n\n########## Run script completed ###########\n\n\n\n"
