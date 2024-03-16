@@ -1,7 +1,7 @@
 #ifndef test_stream_h
 #define test_stream_h
 
-// TODO: da filtrare
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>

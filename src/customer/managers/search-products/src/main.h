@@ -2,7 +2,7 @@
 #define main_h
 
 /* System libraries */
-// TODO: da filtrare
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>

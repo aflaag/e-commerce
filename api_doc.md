@@ -63,7 +63,7 @@
     - _option_
       - courier: `StringS`
           ```
-          update-refund-request TODO
+          update-refund-request courier UPS refund 46
           ```
     - _option_
       - refund_start: `timestamp`
@@ -161,4 +161,3 @@
       ```
       view-refund refund_id 1
       ```
-
