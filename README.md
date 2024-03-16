@@ -17,6 +17,27 @@ Il seguente progetto contiene il backend di un sito di e-commerce, ed include le
 - un database per i log di sistema
 - monitor per proprietà funzionali e non funzionali
 
+## Prerequisiti
+
+Per compilare il progetto sono necessari i seguenti prerequisiti:
+
+### Librerie
+
+- `g++`
+- `make`
+- `PostgreSQL`
+- `Redis`
+- `hiredis` (https://github.com/redis/hiredis)
+- `PostgreSQL Libraries`
+
+### Ubuntu
+
+Il progetto è testato su Ubuntu, ed è possibile installare i prerequisiti menzionati è possibile eseguire lo script seguente:
+
+```sh
+sh install.sh
+```
+
 ## Compilazione
 
 Una volta clonata la repository eseguendo
