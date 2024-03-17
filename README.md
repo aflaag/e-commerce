@@ -209,7 +209,7 @@ sh run.sh --kill
   - product: `ProductCode`
   - quantity: `IntGZ`
       ```
-      add-refund-request assigned_delivery 3321AD34 product P1 quantity 2 $\dots$ quantity 4 product P2
+      add-refund-request assigned_delivery 3321AD34 product P1 quantity 2 ... quantity 4 product P2
       ```
 
 - delete-purchase
