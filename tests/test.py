@@ -1,4 +1,5 @@
 from requests_init import requests, apis, ports
+from param_value.string_s import StringS
 
 import socket
 import random
@@ -24,6 +25,7 @@ if __name__ == "__main__":
     test = 1
     correct = unknow = wrong = 0
     to_save = []
+    wrong_arg_key = StringS()
 
     while counter:
         i = random.randint(0, len(counter) -1)
@@ -57,7 +59,7 @@ if __name__ == "__main__":
 
             if true_args == 0 or len(to_insert) == 0:
                 # remain just false args
-                req += " boh boh"
+                req += " " + wrong_arg_key.wrong().replace(" ", "##") + " " + wrong_arg_key.wrong().replace(" ", "##")
                 continue
 
             pop_i = random.randint(0, len(to_insert) -1)
@@ -70,7 +72,7 @@ if __name__ == "__main__":
                 req += " " + requests[k][index][arg_index][0]
                 true_args -= 1
             else:
-                req += " boh"
+                req += " " + wrong_arg_key.wrong().replace(" ", "##")
                 false_args -= 1
 
             # check for value wrong or right
@@ -79,7 +81,7 @@ if __name__ == "__main__":
                 req += " " + str(requests[k][index][arg_index][1]().right()).replace(" ", "##")
                 true_args -= 1
             else:
-                req += " " + str(requests[k][index][arg_index][1]().wrong()).replace(" ", "##")
+                req += " " + str(requests[k][index][arg_index][1]().wrong())
                 false_args -= 1
 
             to_insert.pop(pop_i)
