@@ -1,5 +1,5 @@
 from requests_init import requests, apis, ports
-from param_value.wrong_arg import StringS
+from param_value.wrong_arg import WrongArg
 
 import socket
 import random
@@ -25,7 +25,7 @@ if __name__ == "__main__":
     test = 1
     correct = unknow = wrong = 0
     to_save = []
-    wrong_arg_key = StringS()
+    wrong_arg_key = WrongArg()
 
     while counter:
         i = random.randint(0, len(counter) -1)
