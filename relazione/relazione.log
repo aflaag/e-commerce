@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Arch Linux) (preloaded format=pdflatex 2024.2.24)  16 MAR 2024 19:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Arch Linux) (preloaded format=pdflatex 2024.2.24)  21 MAR 2024 18:14
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -403,101 +403,101 @@ File: images/System Architecture 2.png Graphic file (type png)
 Package pdftex.def Info: images/System Architecture 2.png  used on input line 240.
 (pdftex.def)             Requested size: 313.77466pt x 398.0903pt.
  [11 <./images/System Architecture 1.png>] [12 <./images/System Architecture 2.png>]
-<images/Activity Diagram.png, id=241, 895.345pt x 945.5325pt>
+<images/Activity Diagram.png, id=243, 895.345pt x 945.5325pt>
 File: images/Activity Diagram.png Graphic file (type png)
 <use images/Activity Diagram.png>
-Package pdftex.def Info: images/Activity Diagram.png  used on input line 252.
+Package pdftex.def Info: images/Activity Diagram.png  used on input line 253.
 (pdftex.def)             Requested size: 380.52342pt x 401.85321pt.
  [13 <./images/Activity Diagram.png>]
-<images/Manager State Diagram.png, id=247, 442.65375pt x 362.35374pt>
+<images/Manager State Diagram.png, id=249, 442.65375pt x 362.35374pt>
 File: images/Manager State Diagram.png Graphic file (type png)
 <use images/Manager State Diagram.png>
-Package pdftex.def Info: images/Manager State Diagram.png  used on input line 263.
+Package pdftex.def Info: images/Manager State Diagram.png  used on input line 264.
 (pdftex.def)             Requested size: 265.59428pt x 217.41393pt.
  [14 <./images/Manager State Diagram.png>]
-<images/Handler State Diagram.png, id=253, 683.55376pt x 512.91624pt>
+<images/Handler State Diagram.png, id=255, 683.55376pt x 512.91624pt>
 File: images/Handler State Diagram.png Graphic file (type png)
 <use images/Handler State Diagram.png>
-Package pdftex.def Info: images/Handler State Diagram.png  used on input line 276.
+Package pdftex.def Info: images/Handler State Diagram.png  used on input line 277.
 (pdftex.def)             Requested size: 375.95573pt x 282.1048pt.
  [15 <./images/Handler State Diagram.png>]
-<images/Message Sequence Chart.png, id=259, 702.625pt x 482.80376pt>
+<images/Message Sequence Chart.png, id=261, 702.625pt x 482.80376pt>
 File: images/Message Sequence Chart.png Graphic file (type png)
 <use images/Message Sequence Chart.png>
-Package pdftex.def Info: images/Message Sequence Chart.png  used on input line 289.
+Package pdftex.def Info: images/Message Sequence Chart.png  used on input line 290.
 (pdftex.def)             Requested size: 386.44493pt x 265.5429pt.
  [16 <./images/Message Sequence Chart.png>]
 Chapter 3.
 [17
 
 ] [18] [19]
-<images/ER-Restructured.png, id=281, 885.3075pt x 1138.2525pt>
+<images/ER-Restructured.png, id=283, 885.3075pt x 1138.2525pt>
 File: images/ER-Restructured.png Graphic file (type png)
 <use images/ER-Restructured.png>
-Package pdftex.def Info: images/ER-Restructured.png  used on input line 378.
+Package pdftex.def Info: images/ER-Restructured.png  used on input line 379.
 (pdftex.def)             Requested size: 398.38469pt x 512.20891pt.
 
-Overfull \hbox (8.38469pt too wide) in paragraph at lines 378--379
+Overfull \hbox (8.38469pt too wide) in paragraph at lines 379--380
  [][] 
  []
 
 [20 <./images/ER-Restructured.png>]
-Overfull \hbox (3.69987pt too wide) in paragraph at lines 420--420
+Overfull \hbox (3.69987pt too wide) in paragraph at lines 421--421
  []                \OT1/cmtt/m/n/12 WHERE NEW.product = OrderedProducts.product[] 
  []
 
 [21{/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
-Overfull \hbox (65.4499pt too wide) in paragraph at lines 449--449
+Overfull \hbox (65.4499pt too wide) in paragraph at lines 450--450
  []    \OT1/cmtt/m/n/12 CREATE OR REPLACE FUNCTION ordered_product_quantity_consistency()[] 
  []
 
 
-Overfull \hbox (34.57489pt too wide) in paragraph at lines 449--449
+Overfull \hbox (34.57489pt too wide) in paragraph at lines 450--450
  []            \OT1/cmtt/m/n/12 SELECT SUM(DISTINCT rq.quantity) >= SUM(op.quantity)[] 
  []
 
 
-Overfull \hbox (22.22488pt too wide) in paragraph at lines 449--449
+Overfull \hbox (22.22488pt too wide) in paragraph at lines 450--450
  []            \OT1/cmtt/m/n/12 FROM OrderedProducts AS op, restock_quantity as rq[] 
  []
 
 
-Overfull \hbox (40.7499pt too wide) in paragraph at lines 449--449
+Overfull \hbox (40.7499pt too wide) in paragraph at lines 450--450
  []            \OT1/cmtt/m/n/12 RAISE EXCEPTION 'invalid quantity for order request';[] 
  []
 
 
-Overfull \hbox (3.69987pt too wide) in paragraph at lines 449--449
+Overfull \hbox (3.69987pt too wide) in paragraph at lines 450--450
  []    \OT1/cmtt/m/n/12 CREATE TRIGGER ordered_product_quantity_consistency_trg[] 
  []
 
 
-Overfull \hbox (9.87488pt too wide) in paragraph at lines 449--449
+Overfull \hbox (9.87488pt too wide) in paragraph at lines 450--450
  []    \OT1/cmtt/m/n/12 EXECUTE FUNCTION ordered_product_quantity_consistency();[] 
  []
 
 [22] [23]
-Overfull \hbox (42.25021pt too wide) in paragraph at lines 543--543
+Overfull \hbox (42.25021pt too wide) in paragraph at lines 544--544
 []            \OT1/cmtt/m/n/12 EPOCH FROM AVG(disconnection_instant - connection_instant)[] 
  []
 
 
-Overfull \hbox (23.7252pt too wide) in paragraph at lines 543--543
+Overfull \hbox (23.7252pt too wide) in paragraph at lines 544--544
 []        \OT1/cmtt/m/n/12 SessionStatistic(type, end_instant, value, response_status)[] 
  []
 
 
-Overfull \hbox (42.25021pt too wide) in paragraph at lines 543--543
+Overfull \hbox (42.25021pt too wide) in paragraph at lines 544--544
 []        \OT1/cmtt/m/n/12 VALUES ('Session', CURRENT_TIMESTAMP, average, responseStatus)[] 
  []
 
 [24]
-Overfull \hbox (23.7252pt too wide) in paragraph at lines 543--543
+Overfull \hbox (23.7252pt too wide) in paragraph at lines 544--544
 []        \OT1/cmtt/m/n/12 SessionStatistic(type, end_instant, value, response_status)[] 
  []
 
 
-Overfull \hbox (48.42522pt too wide) in paragraph at lines 543--543
+Overfull \hbox (48.42522pt too wide) in paragraph at lines 544--544
 []        \OT1/cmtt/m/n/12 VALUES ('Response', CURRENT_TIMESTAMP, average, responseStatus)[] 
  []
 
@@ -509,18 +509,18 @@ Package rerunfilecheck Info: File `relazione.out' has not changed.
 (rerunfilecheck)             Checksum: B009EA807B495A0494DE4ED8717A4501;3209.
  ) 
 Here is how much of TeX's memory you used:
- 11571 strings out of 477974
- 175436 string characters out of 5839630
+ 11573 strings out of 477974
+ 175456 string characters out of 5839630
  1859388 words of memory out of 5000000
  31503 multiletter control sequences out of 15000+600000
  522509 words of font info for 71 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  75i,7n,76p,895b,688s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on relazione.pdf (26 pages, 459217 bytes).
+Output written on relazione.pdf (26 pages, 459452 bytes).
 PDF statistics:
- 365 PDF objects out of 1000 (max. 8388607)
- 301 compressed objects within 4 object streams
- 118 named destinations out of 1000 (max. 500000)
+ 367 PDF objects out of 1000 (max. 8388607)
+ 303 compressed objects within 4 object streams
+ 120 named destinations out of 1000 (max. 500000)
  203 words of extra memory for PDF output out of 10000 (max. 10000000)
 
